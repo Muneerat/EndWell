@@ -1,18 +1,34 @@
-import SignInImg from "@/assets/SignInImg.png";
-import Button from "@/components/Button";
-import TextInput from "@/components/TextInput";
+'use client'
+import SignInImg from "../../../assets/SignInImg.png";
+// import Button from "@/components/Button";
+import Button from "../../components/Button";
+import TextInput from "../../components/TextInput";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+
+// import SignInImg from "../../../assets/SignInImg.png";
+// import Button from "@/components/Button";
+// import TextInput from "@/components/TextInput";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
+// import React from "react";
 
 export default function SignIn() {
+  const router = useRouter()
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    router.push('dashboard/admin')
+  }
   return (
     <div className="flex">
       <div className="w-full overflow-hidden h-screen md:flex hidden justify-center items-center">
         <Image src={SignInImg} alt="SignInImg" className="block w-full" />
       </div>
       <div className="w-full p-12 bg-[#FAFAFB]">
-        <form>
+        <form onSubmit={handleSubmit}>
           <h1 className="text-2xl capitalize font-semibold text-secondary py-2 ">
             Welcome Back!
           </h1>
@@ -35,11 +51,11 @@ export default function SignIn() {
             <div>
             <TextInput
               className="w-full block"
-              label="Email"
+              label="Password"
               id="email"
               maxLength="255"
               placeholder="********"
-              type="text"
+              type="password"
               
             />
             </div>
@@ -49,7 +65,7 @@ export default function SignIn() {
               </Button>
             </div>
             <div className='text-center text-sm'>
-                        Forgot password? <Link href="/forgot-password">Reset </Link>
+                        Forgot password? <Link href="auth/ForgotPassword">Reset </Link>
                     </div>
           </div>
         </form>
@@ -57,3 +73,4 @@ export default function SignIn() {
     </div>
   );
 }
+
