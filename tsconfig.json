@@ -23,6 +23,14 @@
       }
     ],
     
+   
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "types/*": ["types/*"]
+    },
+    
+    
   },
   "include": [
     "next-env.d.ts",
