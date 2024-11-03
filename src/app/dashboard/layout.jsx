@@ -8,7 +8,7 @@ export default function AdminLayout({ children }) {
       <Sidebar />
       <div className="w-full ">
         <MainMenu />
-        {children}
+        <div className="pt-20 bg-[#FAFAFB] w-full h-full">{children}</div>
       </div>
     </div>
   );

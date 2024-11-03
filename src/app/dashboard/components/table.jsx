@@ -51,30 +51,31 @@ const data = [
     dividend: "194,087.5",
     withdrawable: "145,565.625"
   },
-  // {
-  //   id: "3u1reuv4",
-  //   amount: 242,
-  //   status: "success",
-  //   email: "Abe45@gmail.com",
-  // },
-  // {
-  //   id: "derv1ws0",
-  //   amount: 837,
-  //   status: "processing",
-  //   email: "Monserrat44@gmail.com",
-  // },
-  // {
-  //   id: "5kma53ae",
-  //   amount: 874,
-  //   status: "success",
-  //   email: "Silas22@gmail.com",
-  // },
-  // {
-  //   id: "bhqecj4p",
-  //   amount: 721,
-  //   status: "failed",
-  //   email: "carmella@hotmail.com",
-  // },
+  {
+    id: "2",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "1",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+
 ]
 
 // export type Payment = {
@@ -156,14 +157,14 @@ export const columns = [
   // },
   {
     id: "actions",
-    enableHiding: false,
+    header: "Actions",
     cell: ({ row }) => {
       const payment = row.original
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-8 w-8 p-0  ">
               <span className="sr-only">Open menu</span>
               <DotsHorizontalIcon className="h-4 w-4" />
             </Button>
@@ -215,7 +216,7 @@ export function DataTable() {
   })
 
   return (
-    <div className="w-full">
+    <div className="w- m-6">
       {/* <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
@@ -254,13 +255,13 @@ export function DataTable() {
       </div> */}
       <div className="rounded-md border bg-white
       ">
-        <Table >
+        <Table className="">
           <TableHeader className="bg-primary text-white ">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow  key={headerGroup.id} >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className="p-20" key={header.id}>
+                    <TableHead className="py-5 px-" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -279,9 +280,10 @@ export function DataTable() {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                 
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id}  className="px-4 py-5">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -303,7 +305,7 @@ export function DataTable() {
           </TableBody>
         </Table>
       </div>
-      {/* <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -326,7 +328,7 @@ export function DataTable() {
             Next
           </Button>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

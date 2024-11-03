@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar";
 import TextInput from "../../components/TextInput";
 import React from "react";
-
+10
 export default function MainMenu() {
   return (
-    <div className="flex justify-between items-center w-full shadow-sm px-5 py-3">
+    <div className="flex justify-between items-center w-full shadow-sm px-5 py-3 fixed bg-white opacity-">
       <div className="w-full flex items-center gap-4">
         <h1 className="text-2xl font-semibold">Hello Osas,</h1>
         <input
