@@ -14,9 +14,9 @@ import React, { useState } from "react";
 const sideItemsTop = [
   {
     label: "Overview",
-    link: "/dashboard/admin",
+    link: "/dashboard/overview",
     icon: <Overview />,
-    id: "admin",
+    id: "overview",
   },
   { label: "SMS", link: "/dashboard/sms", icon: <SMS />, id: "sms" },
   {
@@ -46,7 +46,7 @@ export default function Sidebar() {
   const [activeItem, setActiveItem] = useState(currentPath);
 
   const handleItemClick = (id) => {
-    setActiveItem(id); // Set the active item when clicked
+    setActiveItem(id); 
   };
 
   return (

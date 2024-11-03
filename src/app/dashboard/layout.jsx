@@ -4,9 +4,9 @@ import MainMenu from "./components/mainmenu";
 
 export default function AdminLayout({ children }) {
   return (
-    <div className="flex">
+    <div className="flex ">
       <Sidebar />
-      <div className="w-full">
+      <div className="w-full ">
         <MainMenu />
         {children}
       </div>

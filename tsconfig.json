@@ -22,21 +22,22 @@
         "name": "next"
       }
     ],
-    
-   
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "types/*": ["types/*"]
-    },
-    
-    
+      "@/*": [
+        "./*"
+      ],
+      "types/*": [
+        "types/*"
+      ]
+    }
   },
   "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "**/*.js",
+    "**/*.jsx",
+    ".next/types/**/*.js",
+    "next-env.d.js",
+    ".next/types/**/*.js"
   ],
   "exclude": [
     "node_modules"

@@ -20,7 +20,7 @@ export default function SignIn() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    router.push('dashboard/admin')
+    router.push('dashboard/overview')
   }
   return (
     <div className="flex">
