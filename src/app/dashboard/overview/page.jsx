@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../components/card";
 import ButtonUpload from "../components/button";
+import { DataTable } from "../components/table";
 
 export default function Overview() {
   return (
@@ -16,7 +17,9 @@ export default function Overview() {
           <ButtonUpload text="Send SMS" icon=""/>
         </div>
       </div>
-      <div></div>
+      <div>
+        <DataTable/>
+      </div>
     </div>
   );
 }

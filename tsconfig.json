@@ -25,8 +25,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "src/*"
       ],
+      // "@/*": [
+      //   "./*"
+      // ],
+      //       "paths": {
+      //   "@/*": ["src/*"]
+      // },
       "types/*": [
         "types/*"
       ]
@@ -36,8 +42,11 @@
     "**/*.js",
     "**/*.jsx",
     ".next/types/**/*.js",
+    ".next/types/**/*.js",
     "next-env.d.js",
-    ".next/types/**/*.js"
+    "src/components/ui/avatar.tsx",
+    "src/components/ui/table.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
