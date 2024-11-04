@@ -1,9 +1,10 @@
-import React from "react";
-import Card from "../components/card";
-import ButtonUpload from "../components/button";
-import { DataTable } from "../components/table";
-import { Sms, Upload2 } from "@/assets/icon";
-import BoardFilter from "../components/board";
+"use client";
+import React, { useState } from "react";
+import UploadFile from "../components/upload";
+import Button from "@/app/components/Button";
+import { Back } from "@/assets/icon";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 import {
   Select,
   SelectContent,
@@ -12,22 +13,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function Overview() {
+export default function SendSMS() {
+  const [file, setFile] = useState(null);
   return (
-    <div className="">
-      <div className="flex md:flex-row flex-col justify-between w-full px-6 py-10 flex-reverse flex-shrink ">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-8 text-primary ">
-          <Card text='No. of Members' number="108" />
-          <Card text='No. of ledger uploaded' number="10" />
-          <Card text='No. of  sent' number="15" />
-        </div>
-        <div className="flex  justify-start justify- gap-2">
-          <ButtonUpload text="Upload Ledger" icon={<Upload2/>} link="upload-ledger"/>
-          <ButtonUpload text="Send SMS" icon={<Sms/>}  link="SendSMS"/>
-        </div>
+    <div className="px-6 py-10">
+      <div className="flex items-center gap-8">
+        <Link
+          href="overview"
+          className="flex items-center gap-2 font-normal  cursor-pointer "
+        >
+          <Back />
+          <p>Back</p>
+        </Link>
+
+        <h1 className="font-bold text-2xl">Send SMS</h1>
       </div>
-      <BoardFilter text='Members'>
-      <div className="flex gap-6 ">
+      <div className="bg-white flex flex-col justify-center my-20 p-10 w-3/5 shadow-sm rounded-md mx-auto items-center">
+        <div className="flex gap-6 mb-16">
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="2024" />
@@ -50,18 +52,17 @@ export default function Overview() {
           </Select>
           <Select>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Xlsx" />
+              <SelectValue placeholder="Select report type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Xlsx</SelectItem>
+              <SelectItem value="light"><Checkbox  id="terms1" />Select report type</SelectItem>
               <SelectItem value="dark">Xlsx</SelectItem>
               <SelectItem value="system">System</SelectItem>
             </SelectContent>
           </Select>
         </div>
-      </BoardFilter>
-      <div>
-        <DataTable/>
+        <UploadFile setFile={setFile} files={file} accept="audio/*,image/*" />
+        <Button className="w-2/6 my-5">Save</Button>
       </div>
     </div>
   );

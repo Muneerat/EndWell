@@ -1,7 +1,8 @@
 'use client'
 import { Upload1 } from "@/assets/icon";
+// import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
-// import { HiCloudArrowUp } from "react-icons/hi2";
+import { ProgressBar } from "./prgressBar";
 
 export default function UploadFile({
     setFile,
@@ -42,7 +43,7 @@ export default function UploadFile({
     }
     return (
         <>
-            <label className={`flex flex-col cursor-pointer  items-center min-w- min-w-96 bg-[#F5F5F7] h-44 rounded-md justify-center p-4 relative ${styles} ${className}`}>
+            <label className={`flex flex-col cursor-pointer  items-center rounded-lg shadow-md w-3/6 bg-[#F5F5F7] justify-center p-4 relative ${styles} ${className}`}>
                 <span className="w-5/6 text-center text-[#3E3E3E]">
                     {
                         files?.length > 0
@@ -68,8 +69,9 @@ export default function UploadFile({
 export const Text = () => {
     return (
         <div className="" >
-            <Upload1 className='flex justify-center items-center mx-auto my-5'/>
+            <Upload1 className='flex justify-center items-center mx-auto my-6'/>
             <p>Drag and drop files here or click to <span className="text-primary !cursor-pointer">Browse</span> the computer</p>
+            <ProgressBar />
         </div>
     )
 }

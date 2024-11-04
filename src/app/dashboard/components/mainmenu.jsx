@@ -16,7 +16,7 @@ export default function MainMenu() {
         />
       </div>
       <div className="">
-        <Avatar className="w-12 border-[#000680] border-2">
+        <Avatar className="w-12 h-12 border-[#000680] border-2 rounded-full">
           <AvatarImage src="https://github.com/shadcn.png"  />
           
           <AvatarFallback>CN</AvatarFallback>

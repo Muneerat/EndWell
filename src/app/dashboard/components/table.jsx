@@ -45,7 +45,55 @@ import { Checkbox } from "@radix-ui/react-checkbox"
 const data = [
   {
     id: "1",
-    name: "Oladipo Munirat",
+    name: "ODEBODE I.A",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "ODEBODE I.A ",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "1",
+    name: "ODEBODE I.A",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "ODEBODE I.A ",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "ODEBODE I.A",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "1",
+    name: "ODEBODE I.A",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "ODEBODE I.A",
     number: '0706924568',
     asset: "776,350",
     dividend: "194,087.5",
@@ -61,55 +109,7 @@ const data = [
   },
   {
     id: "1",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "1",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "1",
-    name: "Oladipo Munirat",
+    name: "ODEBODE I.A",
     number: '0706924568',
     asset: "776,350",
     dividend: "194,087.5",
@@ -157,7 +157,7 @@ export const columns = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "number",
