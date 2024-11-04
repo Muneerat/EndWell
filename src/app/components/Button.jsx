@@ -9,7 +9,7 @@ export default function Button({
    ...props
 }) {
   return (
-    <button className='px-3 py-3 rounded-lg my-8  items-center justify-center disabled:cursor-not-allowed disabled:opacity-50 gap-x-2 flex w-full bg-primary text-white'>
+    <button className={`${className} w-full px-3 py-3 rounded-lg my-8  items-center justify-center disabled:cursor-not-allowed disabled:opacity-50 gap-x-2 flex w-full bg-primary text-white`}>
         <Spinner spin={spin} isBase={false} />
         {children}
     </button>

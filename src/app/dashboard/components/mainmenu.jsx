@@ -4,7 +4,7 @@ import React from "react";
 10
 export default function MainMenu() {
   return (
-    <div className="flex justify-between items-center w-full shadow-sm px-5 py-3 fixed bg-white opacity-">
+    <div className="flex justify-between items-center w-full  shadow-sm px-5 py-3  bg-white m-auto pr-20 left-0 fixed  z-40 top-0 flex-shrink-0 sm:pl-[280px]" >
       <div className="w-full flex items-center gap-4">
         <h1 className="text-2xl font-semibold">Hello Osas,</h1>
         <input
@@ -18,6 +18,7 @@ export default function MainMenu() {
       <div className="">
         <Avatar className="w-12 border-[#000680] border-2">
           <AvatarImage src="https://github.com/shadcn.png"  />
+          
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>

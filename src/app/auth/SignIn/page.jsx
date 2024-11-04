@@ -60,7 +60,7 @@ export default function SignIn() {
             />
             </div>
             <div>
-              <Button >
+              <Button className="w-full">
                 Login
               </Button>
             </div>

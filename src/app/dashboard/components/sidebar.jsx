@@ -50,7 +50,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-[50px] items-center justify-between border-r md:w-[220px] md:px-6 lg:w-[252px] p-6  ">
+    <div className="flex flex-col min-h-screen w-[50px] items-center justify-between border-r md:w-[220px] md:px-6 lg:w-[252px] p-6 z-50 bg-white fixed  top-0 left-0  ">
       <div className="flex flex-col w-full">
         <h1 className="text-primary text-2xl font-extrabold mb-4">
           END<span className="text-secondary">WELL</span>

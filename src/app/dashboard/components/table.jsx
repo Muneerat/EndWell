@@ -75,6 +75,54 @@ const data = [
     dividend: "194,087.5",
     withdrawable: "145,565.625"
   },
+  {
+    id: "2",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "1",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "1",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
+  {
+    id: "2",
+    name: "Oladipo Munirat",
+    number: '0706924568',
+    asset: "776,350",
+    dividend: "194,087.5",
+    withdrawable: "145,565.625"
+  },
 
 ]
 
