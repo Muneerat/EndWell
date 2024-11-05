@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import UploadFile from "../components/upload";
 import Button from "@/app/components/Button";
 import { Back } from "@/assets/icon";
-import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import {
   Select,
@@ -13,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function SendSMS() {
+export default function UploadLedger() {
   const [file, setFile] = useState(null);
   return (
     <div className="px-6 py-10">
@@ -26,12 +25,12 @@ export default function SendSMS() {
           <p>Back</p>
         </Link>
 
-        <h1 className="font-bold text-2xl">Send SMS</h1>
+        <h1 className="font-bold text-2xl">Upload Ledger</h1>
       </div>
       <div className="bg-white flex flex-col justify-center my-20 p-10 w-3/5 shadow-sm rounded-md mx-auto items-center">
         <div className="flex gap-6 mb-16">
           <Select>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] ">
               <SelectValue placeholder="2024" />
             </SelectTrigger>
             <SelectContent>
@@ -52,10 +51,10 @@ export default function SendSMS() {
           </Select>
           <Select>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select report type" />
+              <SelectValue placeholder="Xlsx" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light"><Checkbox  id="terms1" />Select report type</SelectItem>
+              <SelectItem value="light">Xlsx</SelectItem>
               <SelectItem value="dark">Xlsx</SelectItem>
               <SelectItem value="system">System</SelectItem>
             </SelectContent>

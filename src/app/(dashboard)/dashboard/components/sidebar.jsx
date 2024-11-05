@@ -1,12 +1,12 @@
 "use client";
 import {
   Help,
+  Members,
   Overview,
   Setting,
   SMS,
-  Staff,
   Uploaded,
-} from "../../../assets/icon";
+} from "../../../../assets/icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -26,10 +26,10 @@ const sideItemsTop = [
     id: "uploaded",
   },
   {
-    label: "Staff & permissions",
-    link: "/dashboard/staff",
-    icon: <Staff />,
-    id: "staff",
+    label: "Members",
+    link: "/dashboard/members",
+    icon: <Members />,
+    id: "members",
   },
 ];
 

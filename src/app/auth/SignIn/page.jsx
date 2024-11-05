@@ -27,15 +27,15 @@ export default function SignIn() {
       <div className="w-full overflow-hidden h-screen md:flex hidden justify-center items-center">
         <Image src={SignInImg} alt="SignInImg" className="block w-full" />
       </div>
-      <div className="w-full p-12 bg-[#FAFAFB]">
+      <div className="w-full md:p-12 p-5 bg-[#FAFAFB]">
         <form onSubmit={handleSubmit}>
           <h1 className="text-2xl capitalize font-semibold text-secondary py-2 ">
             Welcome Back!
           </h1>
-          <h1 className="text-primary text-6xl font-extrabold">
+          <h1 className="text-primary md:text-6xl text-3xl font-extrabold">
             END<span className="text-secondary">WELL</span>
           </h1>
-          <div className="flex flex-col gap-y-4 md:w-3/4 w-full bg-[#fff] p-12 mt-6 pb-32 rounded-md  ">
+          <div className="flex flex-col gap-y-4 md:w-3/4 w-full bg-[#fff] md:p-12 p-5 mt-6 pb-32 rounded-md  ">
             <p className="text-secondary text-2xl font-semibold">Login</p>
             <div>
             <TextInput

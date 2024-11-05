@@ -1,4 +1,4 @@
-import React from "react";
+'use client'
 import Card from "../components/card";
 import ButtonUpload from "../components/button";
 import { DataTable } from "../components/table";
@@ -11,14 +11,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SMSColumns, SMSData } from "@/app/data/SMSData";
 
 export default function SMS() {
+  const SMSDatas = SMSData.map((data,index) => {
+    return {
+        id: index,
+        name: data.name,
+        number: data.number,
+        asset: data.asset,
+        dividend: data.dividend,
+        withdrawable: data.withdrawable,
+      
+    };
+  })
   return (
     <div className="">
       <div className="flex justify-end w-full px-6 py-5 ">
       
         <div className="flex ">
-          <ButtonUpload text="Send SMS" icon={<Sms/>}/>
+          <ButtonUpload text="Send SMS" icon={<Sms/>}  link="SendSMS"/>
         </div>
       </div>
       <BoardFilter text='Messages'>
@@ -47,7 +59,7 @@ export default function SMS() {
         </div>
       </BoardFilter>
       <div>
-        <DataTable/>
+        <DataTable data={SMSDatas} columns={SMSColumns}/>
       </div>
     </div>
   );

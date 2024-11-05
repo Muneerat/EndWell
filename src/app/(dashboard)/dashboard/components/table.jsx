@@ -19,8 +19,16 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import { Button } from "../../../components/ui/button"
-// import { Checkbox } from "../../../components/ui/checkbox"
+import { Button } from "../../../../components/ui/button"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,9 +37,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../../components/ui/dropdown-menu"
+} from "../../../../components/ui/dropdown-menu"
 // import { Input } from "./../../../components/ui/input"
-import {Input} from "../../../components/ui/input"
+import {Input} from "../../../../components/ui/input"
 import {
   Table,
   TableBody,
@@ -39,7 +47,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/ui/table"
+} from "../../../../components/ui/table"
 import { Checkbox } from "@radix-ui/react-checkbox"
 
 const data = [
@@ -60,7 +68,7 @@ const data = [
     withdrawable: "145,565.625"
   },
   {
-    id: "1",
+    id: "3",
     name: "ODEBODE I.A",
     number: '0706924568',
     asset: "776,350",
@@ -68,7 +76,7 @@ const data = [
     withdrawable: "145,565.625"
   },
   {
-    id: "2",
+    id: "4",
     name: "ODEBODE I.A ",
     number: '0706924568',
     asset: "776,350",
@@ -76,53 +84,21 @@ const data = [
     withdrawable: "145,565.625"
   },
   {
-    id: "2",
+    id: "5",
     name: "ODEBODE I.A",
     number: '0706924568',
     asset: "776,350",
     dividend: "194,087.5",
     withdrawable: "145,565.625"
   },
-  {
-    id: "1",
-    name: "ODEBODE I.A",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "ODEBODE I.A",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "1",
-    name: "ODEBODE I.A",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
-  {
-    id: "2",
-    name: "Oladipo Munirat",
-    number: '0706924568',
-    asset: "776,350",
-    dividend: "194,087.5",
-    withdrawable: "145,565.625"
-  },
+  // {
+  //   id: "6",
+  //   name: "ODEBODE I.A",
+  //   number: '0706924568',
+  //   asset: "776,350",
+  //   dividend: "194,087.5",
+  //   withdrawable: "145,565.625"
+  // },
 
 ]
 
@@ -133,109 +109,109 @@ const data = [
 //   email: string
 // }
 
-export const columns = [
-  {
-    accessorKey: "id",
-    header: "S/N",
+// export const columns = [
+//   {
+//     accessorKey: "id",
+//     header: "S/N",
 
- cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("id")}</div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-    {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-         Members name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "number",
-    header: "Phone number",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("number")}</div>
-    ),
-  },
-   {
-    accessorKey: "asset",
-    header: "Total Asset(NGN)",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("asset")}</div>
-    ),
-  },
-   {
-    accessorKey: "dividend",
-    header: "Total Dividend(NGN)",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("dividend")}</div>
-    ),
-  },
-  {
-    accessorKey: "withdrawable",
-    header: "Withdrawable Dividend(NGN)",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("withdrawable")}</div>
-    ),
-  },
+//  cell: ({ row }) => (
+//       <div className="capitalize">{row.getValue("id")}</div>
+//     ),
+//     enableSorting: false,
+//     enableHiding: false,
+//   },
+//     {
+//     accessorKey: "name",
+//     header: ({ column }) => {
+//       return (
+//         <Button
+//           variant="ghost"
+//           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+//         >
+//          Members name
+//           <CaretSortIcon className="ml-2 h-4 w-4" />
+//         </Button>
+//       )
+//     },
+//     cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+//   },
+//   {
+//     accessorKey: "number",
+//     header: "Phone number",
+//     cell: ({ row }) => (
+//       <div className="capitalize">{row.getValue("number")}</div>
+//     ),
+//   },
+//    {
+//     accessorKey: "asset",
+//     header: "Total Asset(NGN)",
+//     cell: ({ row }) => (
+//       <div className="capitalize">{row.getValue("asset")}</div>
+//     ),
+//   },
+//    {
+//     accessorKey: "dividend",
+//     header: "Total Dividend(NGN)",
+//     cell: ({ row }) => (
+//       <div className="capitalize">{row.getValue("dividend")}</div>
+//     ),
+//   },
+//   {
+//     accessorKey: "withdrawable",
+//     header: "Withdrawable Dividend(NGN)",
+//     cell: ({ row }) => (
+//       <div className="capitalize">{row.getValue("withdrawable")}</div>
+//     ),
+//   },
 
-  // {
-  //   accessorKey: "amount",
-  //   header: () => <div className="text-right">Amount</div>,
-  //   cell: ({ row }) => {
-  //     const amount = parseFloat(row.getValue("amount"))
+//   // {
+//   //   accessorKey: "amount",
+//   //   header: () => <div className="text-right">Amount</div>,
+//   //   cell: ({ row }) => {
+//   //     const amount = parseFloat(row.getValue("amount"))
 
-  //     // Format the amount as a dollar amount
-  //     const formatted = new Intl.NumberFormat("en-US", {
-  //       style: "currency",
-  //       currency: "USD",
-  //     }).format(amount)
+//   //     // Format the amount as a dollar amount
+//   //     const formatted = new Intl.NumberFormat("en-US", {
+//   //       style: "currency",
+//   //       currency: "USD",
+//   //     }).format(amount)
 
-  //     return <div className="text-right font-medium">{formatted}</div>
-  //   },
-  // },
-  {
-    id: "actions",
-    header: "Actions",
-    cell: ({ row }) => {
-      const payment = row.original
+//   //     return <div className="text-right font-medium">{formatted}</div>
+//   //   },
+//   // },
+//   {
+//     id: "actions",
+//     header: "Actions",
+//     cell: ({ row }) => {
+//       const payment = row.original
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0  ">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
-            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-            <DropdownMenuItem>View</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
+//       return (
+//         <DropdownMenu>
+//           <DropdownMenuTrigger asChild>
+//             <Button variant="ghost" className="h-8 w-8 p-0  ">
+//               <span className="sr-only">Open menu</span>
+//               <DotsHorizontalIcon className="h-4 w-4" />
+//             </Button>
+//           </DropdownMenuTrigger>
+//           <DropdownMenuContent align="end" className="bg-white">
+//             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+//             {/* <DropdownMenuItem
+//               onClick={() => navigator.clipboard.writeText(payment.id)}
+//             >
+//               Copy payment ID
+//             </DropdownMenuItem> */}
+//             <DropdownMenuSeparator />
+//             <DropdownMenuItem>Edit</DropdownMenuItem>
+//             <DropdownMenuItem>Delete</DropdownMenuItem>
+//             <DropdownMenuItem>View</DropdownMenuItem>
+//           </DropdownMenuContent>
+//         </DropdownMenu>
+//       )
+//     },
+//   },
+// ]
 
-export function DataTable() {
+export function DataTable({data, columns}) {
   const [sorting, setSorting] = React.useState([])
   const [columnFilters, setColumnFilters] = React.useState(
     []
@@ -353,7 +329,7 @@ export function DataTable() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      {/* <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -376,7 +352,33 @@ export function DataTable() {
             Next
           </Button>
         </div>
-      </div>
+      </div> */}
+   <div className=" mt-6 bg-red-">
+   <Pagination className="flex justify-end  items-end  ">
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" isActive>
+            2
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">3</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+   </div>
     </div>
   )
 }

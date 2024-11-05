@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import Card from "../components/card";
 import ButtonUpload from "../components/button";
 import { DataTable } from "../components/table";
@@ -11,11 +12,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { OverviewColumns, OverviewData } from "@/app/data/overviewData";
 
 export default function Overview() {
+  // const [overviewData, setOverviewData] = useState();
+  const [filter, setFilter] = useState('');
+  const OverviewDatas = OverviewData.map((data,index) => {
+    return {
+        id: index,
+        name: data.name,
+        number: data.number,
+        asset: data.asset,
+        dividend: data.dividend,
+        withdrawable: data.withdrawable,
+      
+    };
+  })
+
   return (
     <div className="">
-      <div className="flex md:flex-row flex-col justify-between w-full px-6 py-10 flex-reverse flex-shrink ">
+      <div className="flex md:flex-row flex-col justify-between w-full px-6 pt-7 pb-1 flex-reverse flex-shrink ">
         <div className="grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-8 text-primary ">
           <Card text='No. of Members' number="108" />
           <Card text='No. of ledger uploaded' number="10" />
@@ -27,7 +43,7 @@ export default function Overview() {
         </div>
       </div>
       <BoardFilter text='Members'>
-      <div className="flex gap-6 ">
+      <div className="flex md:flex-row flex-col gap-6 ">
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="2024" />
@@ -61,7 +77,7 @@ export default function Overview() {
         </div>
       </BoardFilter>
       <div>
-        <DataTable/>
+        <DataTable data={OverviewDatas} columns={OverviewColumns}/>
       </div>
     </div>
   );
