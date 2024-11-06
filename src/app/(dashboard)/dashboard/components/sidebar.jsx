@@ -51,11 +51,12 @@ export default function Sidebar() {
   const handleItemClick = (id) => {
     setActiveItem(id);
     // Close the sidebar on mobile after clicking an item
-  }
     if (window.innerWidth < 640) {
       setIsSidebarOpen(false); 
   };
 
+  }
+   
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
@@ -73,13 +74,13 @@ export default function Sidebar() {
       </button>
 
       <div
-        className={`sm:flex flex-col min-h-screen w-[220px] items-center justify-between border-r md:w-[220px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
+        className={`sm:flex flex-col min-h-screen w-[260px] items-center justify-between border-r md:w-[220px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       >
         <div className="flex flex-col w-full">
-          <header className="flex justify-between items-center mb-4">
-            <h1 className="text-primary text-2xl font-extrabold">
+          <header className="flex justify-between items-center mb-6">
+            <h1 className="text-primary md:text-3xl text-2xl font-extrabold">
               END<span className="text-secondary">WELL</span>
             </h1>
             <button onClick={toggleSidebar} className="sm:hidden">
@@ -98,7 +99,7 @@ export default function Sidebar() {
                   currentPath === item.id
                     ? "text-primary font-medium hover:text-primary"
                     : "text-gray-600 hover:text-primary"
-                } mb-2 flex text-base font-normal gap-2`}
+                } mb-2 flex font-normal transition ease-in-out duration-150 gap-2 text-lg`}
               >
                 <span
                   className={`flex items-center transition-colors duration-200 ${
@@ -113,7 +114,7 @@ export default function Sidebar() {
           </section>
         </div>
 
-        <div className="flex flex-col w-full mb-4">
+        <div className="flex flex-col w-full my-4">
           <section className="flex flex-col gap-4">
             {sideItemsBottom.map((item, index) => (
               <Link
@@ -125,7 +126,7 @@ export default function Sidebar() {
                   currentPath === item.id
                     ? "text-primary font-medium hover:text-primary"
                     : "text-gray-600 hover:text-primary"
-                } mb-2 flex text-base font-normal gap-2`}
+                } mb-2 flex font-normal transition ease-in-out duration-150 gap-2 text-lg`}
               >
                 <span
                   className={`flex items-center transition-colors duration-200 ${
