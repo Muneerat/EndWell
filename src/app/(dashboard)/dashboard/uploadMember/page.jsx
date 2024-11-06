@@ -23,7 +23,7 @@ export default function UploadMember() {
       </BoardFilter>
       <div className="bg-white flex flex-col justify-center my-20 p-10 w-3/5 shadow-sm rounded-md mx-auto items-center">
 
-        <UploadFile setFile={setFile} files={file} accept="audio/*,image/*" />
+        <UploadFile setFile={setFile} files={file} accept=".xls,.xlsx" />
         <Button className="w-2/6 my-5">Save</Button>
       </div>
     </div>

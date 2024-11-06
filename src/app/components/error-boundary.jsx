@@ -1,7 +1,8 @@
+'use client'
 import Image from "next/image";
 import React, { Component } from "react";
-import { Button } from "../ui/button";
 import { useRouter } from "next/router";
+import Button from "./Button";
 
 class ErrorBoundary extends Component {
   constructor(props) {
