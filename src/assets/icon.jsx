@@ -218,3 +218,21 @@ export function Smile({ className }) {
 
   );
 }
+export function Hamburger({ className }) {
+  return (
+<svg className={`w-10 h-10 ${className}`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_2231_588" styles="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_2231_588)">
+<path d="M3 18V16H15V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="#000680"/>
+</g>
+</svg>
+  );
+}
+
+export function Cancel({ className }) {
+  return (
+<svg className={`w-5 h-5 ${className}`} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" aria-hidden="true"  height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd"></path></svg>
+  );
+}

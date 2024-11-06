@@ -8,7 +8,7 @@ export default function AdminLayout({ children }) {
       <Sidebar />
      
         <MainMenu />
-        <div className="pt-20 bg-[#FAFAFB] w-full sm:pl-[250px] min-h-screen ">{children}</div>
+        <div className="pt-20 bg-[#FAFAFB] w-full md:pl-[290px] sm:pl-[210px] min-h-screen ">{children}</div>
       
     </div>
   );

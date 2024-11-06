@@ -32,20 +32,20 @@ export default function Overview() {
   return (
     <div className="">
       <div className="flex md:flex-row flex-col justify-between w-full px-6 pt-7 pb-1 flex-reverse flex-shrink ">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-8 text-primary ">
+        <div className="grid lg:grid-cols-3  grid-cols-1 my-2  gap-8 text-primary ">
           <Card text='No. of Members' number="108" />
           <Card text='No. of ledger uploaded' number="10" />
           <Card text='No. of  sent' number="15" />
         </div>
-        <div className="flex  justify-start justify- gap-2">
+        <div className="flex  justify-start justify- gap-2 ">
           <ButtonUpload text="Upload Ledger" icon={<Upload2/>} link="upload-ledger"/>
           <ButtonUpload text="Send SMS" icon={<Sms/>}  link="SendSMS"/>
         </div>
       </div>
       <BoardFilter text='Members'>
-      <div className="flex md:flex-row flex-col gap-6 ">
+      <div className="flex flex-row gap-1 md:gap-6 ">
           <Select>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="md:w-[180px] ">
               <SelectValue placeholder="2024" />
             </SelectTrigger>
             <SelectContent>
@@ -55,7 +55,7 @@ export default function Overview() {
             </SelectContent>
           </Select>
           <Select>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="md:w-[180px] ">
               <SelectValue placeholder="September" />
             </SelectTrigger>
             <SelectContent>
@@ -64,16 +64,7 @@ export default function Overview() {
               <SelectItem value="system">September</SelectItem>
             </SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Xlsx" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Xlsx</SelectItem>
-              <SelectItem value="dark">Xlsx</SelectItem>
-              <SelectItem value="system">System</SelectItem>
-            </SelectContent>
-          </Select>
+        
         </div>
       </BoardFilter>
       <div>
