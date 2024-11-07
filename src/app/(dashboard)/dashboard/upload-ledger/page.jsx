@@ -15,7 +15,7 @@ import {
 export default function UploadLedger() {
   const [file, setFile] = useState(null);
   return (
-    <div className="px-6 py-10">
+    <div className="md:px-6 py-10 sm:px-14 m-3">
       <div className="flex items-center gap-8">
         <Link
           href="overview"
@@ -27,7 +27,7 @@ export default function UploadLedger() {
 
         <h1 className="font-bold text-2xl">Upload Ledger</h1>
       </div>
-      <div className="bg-white flex flex-col justify-center my-20 p-10 w-3/5 shadow-sm rounded-md mx-auto items-center">
+      <div className="bg-white flex flex-col justify-center my-5 md:my-20 md:p-10 p-5 w-full lg:w-3/5 shadow-sm rounded-md mx-auto items-center">
         <div className="flex gap-6 mb-16">
           <Select>
             <SelectTrigger className="w-[180px] ">
@@ -49,8 +49,8 @@ export default function UploadLedger() {
               <SelectItem value="system">September</SelectItem>
             </SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger className="w-[180px]">
+          {/* <Select>
+            <SelectTrigger className="md:w-[180px]">
               <SelectValue placeholder="Xlsx" />
             </SelectTrigger>
             <SelectContent>
@@ -58,9 +58,9 @@ export default function UploadLedger() {
               <SelectItem value="dark">Xlsx</SelectItem>
               <SelectItem value="system">System</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
-        <UploadFile setFile={setFile} files={file} accept="audio/*,image/*" />
+        <UploadFile setFile={setFile} files={file} accept=".xls,.xlsx" />
         <Button className="w-2/6 my-5">Save</Button>
       </div>
     </div>

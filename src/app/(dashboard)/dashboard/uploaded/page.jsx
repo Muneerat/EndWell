@@ -13,16 +13,14 @@ import {
 } from "@/components/ui/select";
 import { Upload2 } from "@/assets/icon";
 import { UploadColumns, UploadData } from "@/app/data/UploadData";
-import { UploadCloudIcon } from "lucide-react";
 export default function Uploaded() {
   const UploadDatas = UploadData.map((data,index) => {
     return {
         id: index,
-        name: data.name,
-        number: data.number,
-        asset: data.asset,
-        dividend: data.dividend,
-        withdrawable: data.withdrawable,
+        fileName: data.fileName,
+        fileType: data.fileType,
+        dateUploaded: data.dateUploaded,
+        status: data.status,
       
     };
   })

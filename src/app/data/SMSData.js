@@ -20,41 +20,15 @@ export const SMSData = [
         id: "1",
         name: "ODEBODE I.A",
         number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
+        date: "13/56/2024",
+        status: "Delivered",
       },
       {
-        id: "2",
-        name: "ODEBODE I.A ",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
-      {
-        id: "3",
+        id: "1",
         name: "ODEBODE I.A",
         number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
-      {
-        id: "4",
-        name: "ODEBODE I.A ",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
-      {
-        id: "5",
-        name: "ODEBODE I.A",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
+        date: "13/56/2024",
+        status: "Pending",
       },
 ]
 export const SMSColumns = [
@@ -91,24 +65,17 @@ export const SMSColumns = [
     ),
   },
    {
-    accessorKey: "asset",
-    header: "Total Asset(NGN)",
+    accessorKey: "date",
+    header: "Date sent",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("asset")}</div>
+      <div className="capitalize">{row.getValue("date")}</div>
     ),
   },
    {
-    accessorKey: "dividend",
-    header: "Total Dividend(NGN)",
+    accessorKey: "status",
+    header: "Delivery Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("dividend")}</div>
-    ),
-  },
-  {
-    accessorKey: "withdrawable",
-    header: "Withdrawable Dividend(NGN)",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("withdrawable")}</div>
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
 

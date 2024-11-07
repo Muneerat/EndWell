@@ -18,7 +18,7 @@ import Label from "@/app/components/label";
 export default function SendSMS() {
   const [file, setFile] = useState(null);
   return (
-    <div className="px-6 py-10">
+    <div className="md:px-6 py-10 sm:px-14 m-3">
       <div className="flex items-center gap-8">
         <Link
           href="overview"
@@ -30,11 +30,11 @@ export default function SendSMS() {
 
         <h1 className="font-bold text-2xl">Send SMS</h1>
       </div>
-      <div className="bg-white flex flex-col my-20 p-8 w-3/6 shadow-sm rounded-md mx-auto justify-center max-w-[700px] ">
+      <div className="bg-white flex flex-col my-20 p-8 w-full md:w-3/6 shadow-sm rounded-md mx-auto justify-center max-w-[700px] ">
      
-          <div className="flex gap-6 items-center justify-center  mb-8">
+          <div className="flex flex-col md:flex-row gap-6 items-center justify-center  mb-8">
             <Select>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="md:w-[200px]">
                 <SelectValue placeholder="2024" />
               </SelectTrigger>
               <SelectContent>
@@ -44,7 +44,7 @@ export default function SendSMS() {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="md:w-[200px]">
                 <SelectValue placeholder="September" />
               </SelectTrigger>
               <SelectContent>
@@ -54,7 +54,7 @@ export default function SendSMS() {
               </SelectContent>
             </Select>
             <Select>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="md:w-[200px]">
                 <SelectValue placeholder="Select report type" />
               </SelectTrigger>
               <SelectContent>
@@ -81,7 +81,7 @@ export default function SendSMS() {
           </div>
           <div className=" block justify-start align-top items-end justify-items-start mt-6 pb-4">
             <Select>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="md:w-[200px]">
                 <SelectValue placeholder="All Members" />
               </SelectTrigger>
               <SelectContent>
@@ -91,7 +91,7 @@ export default function SendSMS() {
               </SelectContent>
             </Select>
           </div>
-          <Button className="w-2/6 my-5">Send Message</Button>
+          <Button className="md:w-2/6 my-5">Send Message</Button>
         </div>
       </div>
     

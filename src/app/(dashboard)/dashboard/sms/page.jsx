@@ -19,9 +19,8 @@ export default function SMS() {
         id: index,
         name: data.name,
         number: data.number,
-        asset: data.asset,
-        dividend: data.dividend,
-        withdrawable: data.withdrawable,
+        date: data.date,
+        status: data.status,
       
     };
   })

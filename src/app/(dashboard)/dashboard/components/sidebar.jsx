@@ -66,15 +66,15 @@ export default function Sidebar() {
       {/* Mobile toggle button */}
       <button
         onClick={toggleSidebar}
-        className="sm:hidden fixed top-2 left-0 z-50 p-2  rounded-md"
+        className="md:hidden fixed top-2 left-0 z-50 p-2  rounded-md"
       >
-        <div className="bg-[#D9D9D9] p-2 rounded-full flex sm:hidden ">
+        <div className="bg-[#D9D9D9] p-1 rounded-full flex md:hidden ">
         <Hamburger />
       </div>
       </button>
 
       <div
-        className={`sm:flex flex-col min-h-screen w-[260px] items-center justify-between border-r md:w-[220px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
+        className={`md:flex flex-col min-h-screen w-[260px] items-center justify-between border-r md:w-[200px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       >

@@ -43,7 +43,7 @@ export default function UploadFile({
     }
     return (
         <>
-            <label className={`flex flex-col cursor-pointer  items-center rounded-lg shadow-md w-3/6 bg-[#F5F5F7] justify-center p-4 relative ${styles} ${className}`}>
+            <label className={`flex flex-col cursor-pointer  items-center rounded-lg shadow-md w-full py-4 h-56 md:w-3/6 bg-[#F5F5F7] justify-center p-4 relative ${styles} ${className}`}>
                 <span className="w-5/6 text-center text-[#3E3E3E]">
                     {
                         files?.length > 0

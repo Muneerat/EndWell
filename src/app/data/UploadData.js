@@ -1,3 +1,4 @@
+import { Excel } from "@/assets/icon";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,44 +18,12 @@ import {
 export const UploadData = [
     {
         id: "1",
-        name: "ODEBODE I.A",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
+        fileName: "September ledger",
+        fileType: 'Excelsheet',
+        dateUploaded: "13/56/2024",
+        status: "Successful",
       },
-      {
-        id: "2",
-        name: "ODEBODE I.A ",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
-      {
-        id: "3",
-        name: "ODEBODE I.A",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
-      {
-        id: "4",
-        name: "ODEBODE I.A ",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
-      {
-        id: "5",
-        name: "ODEBODE I.A",
-        number: '0706924568',
-        asset: "776,350",
-        dividend: "194,087.5",
-        withdrawable: "145,565.625"
-      },
+      
 ]
 export const UploadColumns = [
   {
@@ -68,49 +37,41 @@ export const UploadColumns = [
     enableHiding: false,
   },
     {
-    accessorKey: "name",
+    accessorKey: "fileName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-         Members name
+        File name
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue("fileName")}</div>,
   },
   {
-    accessorKey: "number",
-    header: "Phone number",
+    accessorKey: "fileType",
+    header: "File type",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("number")}</div>
+      <div className="capitalize flex gap-2"><Excel />{row.getValue("fileType")}</div>
     ),
   },
    {
-    accessorKey: "asset",
-    header: "Total Asset(NGN)",
+    accessorKey: "dateUploaded",
+    header: "Date Uploaded",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("asset")}</div>
+      <div className="capitalize">{row.getValue("dateUploaded")}</div>
     ),
   },
    {
-    accessorKey: "dividend",
-    header: "Total Dividend(NGN)",
+    accessorKey: "status",
+    header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("dividend")}</div>
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
-  {
-    accessorKey: "withdrawable",
-    header: "Withdrawable Dividend(NGN)",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("withdrawable")}</div>
-    ),
-  },
-
   // {
   //   accessorKey: "amount",
   //   header: () => <div className="text-right">Amount</div>,
