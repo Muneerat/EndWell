@@ -1,5 +1,6 @@
+import { signIn } from "@/Services/authService";
+import { getToken, setToken } from "@/utils/authToken";
 import { createSlice } from "@reduxjs/toolkit"
-import { sign } from "crypto"
 
 const initialState = {
     processing: false,
@@ -16,7 +17,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(SignIn.pending, (state) => {
+        builder.addCase(signIn.pending, (state) => {
             state.processing = true;
             state.isSuccess = false;
             state.isError = false;
@@ -30,6 +31,9 @@ const authSlice = createSlice({
             state.errors = {};
             state.message = action.payload.message;
             setToken(action.payload.token);
+            window.location.href = '/'
         });
     }
 })
+
+export default authSlice.reducer;

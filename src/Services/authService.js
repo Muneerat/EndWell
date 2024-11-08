@@ -1,58 +1,28 @@
-import axios from "axios";
-// import router from '@/router/index';
-import { getToken } from "../utils/authToken";
+// import axios from '../libs/axios';
+import axios from '@/libs/axios'
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.interceptors.request.use(
-    function(config){
-        config.headers['Accept'] = 'application/json';
-
-        let token = getToken();
+export const signIn = createAsyncThunk(
+    'auth/signIn',
+    async ({ email, password }, { rejectWithValue }) => {
         
-        if (token?.trim()?.length > 0) {
-            console.log('Token:', token);
+        try {
+            const response = await axios.post('/sign-in', {email, password});
             
-            config.headers['Authorization'] = 'Bearer ' + token;
-        }
-        config.headers['X-API-KEY'] = import.meta.env.VITE_API_KEY;
+            return response.data.data;
+        } catch (error) {
+            if (error.response){
+                return rejectWithValue(error.response)
 
-        config.baseURL = import.meta.env.VITE_API_BASE_URI;
-        return config;
-    },
-    function(error){
-        return Promise.reject(error);
+            }
+            else {
+                return rejectWithValue(error.request);
+            }
+        }
     }
 );
 
-axios.interceptors.response.use(
-    function(response){
-        return response;
-    },
-    function(error){
 
-        if (error?.response) {
-            const { status } = error.response;
 
-            if (status === 401) {
 
-                // removeStorage(TOKEN_KEY);
-                // router.push({path: '/login'});
-            }
 
-            if ([503].indexOf(status) >= 0) {
-                // return router.push({ path: '/technical-error'});
-            }
-
-            if (status === 403) {
-                // return router.push({ path: '/access-denied'});
-            }
-
-            if (status === 409) {
-                // return router.push({ path: '/email/notice'});
-            }
-        }
-
-        return Promise.reject(error);
-    }
-);
-
-export default axios;
