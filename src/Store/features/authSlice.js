@@ -1,3 +1,4 @@
+
 import { signIn } from "@/Services/authService";
 import { getToken, setToken } from "@/utils/authToken";
 import { createSlice } from "@reduxjs/toolkit"
@@ -31,7 +32,8 @@ const authSlice = createSlice({
             state.errors = {};
             state.message = action.payload.message;
             setToken(action.payload.token);
-            window.location.href = '/'
+            // window.location.href = 'dashboard/overview'
+            
         });
     }
 })

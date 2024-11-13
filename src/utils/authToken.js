@@ -1,3 +1,4 @@
+
 import {  getStorage,createStorage, removeStorage } from "./localStorage";
 
 const TOKEN_KEY = '_APP_TOKEN_KEY_';
@@ -11,6 +12,7 @@ const getToken = () => {
 }
 
 const setToken = (token) => {
+    console.log('setToken', token)
     return createStorage(TOKEN_KEY, token)
 }
 

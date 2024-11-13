@@ -1,5 +1,6 @@
 import React from "react";
 import Label from "./label";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 export default function PasswordInput({
   label,
@@ -14,9 +15,9 @@ export default function PasswordInput({
       <button
         type="button"
         className="inline-flex absolute right-2 inset-y-8 text-base-600 z-10"
-        onClick={() => setType(type === 'password' ? )}
+        onClick={() => setType(type === 'password' ? 'text' : 'password')}
       >
-        {suffix}
+       {type == 'password' ? <EyeOpenIcon/> : <EyeClosedIcon />}
       </button>
       <Label text={label} />
       <input

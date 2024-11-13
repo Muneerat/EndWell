@@ -1,7 +1,14 @@
 import { Hamburger } from "@/assets/icon";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../components/ui/avatar";
-import TextInput from "../../../components/TextInput";
-import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 10
 export default function MainMenu() {
   return (
@@ -20,11 +27,23 @@ export default function MainMenu() {
         />
       </div>
       <div className="">
-        <Avatar className="w-12 h-12 border-[#000680] border-2 rounded-full">
-          <AvatarImage src="https://github.com/shadcn.png"  />
+            <DropdownMenu>
+        <DropdownMenuTrigger>
+        <Avatar className="w-14 h-14 border-[#000680] text-black border-2 rounded-full">
+          {/* <AvatarImage src="https://github.com/shadcn.png"  /> */}
           
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>Admin`</AvatarFallback>
         </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="bg-white">
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem>View</DropdownMenuItem>
+          </DropdownMenuContent>
+      </DropdownMenu>
+
+        
       </div>
     </div>
   );

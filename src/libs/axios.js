@@ -1,7 +1,5 @@
 import { getToken } from "@/utils/authToken";
 import axios from "axios";
-// import router from '@/router/index';
-// import { getToken } from "../utils/authToken";
 
 axios.interceptors.request.use(
     function(config){
@@ -14,9 +12,9 @@ axios.interceptors.request.use(
             
             config.headers['Authorization'] = 'Bearer ' + token;
         }
-        config.headers['X-API-KEY'] = import.meta.env.VITE_API_KEY;
+        config.headers['X-API-KEY'] = process.env.NEXT_PUBLIC_API_KEY;
 
-        config.baseURL = import.meta.env.VITE_API_BASE_URI;
+        config.baseURL =  process.env.NEXT_PUBLIC_API_URL;
         return config;
     },
     function(error){
