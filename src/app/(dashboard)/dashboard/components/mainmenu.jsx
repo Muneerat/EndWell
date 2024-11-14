@@ -1,3 +1,4 @@
+'use client'
 import { Hamburger } from "@/assets/icon";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../components/ui/avatar";
 import {
@@ -8,9 +9,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/Services/authService";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-10
 export default function MainMenu() {
+  const dispatch = useDispatch()
+  const router = useRouter();
+  const {isSuccess} = useSelector(state => state.auth);
+  
+  const handleLogout = () => {
+ 
+    dispatch(logout({}))
+    console.log('logged out')
+    router.push('/')
+  }
+//   useEffect(() => {
+//     if (isSuccess) {
+//         router.push('/'); // Redirect to login after logout success
+//     }
+// }, [isSuccess, router]);
   return (
     <div className="flex justify-between items-center w-full  shadow-sm px-4 py-3  bg-white m-auto md:pr-20 left-0 fixed  z-40 top-0 flex-shrink-0 sm:pl-[280px]" >
       <div className="bg-[#D9D9D9] p-2 rounded-full invisible ">
@@ -32,14 +51,17 @@ export default function MainMenu() {
         <Avatar className="w-14 h-14 border-[#000680] text-black border-2 rounded-full">
           {/* <AvatarImage src="https://github.com/shadcn.png"  /> */}
           
-          <AvatarFallback>Admin`</AvatarFallback>
+          <AvatarFallback>Admin</AvatarFallback>
         </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-            <DropdownMenuItem>View</DropdownMenuItem>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem >
+              <button onClick={handleLogout} type="button">
+              Logout
+              </button>
+            </DropdownMenuItem>
           </DropdownMenuContent>
       </DropdownMenu>
 

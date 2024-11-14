@@ -20,4 +20,4 @@ const removeToken = () => {
     return removeStorage(TOKEN_KEY)
 }
 
-export { getToken, setToken, removeToken };
+export {TOKEN_KEY, getToken, setToken, removeToken };

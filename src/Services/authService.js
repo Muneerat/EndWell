@@ -15,16 +15,56 @@ export const signIn = createAsyncThunk(
         } catch (error) {
             if (error.response){
                  console.log(error.response.data.message)
-                return rejectWithValue(error.response)
+                return rejectWithValue(error.response.data)
 
             }
             else {
+                console.log(error.request)
+                return rejectWithValue('Network error: Unable to reach the server.');
+            }
+        }
+    }
+);
+
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async({}, {rejectWithValue}) => {
+        try{
+        console.log('here')
+            const response = await axios.delete('api/v1/admin/logout');
+            console.log(response.data)
+            return response.data;
+        } catch (error){
+            if (error.response){
+                console.log(error.response.data.message)
+                return rejectWithValue(error.response)
+            }
+            else{
                 console.log(error.request)
                 return rejectWithValue(error.request);
             }
         }
     }
-);
+)
+
+// export const forgetPassword = createAsyncThunk(
+//     'auth/forgotPassword',
+//     async({email}, {rejectWithValue}) => {
+//         try{
+//             const response = await axios.post('/api/v1/admin/forgot_password', {email});
+//             return response.data;
+//         }catch (error) {
+//             if (error.response){
+//                 console.log(error.response.data.message)
+//                 return rejectWithValue(error.response.data)
+//             }
+//             else{
+//                 console.log(error.request)
+//                 return rejectWithValue(error.request);
+//             }
+//         }
+//     }
+// )
 
 
 // import axios from '@/libs/axios';
