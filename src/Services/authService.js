@@ -10,11 +10,11 @@ export const signIn = createAsyncThunk(
         try {
             const response = await axios.post('/api/v1/admin/login', {email, password});
             
-            console.log(response.data)
+            // console.log(response.data)
             return response.data.data;
         } catch (error) {
             if (error.response){
-                console.log(error.response.data.message)
+                 console.log(error.response.data.message)
                 return rejectWithValue(error.response)
 
             }
@@ -25,6 +25,30 @@ export const signIn = createAsyncThunk(
         }
     }
 );
+
+
+// import axios from '@/libs/axios';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
+
+// export const signIn = createAsyncThunk(
+//     'auth/signIn',
+//     async ({ email, password }, { rejectWithValue }) => {
+//         try {
+//             const response = await axios.post('/api/v1/admin/login', { email, password });
+//             return response.data.data;  // Return only the relevant data
+//         } catch (error) {
+//             if (error.response) {
+//                 // Extract only the data from the response for a serializable payload
+//                 console.log(error.response.data.message)
+//                 return rejectWithValue(error.response.data);
+//             } else {
+//                 // Log and reject with only serializable error data
+//                 console.log(error.request);
+//                 return rejectWithValue({ message: error.message });
+//             }
+//         }
+//     }
+// );
 
 
 

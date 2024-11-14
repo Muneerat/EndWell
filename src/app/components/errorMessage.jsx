@@ -6,7 +6,7 @@ export default function ErrorMessage({
         <>
             {
                 error && <small className="block text-xs text-red-600 mt-0.5">
-                    {error}ccc
+                    {error}
                 </small>
             }
         </>

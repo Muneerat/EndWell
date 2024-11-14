@@ -63,7 +63,7 @@ export default function SignIn() {
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                errorMessage={errors?.email && errors.email[0]}
+                errorMessage={errors?.email }
               />
             </div>
             <div>
