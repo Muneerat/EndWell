@@ -1,13 +1,15 @@
 'use client'
 import { useEffect, useState } from "react";
-import SignInImg from "../../../assets/SignInImg.png";
-import Button from "../../components/Button";
-import TextInput from "../../components/TextInput";
+ import SignInImg from "@/assets/SignInImg.png";
+// import Button from "../../../components/Button";
+// import TextInput from "../../../components/TextInput";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "@/Services/authService";
+import Button from "@/app/components/Button";
+import TextInput from "@/app/components/TextInput";
 
 export default function SignIn() {
   const router = useRouter();
@@ -23,12 +25,7 @@ export default function SignIn() {
     console.log("Attempting to login with:", { email, password });
     dispatch(signIn({ email, password }))
     console.log(errors)
-      // .then((response) => {
-      //   console.log("SignIn Response:", response);
-      // })
-      // .catch((error) => {
-      //   console.error("SignIn Error:", error.response.data.message.payload);
-      // });
+    router.push('/dashboard/overview');
   };
 
   useEffect(() => {
@@ -80,12 +77,12 @@ export default function SignIn() {
               />
             </div>
             <div>
-              <Button className="w-full" type="submit">
+              <Button spin={processing} disabled={processing} className="w-full" type="submit">
                 Login
               </Button>
             </div>
             <div className="text-center text-sm">
-              Forgot password? <Link href="auth/ForgotPassword">Reset </Link>
+              Forgot password? <Link href="/admin/ForgotPassword">Reset </Link>
             </div>
           </div>
         </form>

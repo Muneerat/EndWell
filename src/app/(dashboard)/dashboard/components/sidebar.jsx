@@ -7,6 +7,7 @@ import {
   Overview,
   Setting,
   SMS,
+  Staff,
   Uploaded,
 } from "../../../../assets/icon";
 import Link from "next/link";
@@ -32,6 +33,12 @@ const sideItemsTop = [
     link: "/dashboard/members",
     icon: <Members />,
     id: "members",
+  },
+  {
+    label: "Staff & permissions",
+    link: "/dashboard/staff",
+    icon: <Staff />,
+    id: "staff",
   },
 ];
 
