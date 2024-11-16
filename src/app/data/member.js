@@ -16,17 +16,46 @@ import {
 } from "@radix-ui/react-icons"
 
 export const StaffData = [
-  //Call apifor get user data
-  
-    // {
-    //     id: "1",
-    //     first_name: "Habeeb",
-    //     last_name: "Suleiman",
-    //     email: 'oladipo@gmail.com',
-    //     phone: "0706924568",
-    //     department: "accountant",
-    //     role: "staff"
-    //   },
+    {
+        id: "1",
+        name: "ODEBODE I.A",
+        number: '0706924568',
+        asset: "776,350",
+        dividend: "194,087.5",
+        withdrawable: "145,565.625"
+      },
+      {
+        id: "2",
+        name: "ODEBODE I.A ",
+        number: '0706924568',
+        asset: "776,350",
+        dividend: "194,087.5",
+        withdrawable: "145,565.625"
+      },
+      {
+        id: "3",
+        name: "ODEBODE I.A",
+        number: '0706924568',
+        asset: "776,350",
+        dividend: "194,087.5",
+        withdrawable: "145,565.625"
+      },
+      {
+        id: "4",
+        name: "ODEBODE I.A ",
+        number: '0706924568',
+        asset: "776,350",
+        dividend: "194,087.5",
+        withdrawable: "145,565.625"
+      },
+      {
+        id: "5",
+        name: "ODEBODE I.A",
+        number: '0706924568',
+        asset: "776,350",
+        dividend: "194,087.5",
+        withdrawable: "145,565.625"
+      },
 ]
 export const StaffColumns = [
   {
@@ -40,54 +69,39 @@ export const StaffColumns = [
     enableHiding: false,
   },
     {
-    accessorKey: "first_name",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-        First Name
+         Members name
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("first_name")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "last_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-        Last Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("last_name")}</div>,
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "number",
+    header: "Phone number",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("email")}</div>
+      <div className="capitalize">{row.getValue("number")}</div>
     ),
   },
    {
-    accessorKey: "role",
-    header: "Role",
+    accessorKey: "asset",
+    header: "Total Asset(NGN)",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("role")}</div>
+      <div className="capitalize">{row.getValue("asset")}</div>
     ),
   },
    {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "dividend",
+    header: "Total Dividend(NGN)",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("dividend")}</div>
     ),
   },
   {

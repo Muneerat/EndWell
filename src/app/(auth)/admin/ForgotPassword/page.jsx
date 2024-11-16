@@ -1,7 +1,9 @@
 "use client";
 import Button from "@/app/components/Button";
 import TextInput from "@/app/components/TextInput";
+import handleErrors from "@/app/data/handleErrors";
 import { forgetPassword } from "@/Services/authService";
+import { addToast } from "@/Store/features/toastSlice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -9,35 +11,27 @@ import { useDispatch, useSelector } from "react-redux";
 // import axios from '../../../libs/axios';
 
 export default function ForgotPassword() {
-  // const { errors,processing } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [processing, setProcessing] = useState(false)
   const [errors, setErrors] = useState(false);
   const router = useRouter()
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const submit = async (e) => {
     e.preventDefault();
     setProcessing(true);
-    console.log("got here");
     try {
-      await axios.post("/api/v1/admin/forgot_password", { email });
-      console.log("Success" + response.data);
+     const response =  await axios.post("/api/v1/admin/forgot_password", { email });
+      dispatch((addToast({
+        type:'success',
+        message: response.data.message
+      })))
       router.push('/admin/reset-password');
       return response.data;
     } catch (error) {
-      if (error.response?.status == 422) {
-        let newErrors = {};
-
-        for (let err in error.response.data.data) {
-          newErrors[err] = error.response.data.data[err];
-        }
-        console.log(error.response);
-        // setErrors(newErrors);
-      } else {
-        // handle email could not be sent
-        // console.error("Email could not be sent"); 
-      }
+         handleErrors(error,setErrors);
+       
+      
     }finally {
       setProcessing(false)
     }
@@ -58,7 +52,7 @@ export default function ForgotPassword() {
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              errorMessage={errors?.email && errors.email[0]}
+              errorMessage={errors?.email}
             />
           </div>
           <Button spin={processing} disabled={processing} className="w-full" type="submit">

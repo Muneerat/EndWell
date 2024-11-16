@@ -15,12 +15,13 @@ export const signIn = createAsyncThunk(
         } catch (error) {
             if (error.response){
                  console.log(error.response.data.message)
-                return rejectWithValue(error.response.data)
+                // return rejectWithValue(error.response.data)
+                return rejectWithValue({status: error.response.status, message: error.response.data.message})
 
             }
             else {
                 console.log(error.request)
-                return rejectWithValue('Network error: Unable to reach the server.');
+                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
             }
         }
     }
@@ -37,11 +38,11 @@ export const logout = createAsyncThunk(
         } catch (error){
             if (error.response){
                 console.log(error.response.data.message)
-                return rejectWithValue(error.response)
+                return rejectWithValue({status: error.response.status, message: error.response.data.message})
             }
             else{
                 console.log(error.request)
-                return rejectWithValue(error.request);
+                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
             }
         }
     }

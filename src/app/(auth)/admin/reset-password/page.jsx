@@ -2,9 +2,12 @@
 import Button from "@/app/components/Button";
 import PasswordInput from "@/app/components/passwordInput";
 import TextInput from "@/app/components/TextInput";
+import handleErrors from "@/app/data/handleErrors";
+import { addToast } from "@/Store/features/toastSlice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState,useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("")
@@ -16,29 +19,23 @@ export default function ResetPassword() {
   const [errors, setErrors] = useState({});
   const router = useRouter()
 
-  // const dispatch = useDispatch();
+   const dispatch = useDispatch();
   const submit = async (e) => {
     e.preventDefault();
     setProcessing(true);
     console.log("got here");
     console.log( code, password,confirm_password);
     try {
-      await axios.put("api/v1/admin/reset_password", { code, password,confirm_password});
+     const response = await axios.put("api/v1/admin/reset_password", { code, password,confirm_password});
+     dispatch(addToast({
+       type:'success',
+       message: response.data.message
+     }))
       router.push('/admin/SignIn');
-      console.log("success" + response);
       return response.data;
     } catch (error) {
-      console.log(error.response);
-      if (error.response?.status == 422) {
-        let newErrors = {};
-
-        for (let err in error.response.data.data) {
-          newErrors[err] = error.response.data.data[err];
-        }
-        // setErrors(newErrors);
-      } else {
-        // handle email could not be sent
-      }
+     handleErrors(error,setErrors)
+      
     }finally {
       setProcessing(false)
     }
@@ -59,6 +56,7 @@ export default function ResetPassword() {
   return (
     <div className="my-auto h-screen w-full flex justify-center items-center">
       <div className="bg-white py-10 px-6 rounded shadow m-auto w-full sm:max-w-md">
+      <div>{(errors ) && <p className="text-red-700">{errors?.email} </p>  }</div>
         <h2 className="text-4xl text-ash-950 font-semibold">Reset Password</h2>
         <div className="my-4 text-sm text-gray-600">
         Kindly enter a new and secure password below.
@@ -75,7 +73,7 @@ export default function ResetPassword() {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               errorMessage={errors?.code}
-              name='setCode'
+              name='code'
             />
           </div>
           <div>

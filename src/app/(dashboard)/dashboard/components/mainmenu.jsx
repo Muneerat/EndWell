@@ -20,16 +20,15 @@ export default function MainMenu() {
   const {isSuccess} = useSelector(state => state.auth);
   
   const handleLogout = () => {
- 
     dispatch(logout({}))
     console.log('logged out')
-    router.push('/')
+    //  router.push('/admin/SignIn')
   }
-//   useEffect(() => {
-//     if (isSuccess) {
-//         router.push('/'); // Redirect to login after logout success
-//     }
-// }, [isSuccess, router]);
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/admin/SignIn')
+    }
+}, [isSuccess, router]);
   return (
     <div className="flex justify-between items-center w-full  shadow-sm px-4 py-3  bg-white m-auto md:pr-20 left-0 fixed  z-40 top-0 flex-shrink-0 sm:pl-[280px]" >
       <div className="bg-[#D9D9D9] p-2 rounded-full invisible ">

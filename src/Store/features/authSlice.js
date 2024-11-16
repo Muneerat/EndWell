@@ -32,26 +32,31 @@ const authSlice = createSlice({
             state.errors = {};
             state.message = action.payload?.message;
             setToken(action.payload?.token);
-            // window.location.href = 'dashboard/overview'
             
         });
         builder.addCase(signIn.rejected, (state,action) => {
+            console.log(action.payload.message);
+            
             state.processing = false;
             state.isSuccess = false;
             state.isError = true;
             
             if (action.payload?.status === 400) {
-                let errors = action.payload.data.message;
+                let errors = action.payload.message;
                 let formatted = {};
             
                 // Check if errors is an object
-                if (errors && typeof errors === 'object') {
+                if (errors && typeof errors === 'string') {
+                    state.message = action.payload.message
+                }
+                else{
                     for (let error of Object.keys(errors)) {
                         formatted[error] = errors[error][0];
                     }
+                    state.errors = formatted;
+                    console.log(formatted);
                 }
             
-                state.errors = formatted;
             } else {
                 state.message = action.payload?.message ?? 'Your account could not found.';
             }

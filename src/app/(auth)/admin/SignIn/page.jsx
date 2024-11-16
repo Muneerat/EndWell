@@ -10,28 +10,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "@/Services/authService";
 import Button from "@/app/components/Button";
 import TextInput from "@/app/components/TextInput";
+import { addToast } from "@/Store/features/toastSlice";
+import PasswordInput from "@/app/components/passwordInput";
 
 export default function SignIn() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  // Pull relevant states from auth slice
-  const { processing, errors, isSuccess } = useSelector((state) => state.auth);
+  // Pull states from auth slice
+  const { processing, errors, isSuccess, isError,message } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Attempting to login with:", { email, password });
     dispatch(signIn({ email, password }))
-    console.log(errors)
-    router.push('/dashboard/overview');
+    
   };
-
+  
   useEffect(() => {
     if (isSuccess) {
       console.log("Login Successful. Redirecting to dashboard...");
       router.push('/dashboard/overview');
+      dispatch(addToast({
+        type: 'success',
+        message: 'Logged in successfully.'
+      }))
     }
   }, [isSuccess, router]);
 
@@ -49,6 +53,7 @@ export default function SignIn() {
             END<span className="text-secondary">WELL</span>
           </h1>
           <div className="flex flex-col gap-y-4 md:w-3/4 w-full bg-[#fff] md:p-12 p-5 mt-6 pb-32 rounded-md">
+          <div>{(isError && message) && <p className="text-red-700">{message} </p>  }</div>
             <p className="text-secondary text-2xl font-semibold">Login</p>
             <div>
               <TextInput
@@ -64,13 +69,12 @@ export default function SignIn() {
               />
             </div>
             <div>
-              <TextInput
+              <PasswordInput
                 className="w-full block"
                 label="Password"
                 id="password"
                 maxLength="255"
                 placeholder="********"
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 errorMessage={errors?.password}
