@@ -41,13 +41,23 @@ export default function AddStaff() {
             password,
             confirm_password
         });
-            console.log('Successfully added' , response);
             dispatch((addToast({
                 type:'success',
                 message: response.data.message
             })))
             setErrors({})
-            return response.data; 
+
+        // Clear input 
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+        setRole("");
+        setDepartment("");
+        setPassword("");
+        setConfirmPassword("");
+
+            // return response.data; 
             
     }catch(error){
        handleErrors(error, setErrors)

@@ -285,7 +285,7 @@ export function DataTable({data, columns}) {
               <TableRow  key={headerGroup.id} >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className="py-5 px-" key={header.id}>
+                    <TableHead className="py-5" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

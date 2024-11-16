@@ -46,14 +46,7 @@ export default function AdminLayout({ children }) {
 
     return () => clearTimeout(x);
   }, [alert, dispatch]);
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     router.push("/SignIn");
-  //     return;
-  //   }
-  //   setLoading(false);
-  // }, [router]);
+
 
   // if (loading) return;
 
