@@ -12,50 +12,55 @@ import { useDispatch } from "react-redux";
 import { addToast } from "@/Store/features/toastSlice";
 
 export default function AddStaff() {
-    const [first_name, setFirstName] = useState("");
-    const [last_name, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [role, setRole] = useState("");
-    const [department, setDepartment] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirm_password, setConfirmPassword] = useState("");
+    // const [first_name, setFirstName] = useState("");
+    // const [last_name, setLastName] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [phone, setPhone] = useState("");
+    // const [role, setRole] = useState("");
+    // const [department, setDepartment] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [confirm_password, setConfirmPassword] = useState("");
+      const [formData, setFormData] = useState({
+          first_name: "",
+          last_name: "",
+          email: "",
+          phone: "",
+          role: "",
+          department: "",
+          password: "",
+          confirm_password: "",
+      });
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState(false);
     const [processing, setProcessing] = useState(false);
     const dispatch = useDispatch();
 
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setProcessing(true);
         
         try{ 
-         const response = await axios.post("/api/v1/admin/user/add", {
-            first_name,
-            last_name,
-            email,
-            phone,
-            role,
-            department,
-            password,
-            confirm_password
-        });
+         const response = await axios.post("/api/v1/admin/user/add", formData);
             dispatch((addToast({
                 type:'success',
                 message: response.data.message
             })))
             setErrors({})
+            // setFormData({})
 
         // Clear input 
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPhone("");
-        setRole("");
-        setDepartment("");
-        setPassword("");
-        setConfirmPassword("");
+        // setFirstName("");
+        // setLastName("");
+        // setEmail("");
+        // setPhone("");
+        // setRole("");
+        // setDepartment("");
+        // setPassword("");
+        // setConfirmPassword("");
 
             // return response.data; 
             
@@ -91,8 +96,8 @@ export default function AddStaff() {
                 maxLength="255"
                 placeholder="Enter your first name"
                 type="text"
-                value={first_name}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={formData.first_name}
+                onChange={handleChange}
                 errorMessage={errors?.first_name }
               />
             </div>
@@ -104,8 +109,8 @@ export default function AddStaff() {
                 maxLength="255"
                 placeholder="Enter your last name"
                 type="text"
-                value={last_name}
-                onChange={(e) => setLastName(e.target.value)}
+                value={formData.last_name}
+                onChange={ handleChange}
                 errorMessage={errors?.last_name }
               />
             </div>
@@ -117,8 +122,8 @@ export default function AddStaff() {
                 maxLength="255"
                 placeholder="Enter your email "
                 type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 errorMessage={errors?.email }
               />
             </div>
@@ -130,8 +135,8 @@ export default function AddStaff() {
                 maxLength="255"
                 placeholder="Enter your phone number"
                 type="number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={formData.phone}
+                onChange={handleChange}
                 errorMessage={errors?.phone }
               />
             </div>
@@ -143,8 +148,8 @@ export default function AddStaff() {
                 maxLength="255"
                 placeholder="Enter your department"
                 type="text"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
+                value={formData.department}
+                onChange={handleChange}
                 errorMessage={errors?.department }
               />
             </div>
@@ -156,8 +161,8 @@ export default function AddStaff() {
                 maxLength="255"
                 placeholder="Enter your role"
                 type="text"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
+                value={formData.role}
+                onChange={handleChange}
                 errorMessage={errors?.role }
               />
             </div>
@@ -168,8 +173,8 @@ export default function AddStaff() {
                 id="password"
                 maxLength="255"
                 placeholder="********"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
                 errorMessage={errors?.password}
               />
             </div>
@@ -180,8 +185,8 @@ export default function AddStaff() {
                 id="confirm_password"
                 maxLength="255"
                 placeholder="********"
-                value={confirm_password}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={formData.confirm_password}
+                onChange={handleChange}
                 errorMessage={errors?.confirm_password }
               />
             </div>

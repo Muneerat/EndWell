@@ -23,54 +23,28 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 import handleErrors from "@/app/data/handleErrors";
+import { useRouter } from "next/navigation";
+import { addToast } from "@/Store/features/toastSlice";
+import { useDispatch } from "react-redux";
 
 export default function Staff() {
   const [staffData, setStaffData] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState({});
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-  const columnsWithActions = StaffColumns.map((column) =>
-    column.id === "actions"
-      ? {
-          ...column,
-          cell: ({ row }) => (
-            <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0  ">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white">
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-              <DropdownMenuItem>View</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          ),
-        }
-      : column
-  );
-  const handleEdit = async () =>{
-    try{
-      await axios.put('api/v1/admin/user/update-profile', {user_id,first_name,last_name,email,phone,role,department})
-    }catch(error){
-      handleErrors(error,setErrors)
-    }
-
-  }
-  //fetch all users 
+       //fetch all users 
   useEffect(() => {
     const staffs = async () => {
       setProcessing(true);
       try {
         const response = await axios.get("api/v1/admin/user/all");
-        console.log(response);
         const data = await response.data.users;
 
         const formattedData = data.map((staff, index) => ({
-          id: index + 1,
+           ID: index + 1,
+           id: staff.id,
           first_name: staff.first_name,
           last_name: staff.last_name,
           email: staff.email,
@@ -90,6 +64,70 @@ export default function Staff() {
     };
     staffs();
   }, []);
+
+    // Actions for table
+    const handleActions = {
+      view: (staff) => {
+        router.push(`/staff/view/${staff.id}`);
+      },
+      edit: (staff) => {
+        router.push(`/staff/edit/${staff.id}`);
+      },
+      delete: async (staff) => {
+        try {
+          
+          const response = await axios.delete(`/api/v1/admin/user/delete`, {
+            data: { user_id: staff.id }, 
+          });
+          alert("Staff deleted successfully.");
+          // Update the table data without the deleted staff
+          setStaffData((prev) => prev.filter((item) => item.id !== staff.id));
+          dispatch(addToast({
+            type:'success',
+            message: response.data.message
+          }))
+          return response.data.message;
+
+        } catch (error) {
+          console.log("Failed to delete staff:", error);
+          alert("Failed to delete staff. Please try again.");
+        }
+      },
+    };
+    
+
+  const columnsWithActions = StaffColumns.map((column) =>
+    column.id === "actions"
+      ? {
+          ...column,
+          cell: ({ row }) => (
+            <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0  ">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-white">
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleActions.delete(row.original)}>Delete</DropdownMenuItem>
+              <DropdownMenuItem>View</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          ),
+        }
+      : column
+  );
+  // const handleEdit = async () =>{
+  //   try{
+  //     await axios.put('api/v1/admin/user/update-profile', {user_id,first_name,last_name,email,phone,role,department})
+  //   }catch(error){
+  //     handleErrors(error,setErrors)
+  //   }
+
+  // }
+
 
   return (
     <div className="my-5">
