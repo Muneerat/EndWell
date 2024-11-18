@@ -33,9 +33,9 @@ export default function Overview() {
     <div className="">
       <div className="flex md:flex-row flex-col justify-between w-full px-6 pt-7 pb-1 flex-reverse flex-shrink ">
         <div className="grid lg:grid-cols-3  grid-cols-1 my-2  gap-8 text-primary ">
-          <Card text='No. of Members' number="108" />
-          <Card text='No. of ledger uploaded' number="10" />
-          <Card text='No. of  sent' number="15" />
+          <Card text='No. of Members' number="4" />
+          <Card text='No. of ledger uploaded' number="0" />
+          <Card text='No. of  sent' number="0" />
         </div>
         <div className="flex  justify-start justify- gap-2 ">
           <ButtonUpload text="Upload Ledger" icon={<Upload2/>} link="upload-ledger"/>

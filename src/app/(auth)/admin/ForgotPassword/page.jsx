@@ -21,7 +21,7 @@ export default function ForgotPassword() {
     e.preventDefault();
     setProcessing(true);
     try {
-     const response =  await axios.post("/api/v1/admin/forgot_password", { email });
+     const response =  await axios.post("/admin/forgot_password", { email });
       dispatch((addToast({
         type:'success',
         message: response.data.message

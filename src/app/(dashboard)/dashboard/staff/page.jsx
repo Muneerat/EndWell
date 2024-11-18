@@ -39,7 +39,7 @@ export default function Staff() {
     const staffs = async () => {
       setProcessing(true);
       try {
-        const response = await axios.get("api/v1/admin/user/all");
+        const response = await axios.get("/admin/user/all");
         const data = await response.data.users;
 
         const formattedData = data.map((staff, index) => ({
@@ -53,6 +53,8 @@ export default function Staff() {
           department: staff.department,
         }));
         setStaffData(formattedData);
+        console.log(data);
+        
 
         return response.data;
       } catch (error) {
@@ -68,18 +70,18 @@ export default function Staff() {
     // Actions for table
     const handleActions = {
       view: (staff) => {
-        router.push(`/staff/view/${staff.id}`);
+        router.push(`/dashboard/viewStaff?user_id=${staff.id}`);
       },
       edit: (staff) => {
-        router.push(`/staff/edit/${staff.id}`);
+        // router.push(`/dashboard/editStaff/${staff.id}`);
+        router.push(`/dashboard/editStaff?user_id=${staff.id}`);
       },
       delete: async (staff) => {
         try {
           
-          const response = await axios.delete(`/api/v1/admin/user/delete`, {
+          const response = await axios.delete(`/admin/user/delete`, {
             data: { user_id: staff.id }, 
           });
-          alert("Staff deleted successfully.");
           // Update the table data without the deleted staff
           setStaffData((prev) => prev.filter((item) => item.id !== staff.id));
           dispatch(addToast({
@@ -90,7 +92,7 @@ export default function Staff() {
 
         } catch (error) {
           console.log("Failed to delete staff:", error);
-          alert("Failed to delete staff. Please try again.");
+          // alert("Failed to delete staff. Please try again.");
         }
       },
     };
@@ -110,23 +112,16 @@ export default function Staff() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-white">
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleActions.edit(row.original)}>Edit</DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleActions.delete(row.original)}>Delete</DropdownMenuItem>
-              <DropdownMenuItem>View</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleActions.view(row.original)}> View</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           ),
         }
       : column
   );
-  // const handleEdit = async () =>{
-  //   try{
-  //     await axios.put('api/v1/admin/user/update-profile', {user_id,first_name,last_name,email,phone,role,department})
-  //   }catch(error){
-  //     handleErrors(error,setErrors)
-  //   }
 
-  // }
 
 
   return (

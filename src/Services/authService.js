@@ -8,9 +8,8 @@ export const signIn = createAsyncThunk(
         
         
         try {
-            const response = await axios.post('/api/v1/admin/login', {email, password});
+            const response = await axios.post('/admin/login', {email, password});
             
-            // console.log(response.data)
             return response.data.data;
         } catch (error) {
             if (error.response){
@@ -32,7 +31,7 @@ export const logout = createAsyncThunk(
     async({}, {rejectWithValue}) => {
         try{
         console.log('here')
-            const response = await axios.delete('api/v1/admin/logout');
+            const response = await axios.delete('/admin/logout');
             console.log(response.data)
             return response.data;
         } catch (error){
@@ -48,24 +47,6 @@ export const logout = createAsyncThunk(
     }
 )
 
-// export const forgetPassword = createAsyncThunk(
-//     'auth/forgotPassword',
-//     async({email}, {rejectWithValue}) => {
-//         try{
-//             const response = await axios.post('/api/v1/admin/forgot_password', {email});
-//             return response.data;
-//         }catch (error) {
-//             if (error.response){
-//                 console.log(error.response.data.message)
-//                 return rejectWithValue(error.response.data)
-//             }
-//             else{
-//                 console.log(error.request)
-//                 return rejectWithValue(error.request);
-//             }
-//         }
-//     }
-// )
 
 
 // import axios from '@/libs/axios';

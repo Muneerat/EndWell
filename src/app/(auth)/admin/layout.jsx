@@ -5,10 +5,11 @@ import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function AdminLayout({ children }) {
+export default function GuestLayout({ children }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { toast: alert, userToken } = useSelector((state) => state.toast);
+  const { toast: alert } = useSelector((state) => state.toast);
+  const { userToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
