@@ -35,7 +35,7 @@ const authSlice = createSlice({
             
         });
         builder.addCase(signIn.rejected, (state,action) => {
-            console.log(action.payload.message);
+            // console.log(action.payload.message);
             
             state.processing = false;
             state.isSuccess = false;
@@ -144,3 +144,87 @@ export default authSlice.reducer;
 // });
 
 // export default authSlice.reducer;
+// import { logout, signIn } from "@/Services/authService";
+// import { getToken, removeToken, setToken } from "@/utils/authToken";
+// import { createSlice } from "@reduxjs/toolkit";
+
+// const initialState = {
+//     processing: false,
+//     isSuccess: false,
+//     isError: false,
+//     errors: {},
+//     message: null,
+//     userToken: getToken(),
+//     userInfo: {}, // Includes user role
+// };
+
+// const authSlice = createSlice({
+//     name: "auth",
+//     initialState,
+//     reducers: {},
+//     extraReducers: (builder) => {
+//         builder
+//             .addCase(signIn.pending, (state) => {
+//                 state.processing = true;
+//                 state.isSuccess = false;
+//                 state.isError = false;
+//                 state.errors = {};
+//                 state.message = null;
+//             })
+//             .addCase(signIn.fulfilled, (state, action) => {
+//                 state.processing = false;
+//                 state.isSuccess = true;
+//                 state.isError = false;
+//                 state.errors = {};
+//                 state.message = action.payload?.message;
+
+//                 // Save token and user info (including role)
+//                 setToken(action.payload?.data.token);
+//                 state.userInfo = {
+//                     ...action.payload?.data,
+//                     role: action.payload?.data?.role, // Store user role
+//                 };
+//             })
+//             .addCase(signIn.rejected, (state, action) => {
+//                 state.processing = false;
+//                 state.isSuccess = false;
+//                 state.isError = true;
+
+//                 if (action.payload?.status === 400) {
+//                     const errors = action.payload.message;
+//                     const formatted = {};
+
+//                     if (typeof errors === "string") {
+//                         state.message = action.payload.message;
+//                     } else {
+//                         Object.keys(errors).forEach((error) => {
+//                             formatted[error] = errors[error][0];
+//                         });
+//                         state.errors = formatted;
+//                     }
+//                 } else {
+//                     state.message =
+//                         action.payload?.message || "Authentication failed.";
+//                 }
+//             })
+//             // Logout action
+//             .addCase(logout.fulfilled, (state) => {
+//                 state.processing = false;
+//                 state.isSuccess = true;
+//                 state.isError = false;
+//                 state.errors = {};
+//                 state.message = "Logged out successfully.";
+//                 state.userInfo = {};
+//                 removeToken();
+//             })
+//             .addCase(logout.rejected, (state, action) => {
+//                 state.processing = false;
+//                 state.isSuccess = false;
+//                 state.isError = true;
+//                 state.message = action.payload?.message || "Logout failed.";
+//             });
+//     },
+// });
+
+// export default authSlice.reducer;
+

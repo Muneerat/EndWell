@@ -1,8 +1,7 @@
-'use client'
+"use client";
+
 import { useEffect, useState } from "react";
- import SignInImg from "@/assets/SignInImg.png";
-// import Button from "../../../components/Button";
-// import TextInput from "../../../components/TextInput";
+import SignInImg from "@/assets/SignInImg.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,29 +14,51 @@ import PasswordInput from "@/app/components/passwordInput";
 
 export default function SignIn() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  // Pull states from auth slice
-  const { processing, errors, isSuccess, isError,message } = useSelector((state) => state.auth);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { processing, errors, isError, message } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(signIn({ email, password }))
-    
-  };
-  
   useEffect(() => {
-    if (isSuccess) {
-      console.log("Login Successful. Redirecting to dashboard...");
-      router.push('/dashboard/overview');
-      dispatch(addToast({
-        type: 'success',
-        message: 'Logged in successfully.'
-      }))
+    const checkAuth = () => {
+      const token = localStorage.getItem("_APP_TOKEN_KEY_");
+      if (token) {
+        router.push("/dashboard/overview");
+      } else {
+        setIsLoading(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await dispatch(signIn({ email, password }));
+    if (result.payload && result.payload.token) {
+      localStorage.setItem("_APP_TOKEN_KEY_", result.payload.token);
+      router.refresh();
+      router.push("/dashboard/overview");
+      dispatch(
+        addToast({
+          type: "success",
+          message: "Logged in successfully.",
+        })
+      );
     }
-  }, [isSuccess, router]);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="sr-only">Loading...</span>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex">
@@ -53,7 +74,13 @@ export default function SignIn() {
             END<span className="text-secondary">WELL</span>
           </h1>
           <div className="flex flex-col gap-y-4 md:w-3/4 w-full bg-[#fff] md:p-12 p-5 mt-6 pb-32 rounded-md">
-          <div>{(isError && message) && <p className="text-red-700">{message} </p>  }</div>
+            <div>
+              {isError && message && (
+                <p className="text-red-700" role="alert">
+                  {message}
+                </p>
+              )}
+            </div>
             <p className="text-secondary text-2xl font-semibold">Login</p>
             <div>
               <TextInput
@@ -62,10 +89,12 @@ export default function SignIn() {
                 id="email"
                 maxLength="255"
                 placeholder="sample@email.com"
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                errorMessage={errors?.email }
+                errorMessage={errors?.email}
+                required
+                aria-required="true"
               />
             </div>
             <div>
@@ -78,15 +107,26 @@ export default function SignIn() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 errorMessage={errors?.password}
+                required
+                aria-required="true"
               />
             </div>
             <div>
-              <Button spin={processing} disabled={processing} className="w-full" type="submit">
-                Login
+              <Button
+                spin={processing}
+                disabled={processing}
+                className="w-full"
+                type="submit"
+                aria-label={processing ? "Logging in..." : "Login"}
+              >
+                {processing ? "Logging in..." : "Login"}
               </Button>
             </div>
             <div className="text-center text-sm">
-              Forgot password? <Link href="/admin/ForgotPassword">Reset </Link>
+              Forgot password?{" "}
+              <Link href="/admin/ForgotPassword" className="underline">
+                Reset
+              </Link>
             </div>
           </div>
         </form>

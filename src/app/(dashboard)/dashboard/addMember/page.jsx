@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Button from "@/app/components/Button";
-import { Back } from "@/assets/icon";
+import { Back, Smile } from "@/assets/icon";
 import Link from "next/link";
 import TextInput from "@/app/components/TextInput";
 import PasswordInput from "@/app/components/passwordInput";
@@ -9,6 +9,8 @@ import axios from "axios";
 import handleErrors from "@/app/data/handleErrors";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/Store/features/toastSlice";
+import BoardFilter from "../components/board";
+import ButtonUpload from "../components/button";
 
 export default function AddMember() {
   const initialFormData = {
@@ -54,8 +56,8 @@ export default function AddMember() {
   };
 
   return (
-    <div className="md:px-6 pt-4 sm:px-14 m-3">
-      <div className="flex items-center gap-8">
+    <div className="md:px-6 sm:px-14">
+      {/* <div className="flex items-center gap-8">
         <Link
           href="members"
           className="flex items-center gap-2 font-normal  cursor-pointer "
@@ -64,7 +66,10 @@ export default function AddMember() {
           <p>Back</p>
         </Link>
         <h1 className="font-bold text-2xl">Add new member</h1>
-      </div>
+      </div> */}
+        <BoardFilter text="Members">
+        <ButtonUpload text="Upload Multiple" icon={<Smile />} link="uploadMember" />
+      </BoardFilter>
       <div className="bg-white flex flex-col my-20 p-8 w-full shadow-sm rounded-md max-w-[1050px]">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full bg-[#fff] md:p-5 mt-6 pb-32 rounded-md">

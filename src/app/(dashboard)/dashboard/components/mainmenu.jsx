@@ -12,23 +12,33 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/Services/authService";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { addToast } from "@/Store/features/toastSlice";
 
 export default function MainMenu() {
   const dispatch = useDispatch()
   const router = useRouter();
   const {isSuccess} = useSelector(state => state.auth);
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   
   const handleLogout = () => {
-    dispatch(logout({}))
-    console.log('logged out')
-    //  router.push('/admin/SignIn')
-  }
-  useEffect(() => {
-    if (isSuccess) {
-      router.push('/admin/SignIn')
+    if (!isLoggingOut){
+      setIsLoggingOut(true);
+      dispatch(logout({})).then(() => {
+        setIsLoggingOut(false);
+        router.push('/admin/SignIn')
+      })
     }
-}, [isSuccess, router]);
+    dispatch(addToast({
+      type: 'success',
+      message: 'You have been logged out successfully'
+    }))
+  }
+//   useEffect(() => {
+//     if (isSuccess) {
+//       router.push('/admin/SignIn')
+//     }
+// }, [isSuccess, router]);
   return (
     <div className="flex justify-between items-center w-full  shadow-sm px-4 py-3  bg-white m-auto md:pr-20 left-0 fixed  z-40 top-0 flex-shrink-0 sm:pl-[280px]" >
       <div className="bg-[#D9D9D9] p-2 rounded-full invisible ">

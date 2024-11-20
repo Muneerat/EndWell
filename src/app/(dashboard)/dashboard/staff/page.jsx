@@ -67,7 +67,7 @@ export default function Staff() {
     staffs();
   }, []);
 
-    // Actions for table
+  
     const handleActions = {
       view: (staff) => {
         router.push(`/dashboard/viewStaff?user_id=${staff.id}`);

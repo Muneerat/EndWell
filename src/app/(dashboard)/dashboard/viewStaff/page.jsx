@@ -42,7 +42,8 @@ export default function ViewStaff() {
     );
 
   return (
-    <div className="p-5 md:w-4/6 flex flex-col">
+    <div>
+    <div className="p-5 md:w-2/6 m-10 rounded-md flex flex-col bg-white">
       {/* Header */}
       <div className="border font-bold p-3 w-fit rounded-md">Staff</div>
       <div className="flex justify-between py-4 items-center">
@@ -68,7 +69,7 @@ export default function ViewStaff() {
       </div>
 
       {/* Personal Information */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-6">
+      <div className="grid grid-cols-1  gap-8 my-6">
         <div className="flex items-center gap-x-6">
           <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
             First Name:
@@ -104,7 +105,11 @@ export default function ViewStaff() {
       </div>
 
       {/* Back Button */}
-      {/* <Button className='w-20' onClick={() => router.push("/staff")}>Back</Button> */}
+      <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button>
+    </div>
+     <div>
+
+     </div>
     </div>
   );
 }

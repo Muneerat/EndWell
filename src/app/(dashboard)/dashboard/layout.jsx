@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar";
 import MainMenu from "./components/mainmenu";
@@ -10,65 +11,67 @@ import { removeToast } from "@/Store/features/toastSlice";
 import Spinner from "@/app/components/Spinner";
 
 export default function AdminLayout({ children }) {
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { userToken  } = useSelector((state) => state.auth);
-   const { toast: alert } = useSelector((state) => state.toast);
+  const { toast: alert } = useSelector((state) => state.toast);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for user token and handle redirection
-    if (!userToken) {
-      router.push("/admin/SignIn");
-      return;
-    }
-     // Set loading to false once userToken is validated
-    setLoading(false);
-  }, [userToken, router]);
+    const checkAuth = () => {
+      const token = localStorage.getItem("_APP_TOKEN_KEY_");
+      if (!token) {
+        router.push("/admin/SignIn");
+      } else {
+        setIsLoading(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   useEffect(() => {
-    let timer;
-
-    if (!alert?.type || !alert?.message) return;
-
-    if (alert.type === "success") {
-      toast.success(alert.message, { position: "top-right" });
-    } else if (alert.type === "error") {
-      toast.error(alert.message, { position: "top-right" });
-    } else {
-      toast.info(alert.message, { position: "top-right" });
+    if (!(alert.type && alert.message)) {
+      return; 
     }
 
-  
-    timer = setTimeout(() => {
-      dispatch(removeToast());
-    }, 5500);
+    // Show the toast based on alert type
+    switch (alert.type) {
+      case "success":
+        toast.success(alert.message, { position: "top-right" });
+        break;
+      case "error":
+        toast.error(alert.message, { position: "top-right" });
+        break;
+      default:
+        toast.info(alert.message, { position: "top-right" });
+        break;
+    }
 
-    return () => clearTimeout(timer);
+    // Remove the toast after it's been shown
+    dispatch(removeToast());
   }, [alert, dispatch]);
 
-  
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Spinner
-          className="border-2 border-primary "
-          size={9}
-          spin={true}
-        ></Spinner>
+      <div
+        className="flex items-center justify-center min-h-screen"
+        aria-live="polite"
+        aria-busy="true"
+      >
+        <Spinner className="border-2 border-primary" size={9} spin={true} />
+        <span className="sr-only">Loading...</span>
       </div>
     );
   }
 
   return (
     <ErrorBoundary>
-      <div className="flex ">
+      <div className="flex">
         <Toaster />
         <Sidebar />
         <MainMenu />
-        <div className="pt-20 bg-[#FAFAFB] w-full md:pl-[290px] sm:pl-[210px] min-h-screen">
+        <main className="pt-20 bg-[#FAFAFB] w-full md:pl-[290px] sm:pl-[210px] min-h-screen">
           {children}
-        </div>
+        </main>
       </div>
     </ErrorBoundary>
   );

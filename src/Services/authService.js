@@ -13,7 +13,7 @@ export const signIn = createAsyncThunk(
             return response.data.data;
         } catch (error) {
             if (error.response){
-                 console.log(error.response.data.message)
+                //  console.log(error.response.data.message)
                 // return rejectWithValue(error.response.data)
                 return rejectWithValue({status: error.response.status, message: error.response.data.message})
 
@@ -30,13 +30,11 @@ export const logout = createAsyncThunk(
     'auth/logout',
     async({}, {rejectWithValue}) => {
         try{
-        console.log('here')
+       
             const response = await axios.delete('/admin/logout');
-            console.log(response.data)
             return response.data;
         } catch (error){
             if (error.response){
-                console.log(error.response.data.message)
                 return rejectWithValue({status: error.response.status, message: error.response.data.message})
             }
             else{

@@ -21,7 +21,7 @@ class ErrorBoundary extends Component {
   resetError = () => {
     this.setState({ hasError: false });
     const router = useRouter();
-    router.push("dashboard/overview");
+    // router.push("dashboard/overview");
   };
 
   render() {

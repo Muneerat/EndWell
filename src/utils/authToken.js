@@ -12,7 +12,7 @@ const getToken = () => {
 }
 
 const setToken = (token) => {
-    console.log('setToken', token)
+    // console.log('setToken', token)
     return createStorage(TOKEN_KEY, token)
 }
 

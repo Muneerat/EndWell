@@ -8,7 +8,7 @@ axios.interceptors.request.use(
         let token = getToken();
         
         if (token?.trim()?.length > 0) {
-            console.log('Token:', token);
+            // console.log('Token:', token);
             
             config.headers['Authorization'] = 'Bearer ' + token;
         }

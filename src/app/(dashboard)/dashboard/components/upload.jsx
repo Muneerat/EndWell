@@ -71,7 +71,7 @@ export const Text = () => {
         <div className="" >
             <Upload1 className='flex justify-center items-center mx-auto my-6'/>
             <p>Drag and drop files here or click to <span className="text-primary !cursor-pointer">Browse</span> the computer</p>
-            <ProgressBar />
+            {/* <ProgressBar /> */}
         </div>
     )
 }

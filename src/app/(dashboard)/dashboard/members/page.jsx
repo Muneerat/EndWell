@@ -67,11 +67,11 @@ export default function Member() {
     // Actions for table
     const handleActions = {
       view: (member) => {
-        router.push(`/dashboard/viewMembers?member=${member.id}`);
+        router.push(`/dashboard/viewMembers?member_id=${member.id}`);
       },
-      edit: (staff) => {
-        // router.push(`/dashboard/editStaff/${staff.id}`);
-        router.push(`/dashboard/editStaff?user_id=${staff.id}`);
+      edit: (member) => {
+        // router.push(`/dashboard/editMember/${member.id}`);
+        router.push(`/dashboard/editMembers?member_id=${member.id}`);
       },
       delete: async (member) => {
         try {
@@ -79,7 +79,7 @@ export default function Member() {
           const response = await axios.delete(`/admin/member/delete`, {
             data: { member_id: member.id }, 
           });
-          // Update the table data without the deleted staff
+          // Update the table data without the deleted member
           setMemberData((prev) => prev.filter((item) => item.id !== member.id));
           dispatch(addToast({
             type:'success',
@@ -88,8 +88,8 @@ export default function Member() {
           return response.data.message;
 
         } catch (error) {
-          console.log("Failed to delete staff:", error);
-          // alert("Failed to delete staff. Please try again.");
+          console.log("Failed to delete member:", error);
+          // alert("Failed to delete member. Please try again.");
         }
       },
     };

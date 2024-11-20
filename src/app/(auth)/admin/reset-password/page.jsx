@@ -23,10 +23,8 @@ export default function ResetPassword() {
   const submit = async (e) => {
     e.preventDefault();
     setProcessing(true);
-    console.log("got here");
-    console.log( code, password,confirm_password);
     try {
-     const response = await axios.put("api/v1/admin/reset_password", { code, password,confirm_password});
+     const response = await axios.put("/admin/reset_password", { code, password,confirm_password});
      dispatch(addToast({
        type:'success',
        message: response.data.message
