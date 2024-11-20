@@ -45,6 +45,31 @@ export const logout = createAsyncThunk(
     }
 )
 
+export const userSignIn = createAsyncThunk(
+    'auth/userSignIn',
+    async ({ phone, password }, { rejectWithValue }) => {
+        console.log(phone, password );
+        
+        
+        try {
+            const response = await axios.post('/member/login', {phone, password});
+            
+            return response.data.data;
+        } catch (error) {
+            if (error.response){
+                  console.log(error.response.data.message)
+                // return rejectWithValue(error.response.data)
+                return rejectWithValue({status: error.response.status, message: error.response.data.message})
+
+            }
+            else {
+                console.log(error.request)
+                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
+            }
+        }
+    }
+)
+
 
 
 // import axios from '@/libs/axios';

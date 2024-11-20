@@ -3,26 +3,17 @@ import React, { useState } from "react";
 import axios from "axios";
 import UploadFile from "../components/upload";
 import Button from "@/app/components/Button";
-import { Back, Smile } from "@/assets/icon";
-import Link from "next/link";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Smile } from "@/assets/icon";
 import BoardFilter from "../components/board";
 import ButtonUpload from "../components/button";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/Store/features/toastSlice";
-import handleErrors from "@/app/data/handleErrors";
 
 export default function UploadMember() {
   const [file, setFile] = useState(null);
   const [processing, setProcessing] = useState(false);
   const dispatch = useDispatch();
-  const [error, setError] = useState({});
+  const [status, setStatus] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,18 +28,8 @@ export default function UploadMember() {
       return;
     }
 
-    // const allowedTypes = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel", "text/csv"];
-    // if (!allowedTypes.includes(file.type)) {
-    //   dispatch(
-    //     addToast({
-    //       type: "error",
-    //       message: "Invalid file type. Please upload an .xlsx, .xls, or .csv file.",
-    //     })
-    //   );
-    //   return;
-    // }
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file[0]); 
 
     setProcessing(true);
 
@@ -62,11 +43,18 @@ export default function UploadMember() {
       dispatch(
         addToast({
           type: "success",
-          message: response.data.message,
+          message: response.data.message || "File uploaded successfully!",
         })
       );
+      setStatus("File uploaded successfully!");
     } catch (error) {
-      handleErrors(error, setError);
+      dispatch(
+        addToast({
+          type: "error",
+          message: "Error uploading file.",
+        })
+      );
+      setStatus("Error uploading file.");
     } finally {
       setProcessing(false);
     }
@@ -78,16 +66,22 @@ export default function UploadMember() {
         <ButtonUpload text="Upload Multiple" icon={<Smile />} link="uploadMember" />
       </BoardFilter>
       <div className="bg-white flex flex-col justify-center my-20 md:p-10 p-5 w-full md:w-3/5 shadow-sm rounded-md mx-auto items-center">
-     <div>{error &&  <p className="text-red-700 py-3">{error?.file} </p>  }</div>
-        <UploadFile setFile={setFile} files={file} accept=".xlsx,.xls,.csv" />
-        <Button
-          onClick={handleSubmit}
-          spin={processing}
-          disabled={processing || !file}
-          className="w-2/6 my-5"
-        >
-          Save
-        </Button>
+        <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
+          <UploadFile
+            setFile={setFile}
+            files={file}
+            accept=".xls,.xlsx,.csv"
+            className="w-full"
+          />
+          <Button
+            spin={processing}
+            disabled={processing || !file}
+            className="w-2/6 my-5"
+          >
+            Save
+          </Button>
+        </form>
+        {status && <p className="text-center mt-4">{status}</p>}
       </div>
     </div>
   );
