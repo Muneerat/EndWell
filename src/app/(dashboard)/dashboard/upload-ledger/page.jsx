@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadFile from "../components/upload";
 import Button from "@/app/components/Button";
 import { Back } from "@/assets/icon";
@@ -11,9 +11,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { fetchYears } from "./action";
+import handleErrors from "@/app/data/handleErrors";
 
 export default function UploadLedger() {
   const [file, setFile] = useState(null);
+  const [years, setYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState('');
+
+
+  useEffect(() => {
+    const loadYears = async () => {
+      try{
+        const allYears = await fetchYears();
+        const yearArray = Object.values(allYears.months);
+        console.log(yearArray);
+
+
+        setYears(yearArray);
+      
+      } catch(error){
+        handleErrors(error)
+      }
+    };
+    loadYears();
+  },[])
   return (
     <div className="md:px-6 py-10 sm:px-14 m-3">
       <div className="flex items-center gap-8">
@@ -29,7 +51,7 @@ export default function UploadLedger() {
       </div>
       <div className="bg-white flex flex-col justify-center my-5 md:my-20 md:p-10 p-5 w-full lg:w-3/5 shadow-sm rounded-md mx-auto items-center">
         <div className="flex gap-6 mb-16">
-          <Select>
+          {/* <Select>
             <SelectTrigger className="w-[180px] ">
               <SelectValue placeholder="2024" />
             </SelectTrigger>
@@ -38,7 +60,38 @@ export default function UploadLedger() {
               <SelectItem value="2024">2024</SelectItem>
               <SelectItem value="2024">2024</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
+           {/* <Select onValueChange={(value) => setSelectedYear(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Year" />
+              </SelectTrigger>
+              <SelectContent>
+                {years.map((year) => (
+                  <SelectItem key={year} value={year}>
+                    {year}h
+                  </SelectItem>
+                ))}
+                <SelectItem value="system">September</SelectItem>
+              </SelectContent>
+            </Select> */}
+            <Select onValueChange={(value) => setSelectedYear(value)}>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="Select Year" />
+  </SelectTrigger>
+  <SelectContent>
+    {years.map((year) => (
+      <SelectItem key={year} value={year}>
+        {year}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+k
+{/* <Select onValueChange={(value) => {
+  console.log("Selected Year:", value);
+  setSelectedYear(value);
+}}></Select> */}
+
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="September" />
