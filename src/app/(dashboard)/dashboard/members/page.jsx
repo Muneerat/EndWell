@@ -50,7 +50,6 @@ export default function Member() {
           phone: member.phone,
         }));
         setMemberData(formattedData);
-        console.log(data);
         
 
         return response.data;

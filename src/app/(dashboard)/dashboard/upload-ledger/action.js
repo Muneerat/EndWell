@@ -20,9 +20,9 @@ export const fetchYears = async () => {
  * @param {string} year The selected year.
  * @returns {Promise} Axios response with month data.
  */
-export const fetchMonths = async (year) => {
+export const fetchMonths = async () => {
   try {
-    const response = await axios.get(`/api/months?year=${year}`); // Replace with your actual endpoint
+    const response = await axios.get(`/fetch-months`); 
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
@@ -36,7 +36,7 @@ export const fetchMonths = async (year) => {
  */
 export const uploadLedger = async (formData) => {
   try {
-    const response = await axios.post("/api/ledger/upload", formData, {
+    const response = await axios.post("/admin/ledger/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

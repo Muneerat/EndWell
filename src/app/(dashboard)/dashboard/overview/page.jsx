@@ -13,8 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { OverviewColumns, OverviewData } from "@/app/data/overviewData";
+import { useSelector } from "react-redux";
 
 export default function Overview() {
+  // const totalLedgers = useSelector((state) => state.ledger.totalLedgers)
   // const [overviewData, setOverviewData] = useState();
   const [filter, setFilter] = useState('');
   const OverviewDatas = OverviewData.map((data,index) => {
