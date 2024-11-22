@@ -6,8 +6,8 @@ const memberSlice = createSlice({
   initialState: {
     members: [],
     totalMembers: 0,
-    loading: false, // Added loading property
-    error: null,    // Added error property
+    loading: false, 
+    error: null,    
   },
   reducers: {
     setMember: (state, action) => {

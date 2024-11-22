@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from '@/libs/axios'
-import { setMember } from "@/Store/features/memberSlice";
 
 export const getAllMembers = createAsyncThunk(
     'member/getAll',
@@ -16,7 +15,6 @@ export const getAllMembers = createAsyncThunk(
                last_name: member.last_name,
                phone: member.phone,
              }));
-            //  dispatch(setMember(formattedData));
             return formattedData;  
         } catch (error) {
             if (error.response){
@@ -29,15 +27,3 @@ export const getAllMembers = createAsyncThunk(
     }
 )
 
-
-
-// try {
-//     const response = await axios.get(`/admin/member/profile`, {
-//       params: { member_id },
-//     });
-//     setMember(response.data.data); 
-//   } catch (error) {
-//     console.error("Failed to fetch member:", error);
-//   } finally {
-//     setLoading(false); 
-//   }

@@ -15,16 +15,19 @@ import {
 import { OverviewColumns, OverviewData } from "@/app/data/overviewData";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMembers } from "@/Services/membersServie";
+import { getAllLedger } from "@/Services/ledgerService";
+import Spinner from "@/app/components/Spinner";
 
 export default function Overview() {
    const totalLedgers = useSelector((state) => state.ledger.totalLedgers)
    const totalMembers = useSelector((state) => state.member.totalMembers)
-   const {members} = useSelector((state) => state.member )
+   const {members,loading} = useSelector((state) => state.member )
   const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllMembers())
+    // dispatch(getAllLedger())
   },[dispatch]);
 
 
@@ -67,7 +70,19 @@ export default function Overview() {
         </div>
       </BoardFilter>
       <div>
-        <DataTable data={members} columns={OverviewColumns}/>
+      {loading ? (
+          <div className="flex justify-center items-center mt-32">
+            <Spinner
+              spin={loading}
+              className="border-2 border-primary "
+              size={9}
+            />
+          </div>
+        ) :
+        (
+          <DataTable data={members} columns={OverviewColumns}/>
+        )}
+       
       </div>
     </div>
   );
