@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/card";
 import ButtonUpload from "../components/button";
 import { DataTable } from "../components/table";
@@ -13,30 +13,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { OverviewColumns, OverviewData } from "@/app/data/overviewData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMembers } from "@/Services/membersServie";
 
 export default function Overview() {
-  // const totalLedgers = useSelector((state) => state.ledger.totalLedgers)
-  // const [overviewData, setOverviewData] = useState();
+   const totalLedgers = useSelector((state) => state.ledger.totalLedgers)
+   const totalMembers = useSelector((state) => state.member.totalMembers)
+   const {members} = useSelector((state) => state.member )
   const [filter, setFilter] = useState('');
-  const OverviewDatas = OverviewData.map((data,index) => {
-    return {
-        id: index,
-        name: data.name,
-        number: data.number,
-        asset: data.asset,
-        dividend: data.dividend,
-        withdrawable: data.withdrawable,
-      
-    };
-  })
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllMembers())
+  },[dispatch]);
+
 
   return (
     <div className="">
       <div className="flex md:flex-row flex-col justify-between w-full px-6 pt-7 pb-1 flex-reverse flex-shrink ">
-        <div className="grid lg:grid-cols-3  grid-cols-1 my-2  gap-8 text-primary ">
-          <Card text='No. of Members' number="4" />
-          <Card text='No. of ledger uploaded' number="0" />
+        <div className="grid lg:grid-cols-3  md:grid-cols-2  grid-cols-1 my-2  gap-8 text-primary ">
+          <Card text='No. of Members' number={totalMembers} />
+          <Card text='No. of ledger uploaded' number={totalLedgers} />
           <Card text='No. of  sent' number="0" />
         </div>
         <div className="flex  justify-start justify- gap-2 ">
@@ -70,7 +67,7 @@ export default function Overview() {
         </div>
       </BoardFilter>
       <div>
-        <DataTable data={OverviewDatas} columns={OverviewColumns}/>
+        <DataTable data={members} columns={OverviewColumns}/>
       </div>
     </div>
   );

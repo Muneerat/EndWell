@@ -24,7 +24,7 @@ export default function UploadLedger() {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   // const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState('');
   const [processing, setProcessing] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function UploadLedger() {
         const yearArray = Object.values(allYears.months);
         setYears(yearArray);
       } catch (error) {
-        handleErrors(error);
+        handleErrors(error, setErrors('The year field is required.'));
       }
     };
     loadYears();
@@ -52,7 +52,7 @@ export default function UploadLedger() {
         
         setMonths(monthsArray);
       } catch (error) {
-        handleErrors(error);
+        handleErrors(error, setErrors('The month field is required.'));
       }
     };
     loadMonths();
@@ -62,7 +62,7 @@ export default function UploadLedger() {
     e.preventDefault();
 
     if (!file || !selectedYear || !selectedMonth) {
-      setError("Please select a year, month, and file.");
+      setErrors("Please select a year, month, and file.");
       return;
     }
 
@@ -75,7 +75,7 @@ export default function UploadLedger() {
 
     try {
       const response = await uploadLedger(formData);
-      setError("");
+      setErrors("");
 
       dispatch(
         addToast({
@@ -85,7 +85,8 @@ export default function UploadLedger() {
       );
       router.push("/dashboard/uploaded");
     } catch (error) {
-      console.log(error);
+      handleErrors(error, setErrors("Ledger already uploaded for the request month and year"));
+      
     } finally {
       setProcessing(false);
     }
@@ -106,7 +107,8 @@ export default function UploadLedger() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="bg-white flex flex-col justify-center my-5 md:my-20 md:p-10 p-5 w-full lg:w-3/5 shadow-sm rounded-md mx-auto items-center">
-          {error && <p className="pb-8 text-red-700">{error}</p>}
+        <div>{errors && <p className="pb-8 text-red-700 text-sm">{errors}</p>}</div>  
+         
           <div className="flex gap-6 mb-16">
             <Select onValueChange={(value) => setSelectedYear(value)}>
               <SelectTrigger className="w-[180px]">

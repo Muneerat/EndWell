@@ -53,9 +53,7 @@ export default function Staff() {
           department: staff.department,
         }));
         setStaffData(formattedData);
-        console.log(data);
-        
-
+      
         return response.data;
       } catch (error) {
         console.log(error);

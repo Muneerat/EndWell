@@ -15,5 +15,5 @@ const ledgerSlice = createSlice({
   },
 });
 
-export const { setLedgers } = ledgerSlice.actions;
 export default ledgerSlice.reducer;
+export const { setLedgers } = ledgerSlice.actions;

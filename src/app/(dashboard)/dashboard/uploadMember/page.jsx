@@ -46,7 +46,6 @@ export default function UploadMember() {
           message: response.data.message || "File uploaded successfully!",
         })
       );
-      setStatus("File uploaded successfully!");
     } catch (error) {
       dispatch(
         addToast({

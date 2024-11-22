@@ -15,23 +15,14 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 
-// export const UploadData = [
-//     {
-//         id: "1",
-//         fileName: "September ledger",
-//         fileType: 'Excelsheet',
-//         dateUploaded: "13/56/2024",
-//         status: "Successful",
-//       },
-      
-// ]
+
 export const UploadColumns = [
   {
-    accessorKey: "id",
+    accessorKey: "ID",
     header: "S/N",
 
  cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("id")}</div>
+      <div className="capitalize">{row.getValue("ID")}</div>
     ),
     enableSorting: false,
     enableHiding: false,

@@ -15,21 +15,14 @@ import { Upload2 } from "@/assets/icon";
 import { UploadColumns, UploadData } from "@/app/data/UploadData";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { setLedgers } from "@/Store/features/ledgerSlice";
+import Spinner from "@/app/components/Spinner";
 export default function Uploaded() {
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [uploadData, setUploadData] = useState([]);
   const dispatch = useDispatch();
-  // const UploadDatas = UploadData.map((data,index) => {
-  //   return {
-  //       id: index,
-  //       fileName: data.fileName,
-  //       fileType: data.fileType,
-  //       dateUploaded: data.dateUploaded,
-  //       status: data.status,
-      
-  //   };
-  // })
+
 //fetch all ledger files
 useEffect(()=> {
   const ledgerFiles = async () => {
@@ -37,7 +30,8 @@ useEffect(()=> {
     try{
       const response = await axios.get("/admin/ledger/all");
       const data = await response.data.ledgers;
-      const ledgers = data.map((ledger) => ({
+      const ledgers = data.map((ledger,index) => ({
+        ID: index + 1,
         id: ledger.id,
         fileName: ledger.file_name,
         fileType: ledger.file_type,
@@ -46,9 +40,9 @@ useEffect(()=> {
         uploaded_by: ledger.uploaded_by,
       }))
       setUploadData(ledgers);
-      dispatch(setUploadData(ledgers))
+
+      dispatch(setLedgers(ledgers))
       return response.data.ledger
-      console.log(data);
     }catch(error){
       console.log("Failed to fetch ledger files", error);
     }finally{
@@ -82,7 +76,17 @@ useEffect(()=> {
         </div>
       </BoardFilter>
       <div>
+      {processing ? (
+          <div className="flex justify-center items-center mt-32">
+            <Spinner
+              spin={processing}
+              className="border-2 border-primary "
+              size={9}
+            />
+          </div>
+        ) : (
         <DataTable data={uploadData} columns={UploadColumns}/>
+        )}
       </div>
     </div>
   );

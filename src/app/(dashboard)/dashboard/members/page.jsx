@@ -24,44 +24,48 @@ import {
 import handleErrors from "@/app/data/handleErrors";
 import { useRouter } from "next/navigation";
 import { addToast } from "@/Store/features/toastSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MemberColumns } from "@/app/data/member";
+import { setMember } from "@/Store/features/memberSlice";
+import { getAllMembers } from "@/Services/membersServie";
 
 export default function Member() {
   const [memberData, setMemberData] = useState([]);
-  const [processing, setProcessing] = useState(false);
+  // const [loadingS, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
+  const {members, totalMembers,loading,error} = useSelector((state) => state.member)
 
        //fetch all users 
   useEffect(() => {
-    const members = async () => {
-      setProcessing(true);
-      try {
-        const response = await axios.get("/admin/member/all");
-        const data = await response.data.users;
+    // const members = async () => {
+    //   setProcessing(true);
+    //   try {
+    //     const response = await axios.get("/admin/member/all");
+    //     const data = await response.data.users;
 
-        const formattedData = data.map((member, index) => ({
-           ID: index + 1,
-           id: member.id,
-          first_name: member.first_name,
-          last_name: member.last_name,
-          phone: member.phone,
-        }));
-        setMemberData(formattedData);
-        
+    //     const formattedData = data.map((member, index) => ({
+    //        ID: index + 1,
+    //        id: member.id,
+    //       first_name: member.first_name,
+    //       last_name: member.last_name,
+    //       phone: member.phone,
+    //     }));
+    //     setMemberData(formattedData);
+    //     dispatch(setMember(formattedData))
 
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }finally{
-        setProcessing(false);
-      }
+    //     return response.data;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }finally{
+    //     setProcessing(false);
+    //   }
 
-    };
-    members();
-  }, []);
+    // };
+    // members();
+     dispatch(getAllMembers())
+  }, [dispatch]);
 
     // Actions for table
     const handleActions = {
@@ -79,7 +83,8 @@ export default function Member() {
             data: { member_id: member.id }, 
           });
           // Update the table data without the deleted member
-          setMemberData((prev) => prev.filter((item) => item.id !== member.id));
+          // setMemberData((prev) => prev.filter((item) => item.id !== member.id));
+          dispatch(getAllMembers());
           dispatch(addToast({
             type:'success',
             message: response.data.message
@@ -88,7 +93,6 @@ export default function Member() {
 
         } catch (error) {
           console.log("Failed to delete member:", error);
-          // alert("Failed to delete member. Please try again.");
         }
       },
     };
@@ -126,16 +130,19 @@ export default function Member() {
         <ButtonUpload text="Add new member" icon={<Smile />} link="addMember" />
       </BoardFilter>
       <div>
-        {processing ? (
+        {loading ? (
           <div className="flex justify-center items-center mt-32">
             <Spinner
-              spin={processing}
+              spin={loading}
               className="border-2 border-primary "
               size={9}
             />
           </div>
-        ) : (
-          <DataTable data={memberData} columns={columnsWithActions} />
+        ) : error?(
+          <div>{error}</div>
+        ):
+         (
+          <DataTable data={members} columns={columnsWithActions} />
         )}
       </div>
     </div>

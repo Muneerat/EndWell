@@ -46,13 +46,13 @@ export default function MainMenu() {
       </div>
       <div className="w-full flex items-center gap-4">
         <h1 className="text-2xl font-semibold">Hello Osas,</h1>
-        <input
+        {/* <input
           type="text"
           className={`hidden  outline-none rounded-lg shadow-sm focus:outline-1 focus:ring-0 px-2 py-3 my-1 mx-2 md:block w-full md:w-3/6 placeholder:text-sm bg-[#F0F0F0]`}
           id="text"
           maxLength="255"
           placeholder="Search anything...."
-        />
+        /> */}
       </div>
       <div className="">
             <DropdownMenu>
