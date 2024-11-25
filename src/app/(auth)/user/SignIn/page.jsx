@@ -16,30 +16,30 @@ export default function SignIn() {
   const router = useRouter();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { processing, errors, isError, message } = useSelector(
-    (state) => state.auth
+    (state) => state.userAuth
   );
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const checkAuth = () => {
-  //     const token = localStorage.getItem("_APP_TOKEN_KEY_");
-  //     if (token) {
-  //       router.push("/user/overview");
-  //     } else {
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   checkAuth();
-  // }, [router]);
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem("_APP_USER_TOKEN_KEY_");
+      if (token) {
+        router.push("/user/overview");
+      } else {
+        setIsLoading(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await dispatch(userSignIn({ phone, password }));
     if (result.payload && result.payload.token) {
-      localStorage.setItem("_APP_TOKEN_KEY_", result.payload.token);
+      localStorage.setItem("_APP_USER_TOKEN_KEY_", result.payload.token);
       router.refresh();
       router.push("/user/overview");
       dispatch(
@@ -76,7 +76,7 @@ export default function SignIn() {
           <div className="flex flex-col gap-y-4 md:w-3/4 w-full bg-[#fff] md:p-12 p-5 mt-6 pb-32 rounded-md">
             <div>
               {isError && message && (
-                <p className="text-red-700" role="alert">
+                <p className="text-red-700" role="alert"  aria-live="polite">
                   {message}
                 </p>
               )}
@@ -124,7 +124,7 @@ export default function SignIn() {
             </div>
             <div className="text-center text-sm">
               Forgot password?{" "}
-              <Link href="/admin/ForgotPassword" className="underline">
+              <Link href="/user/ForgotPassword" className="underline">
                 Reset
               </Link>
             </div>

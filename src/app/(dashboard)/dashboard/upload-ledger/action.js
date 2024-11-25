@@ -7,7 +7,7 @@ import axios from "axios";
  */
 export const fetchYears = async () => {
   try {
-    const response = await axios.get("/fetch-years"); 
+    const response = await axios.get("/fetch-years",{ headers: {Role: 'admin'}}); 
     return response.data;
   } catch (error) {
    
@@ -22,7 +22,7 @@ export const fetchYears = async () => {
  */
 export const fetchMonths = async () => {
   try {
-    const response = await axios.get(`/fetch-months`); 
+    const response = await axios.get(`/fetch-months`,{ headers: {Role: 'admin'}}); 
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
@@ -40,6 +40,7 @@ export const uploadLedger = async (formData) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      headers: {Role: 'admin'}
     });
     return response.data;
   } catch (error) {

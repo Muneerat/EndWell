@@ -26,11 +26,12 @@ export default function EditMember() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(member_id);
     if (member_id) {
       const fetchMember = async () => {
         try {
           const response = await axios.get(`/admin/member/profile`, {
+            headers: {Role: 'admin'},
+            // user_id as a query paramete
             params: { member_id },
           });
           setFormData({
@@ -62,7 +63,7 @@ export default function EditMember() {
       const response = await axios.put(`/admin/member/update-profile`, {
         ...formData,
         member_id,
-      });
+      },{ headers: {Role: 'admin'},});
       dispatch(
         addToast({
           type: "success",

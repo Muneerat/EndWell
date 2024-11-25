@@ -17,17 +17,7 @@ export default function GuestLayout({ children }) {
     setIsClientLoading(true)
   },[])
 
-  // useEffect(() => {
-  //   console.log(userToken, "signIn");
-  //   const token = localStorage.getItem('_APP_TOKEN_KEY_') 
-  //   if (!clientLoading) return;
-  //   // // if (userToken) {
-  //   // //   router.push("/dashboard/overview");
-  //   // //   return;
-  //   // // }
-  //   // setLoading(false);
 
-  // }, []);
 useEffect(() => {
     if (!(alert.type && alert.message)) {
       return; // Skip if no valid alert

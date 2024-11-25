@@ -26,6 +26,7 @@ const ledgerSlice = createSlice({
         state.loading = false;
         state.ledgers = action.payload;
         state.totalLedgers = action.payload.length;
+        
       })
       .addCase(getAllLedger.rejected, (state, action) => {
         state.loading = false;

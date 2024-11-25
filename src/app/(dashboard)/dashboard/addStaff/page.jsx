@@ -40,7 +40,7 @@ export default function AddStaff() {
     setProcessing(true);
 
     try {
-      const response = await axios.post("/admin/user/add", formData);
+      const response = await axios.post("/admin/user/add", formData, { headers: {Role: 'admin'}});
       dispatch(
         addToast({
           type: "success",

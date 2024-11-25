@@ -1,6 +1,6 @@
 import React from "react";
-import MainMenu from "../dashboard/components/mainmenu";
 import Sidebar from "./components/sidebar";
+import MainMenu from "./components/mainmenu";
 
 export default function AdminLayout({ children }) {
   return (

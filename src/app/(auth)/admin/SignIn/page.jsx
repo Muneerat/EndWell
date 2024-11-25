@@ -25,7 +25,7 @@ export default function SignIn() {
 
   useEffect(() => {
     const checkAuth = () => {
-      const token = localStorage.getItem("_APP_TOKEN_KEY_");
+      const token = localStorage.getItem("_APP_ADMIN_TOKEN_KEY_");
       if (token) {
         router.push("/dashboard/overview");
       } else {
@@ -39,7 +39,7 @@ export default function SignIn() {
     e.preventDefault();
     const result = await dispatch(signIn({ email, password }));
     if (result.payload && result.payload.token) {
-      localStorage.setItem("_APP_TOKEN_KEY_", result.payload.token);
+      localStorage.setItem("_APP_ADMIN_TOKEN_KEY_", result.payload.token);
       router.refresh();
       router.push("/dashboard/overview");
       dispatch(

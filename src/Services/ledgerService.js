@@ -2,12 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from '@/libs/axios'
 
 export const getAllLedger = createAsyncThunk(
-    'member/getAll',
+    'ledger/getAll',
     async (_, { rejectWithValue }) => {
         try {
             // const response = await axios.get('/profile');
-            const response = await axios.get("/admin/ledger/all");
+            const response = await axios.get("/admin/ledger/all",{ headers: {Role: 'admin'}});
             const data = response.data.ledgers
+            
             const ledgers = data.map((ledger,index) => ({
                 ID: index + 1,
                 id: ledger.id,

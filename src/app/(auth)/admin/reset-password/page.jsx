@@ -24,7 +24,7 @@ export default function ResetPassword() {
     e.preventDefault();
     setProcessing(true);
     try {
-     const response = await axios.put("/admin/reset_password", { code, password,confirm_password});
+     const response = await axios.put("/admin/reset_password", { code, password,confirm_password},{ headers: {Role: 'admin'},});
      dispatch(addToast({
        type:'success',
        message: response.data.message

@@ -5,7 +5,12 @@ axios.interceptors.request.use(
     function(config){
         config.headers['Accept'] = 'application/json';
 
-        let token = getToken();
+        // let token = getToken();
+         // Determine if the request is for admin or user
+         const isAdmin = config.headers['Role'] === 'admin';
+
+         // Retrieve the appropriate token
+         const token = getToken(isAdmin ? 'admin' : 'user');
         
         if (token?.trim()?.length > 0) {
             // console.log('Token:', token);

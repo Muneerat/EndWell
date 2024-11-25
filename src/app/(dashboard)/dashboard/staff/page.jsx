@@ -39,7 +39,7 @@ export default function Staff() {
     const staffs = async () => {
       setProcessing(true);
       try {
-        const response = await axios.get("/admin/user/all");
+        const response = await axios.get("/admin/user/all",{ headers: {Role: 'admin'}});
         const data = await response.data.users;
 
         const formattedData = data.map((staff, index) => ({
@@ -78,6 +78,7 @@ export default function Staff() {
         try {
           
           const response = await axios.delete(`/admin/user/delete`, {
+            headers: {Role: 'admin'},
             data: { user_id: staff.id }, 
           });
           // Update the table data without the deleted staff

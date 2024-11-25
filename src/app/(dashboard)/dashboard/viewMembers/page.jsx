@@ -18,6 +18,7 @@ export default function ViewMember() {
       const fetchMember = async () => {
         try {
           const response = await axios.get(`/admin/member/profile`, {
+            headers: {Role: 'admin'},
             params: { member_id },
           });
           setMember(response.data.data); 

@@ -39,7 +39,7 @@ export default function AddMember() {
     setProcessing(true);
 
     try {
-      const response = await axios.post("/admin/member/add", formData);
+      const response = await axios.post("/admin/member/add", formData,{ headers: {Role: 'admin'},});
       dispatch(
         addToast({
           type: "success",

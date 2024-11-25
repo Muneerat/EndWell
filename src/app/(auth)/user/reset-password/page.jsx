@@ -24,12 +24,12 @@ export default function ResetPassword() {
     e.preventDefault();
     setProcessing(true);
     try {
-     const response = await axios.put("/admin/reset_password", { code, password,confirm_password});
+     const response = await axios.put("/member/reset_password", { code, password,confirm_password});
      dispatch(addToast({
        type:'success',
        message: response.data.message
      }))
-      router.push('/admin/SignIn');
+      router.push('/user/SignIn');
       return response.data;
     } catch (error) {
      handleErrors(error,setErrors)

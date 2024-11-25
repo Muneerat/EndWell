@@ -80,6 +80,7 @@ export default function Member() {
         try {
           
           const response = await axios.delete(`/admin/member/delete`, {
+            headers: {Role: 'admin'},
             data: { member_id: member.id }, 
           });
           // Update the table data without the deleted member

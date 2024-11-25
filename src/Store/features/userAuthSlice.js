@@ -1,5 +1,5 @@
 
-import { logout, signIn } from "@/Services/authService";
+import { logout, signIn, userLogout, userSignIn } from "@/Services/authService";
 import { getToken, removeToken, setToken } from "@/utils/authToken";
 import { createSlice } from "@reduxjs/toolkit"
 
@@ -9,32 +9,32 @@ const initialState = {
     isError: false,
     errors: {},
     message: null,
-    userToken: getToken('admin'),
+    userToken: getToken(),
     userInfo: {}
 }
 
-const authSlice = createSlice({
-    name: "auth",
+const userAuth = createSlice({
+    name: "userAuth",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(signIn.pending, (state) => {
+        builder.addCase(userSignIn.pending, (state) => {
             state.processing = true;
             state.isSuccess = false;
             state.isError = false;
             state.errors = {};
             state.message = null;
         });
-        builder.addCase(signIn.fulfilled, (state, action) => {
+        builder.addCase(userSignIn.fulfilled, (state, action) => {
             state.processing = false;
             state.isSuccess = true;
             state.isError = false;
             state.errors = {};
             state.message = action.payload?.message;
-            setToken('admin',action.payload?.token);
+            setToken(action.payload?.token);
             
         });
-        builder.addCase(signIn.rejected, (state,action) => {
+        builder.addCase(userSignIn.rejected, (state,action) => {
             // console.log(action.payload.message);
             
             state.processing = false;
@@ -54,7 +54,7 @@ const authSlice = createSlice({
                         formatted[error] = errors[error][0];
                     }
                     state.errors = formatted;
-                    console.log(formatted);
+                    // console.log(formatted);
                 }
             
             } else {
@@ -63,15 +63,15 @@ const authSlice = createSlice({
             
         })
         //logout
-        builder.addCase(logout.fulfilled, (state,action) => {
+        builder.addCase(userLogout.fulfilled, (state,action) => {
             state.processing = false;
             state.isSuccess = true;
             state.isError = false;
             state.errors = {};
             state.message = action.payload?.message;
-            removeToken('admin');
+            removeToken();
         })
-        builder.addCase(logout.rejected, (state,action) => {
+        builder.addCase(userLogout.rejected, (state,action) => {
             state.processing = false;
             state.isSuccess = false;
             state.isError = true;
@@ -82,7 +82,7 @@ const authSlice = createSlice({
     }
 })
 
-export default authSlice.reducer;
+export default userAuth.reducer;
 
 // import { signIn } from "@/Services/authService";
 // import { getToken, setToken } from "@/utils/authToken";

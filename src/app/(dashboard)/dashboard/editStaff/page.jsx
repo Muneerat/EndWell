@@ -33,10 +33,10 @@ export default function EditStaff() {
       const fetchStaff = async () => {
         try {
           const response = await axios.get(`/admin/user/profile`, {
+            headers: {Role: 'admin'},
             // user_id as a query parameter
             params: { user_id }, 
           });
-          console.log(response.data.data);
           
           // setFormData(response.data);
           setFormData({
@@ -64,7 +64,7 @@ export default function EditStaff() {
     e.preventDefault();
     setProcessing(true); // Disable button while processing
     try {
-      const response = await axios.put(`/admin/user/update-profile`, {...formData, user_id});
+      const response = await axios.put(`/admin/user/update-profile`, {...formData, user_id},{headers: {Role: 'admin'},});
      dispatch(addToast({
        type:'success',
        message: response.data.message

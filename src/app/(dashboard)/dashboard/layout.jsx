@@ -18,7 +18,7 @@ export default function AdminLayout({ children }) {
 
   useEffect(() => {
     const checkAuth = () => {
-      const token = localStorage.getItem("_APP_TOKEN_KEY_");
+      const token = localStorage.getItem("_APP_ADMIN_TOKEN_KEY_");
       if (!token) {
         router.push("/admin/SignIn");
       } else {

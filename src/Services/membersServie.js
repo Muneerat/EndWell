@@ -6,7 +6,7 @@ export const getAllMembers = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             // const response = await axios.get('/profile');
-            const response = await axios.get("/admin/member/all");
+            const response = await axios.get("/admin/member/all",{ headers: {Role: 'admin'}});
             const data = response.data.users
             const formattedData = data.map((member, index) => ({
                 ID: index + 1,

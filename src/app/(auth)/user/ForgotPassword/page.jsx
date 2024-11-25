@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import axios from '../../../libs/axios';
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [processing, setProcessing] = useState(false)
   const [errors, setErrors] = useState(false);
   const router = useRouter()
@@ -21,17 +21,16 @@ export default function ForgotPassword() {
     e.preventDefault();
     setProcessing(true);
     try {
-     const response =  await axios.post("/admin/forgot_password", { email });
+     const response =  await axios.post("/member/forgot_password", { phone },);
       dispatch((addToast({
         type:'success',
         message: response.data.message
       })))
-      router.push('/admin/reset-password');
+      router.push('/user/reset-password');
       return response.data;
     } catch (error) {
          handleErrors(error,setErrors);
-       
-      
+
     }finally {
       setProcessing(false)
     }
@@ -45,14 +44,14 @@ export default function ForgotPassword() {
           <div>
             <TextInput
               className="w-full block"
-              label="Email"
-              id="email"
+              label="Phone number"
+              id="phone"
               maxLength="255"
-              placeholder="sample@email.com"
+              placeholder="Enter your phone number"
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              errorMessage={errors?.email}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              errorMessage={errors?.phone}
             />
           </div>
           <Button spin={processing} disabled={processing} className="w-full" type="submit">

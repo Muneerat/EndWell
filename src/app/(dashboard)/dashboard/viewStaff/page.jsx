@@ -17,6 +17,7 @@ export default function ViewStaff() {
       const fetchStaff = async () => {
         try {
           const response = await axios.get(`admin/user/profile`, {
+            headers: {Role: 'admin'},
             params: { user_id },
           });
           console.log(response.data);

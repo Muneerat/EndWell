@@ -38,6 +38,7 @@ export default function UploadMember() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        headers: {Role: 'admin'}
       });
 
       dispatch(
