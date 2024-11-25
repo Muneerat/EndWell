@@ -18,6 +18,8 @@ const sideItemsTop = [
     icon: <Overview />,
     id: "overview",
   },
+  { label: "Update Profile", link: "/user/update-profile", icon: <Setting />, id: "Update" },
+  { label: "Change Password", link: "/user/change-password", icon: <Setting />, id: "Change" },
 ];
 
 const sideItemsBottom = [
