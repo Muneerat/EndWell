@@ -61,14 +61,15 @@ export default function EditStaff() {
  // handle Update user profile
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setProcessing(true); 
+    setProcessing(true); // Disable button while processing
     try {
       const response = await axios.put(`/admin/user/update-profile`, {...formData, user_id},{headers: {Role: 'admin'},});
      dispatch(addToast({
        type:'success',
        message: response.data.message
      }))
-      router.push("/dashboard/staff");
+      // console.log(response.data.message)
+      router.push("/dashboard/staffProfile");
     } catch (error) {
       console.log("Failed to update staff:", error);
       handleErrors(error, setErrors);

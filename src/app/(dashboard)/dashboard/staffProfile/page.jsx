@@ -37,7 +37,7 @@ export default function ViewStaff() {
       <div className="border font-bold p-3 w-fit rounded-md">Staff</div>
       <div className="flex justify-between py-4 items-center">
         <h1 className="font-bold text-2xl">Profile</h1>
-        <Button onClick={() => router.push(`/dashboard/editStaff?user_id=${profile.id}`)}>
+        <Button onClick={() => router.push(`/dashboard/editProfile?user_id=${profile.id}`)}>
           Edit
         </Button>
       </div>
