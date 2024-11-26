@@ -5,56 +5,51 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import Button from "@/app/components/Button";
 import Spinner from "@/app/components/Spinner";
-import { useDispatch, useSelector } from "react-redux";
-import { staffProfile } from "@/Services/staffProfileService";
+import { useSelector } from "react-redux";
 
 export default function ViewStaff() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const user_id = searchParams.get("user_id"); // Fetch the user_id from query parameters
   const [staff, setStaff] = useState(null);
-  const { profile,errors } = useSelector((state) => state.staffProfiles);
-  const dispatch = useDispatch();
+  const {userInfo,message} = useSelector((state) => state.userAuth)
 
-  // useEffect(() => {
-  //   if (user_id) {
-  //     dispatch(staffProfile({ user_id }));
-  //   }
-  // }, [dispatch, user_id]);
-  // console.log(profile,user_id,errors, 'staff');
+
   useEffect(() => {
-    if (user_id) {
-      const fetchStaff = async () => {
-        try {
-          const response = await axios.get(`admin/user/profile`, {
-            headers: {Role: 'admin'},
-            params: { user_id },
-          });
-          console.log(response.data);
+    console.log(userInfo, message);
+    
+    // if (user_id) {
+    //   const fetchStaff = async () => {
+    //     try {
+    //       const response = await axios.get(`admin/user/profile`, {
+    //         headers: {Role: 'admin'},
+    //         params: { user_id },
+    //       });
+    //       console.log(response.data);
 
-          setStaff(response.data.data); // Set staff data
-        } catch (error) {
-          console.error("Failed to fetch staff:", error);
-        }
-      };
-      fetchStaff();
-    }
-  }, [user_id]);
+    //       setStaff(response.data.data); // Set staff data
+    //     } catch (error) {
+    //       console.error("Failed to fetch staff:", error);
+    //     }
+    //   };
+    //   fetchStaff();
+    // }
+  }, [userInfo]);
 
-  if (!staff)
-    return (
-      <div className="flex justify-center items-center mt-20">
-        <Spinner
-          className="border-2 border-primary "
-          size={9}
-          spin={true}
-        ></Spinner>
-      </div>
-    );
+//   if (!staff)
+//     return (
+//       <div className="flex justify-center items-center mt-20">
+//         <Spinner
+//           className="border-2 border-primary "
+//           size={9}
+//           spin={true}
+//         ></Spinner>
+//       </div>
+//     );
 
   return (
     <div>
-    <div className="p-5 md:w-2/6 m-10 rounded-md flex flex-col bg-white">
+          <div className="p-5 md:w-2/6 m-10 rounded-md flex flex-col bg-white">
       {/* Header */}
       <div className="border font-bold p-3 w-fit rounded-md">Staff</div>
       <div className="flex justify-between py-4 items-center">
@@ -71,16 +66,16 @@ export default function ViewStaff() {
       {/* Profile Picture and Email */}
       <div>
         <div className="rounded-full h-12 w-12 bg-[#141E2F] text-white flex justify-center mx-auto items-center">
-          {staff.first_name?.[0]?.toUpperCase()}
-          {staff.last_name?.[0]?.toUpperCase()}
+          {userInfo.first_name?.[0]?.toUpperCase()}
+          {userInfo.last_name?.[0]?.toUpperCase()}
         </div>
-        <div className="text-[#A3A3A3] items-center text-center mt-2">
+        {/* <div className="text-[#A3A3A3] items-center text-center mt-2">
           {staff.email}
-        </div>
+        </div> */}
       </div>
 
       {/* Personal Information */}
-      <div className="grid grid-cols-1  gap-8 my-6">
+      {/* <div className="grid grid-cols-1  gap-8 my-6">
         <div className="flex items-center gap-x-6">
           <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
             First Name:
@@ -113,13 +108,13 @@ export default function ViewStaff() {
             {staff.department || "N/A"}
           </span>
         </div>
-      </div>
+      </div> */}
 
       {/* Back Button */}
       <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button>
     </div>
      <div>
-
+      <h1>here</h1>
      </div>
     </div>
   );

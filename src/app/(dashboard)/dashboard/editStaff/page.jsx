@@ -179,6 +179,7 @@ export default function EditStaff() {
                 value={formData.role || ""}
                 onChange={handleChange}
                 errorMessage={errors?.role}
+                disabled
               />
             </div>
             <div>

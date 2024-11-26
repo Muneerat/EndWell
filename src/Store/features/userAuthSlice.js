@@ -31,7 +31,17 @@ const userAuth = createSlice({
             state.isError = false;
             state.errors = {};
             state.message = action.payload?.message;
+            if (action.payload?.id) {
+                localStorage.setItem("userId", action.payload.id);
+            }
             setToken(action.payload?.token);
+            state.userInfo = {
+                id: action.payload?.id,
+                firstName: action.payload?.first_name,
+                lastName: action.payload?.last_name,
+                phone: action.payload?.phone,
+                role: action.payload?.role,
+            }; 
             
         });
         builder.addCase(userSignIn.rejected, (state,action) => {

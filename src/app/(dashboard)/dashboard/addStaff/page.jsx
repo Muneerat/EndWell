@@ -16,7 +16,7 @@ export default function AddStaff() {
     last_name: "",
     email: "",
     phone: "",
-    role: "",
+    role: "staff",
     department: "",
     password: "",
     confirm_password: "",
@@ -38,9 +38,14 @@ export default function AddStaff() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
+    const payload = {
+      ...formData,
+      role: "staff", 
+    };
+
 
     try {
-      const response = await axios.post("/admin/user/add", formData, { headers: {Role: 'admin'}});
+      const response = await axios.post("/admin/user/add", payload, { headers: {Role: 'admin'}});
       dispatch(
         addToast({
           type: "success",
@@ -48,7 +53,7 @@ export default function AddStaff() {
         })
       );
       setErrors({});
-      resetForm(); // Clear input fields after successful addition
+      resetForm(); 
     } catch (error) {
       handleErrors(error, setErrors);
     } finally {
@@ -147,6 +152,7 @@ export default function AddStaff() {
                 value={formData.role}
                 onChange={handleChange}
                 errorMessage={errors?.role}
+                disabled
               />
             </div>
             <div>

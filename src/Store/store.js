@@ -5,6 +5,8 @@ import toastSlice  from "./features/toastSlice";
 import ledgerSlice from "./features/ledgerSlice";
 import memberSlice from "./features/memberSlice";
 import userAuthSlice from "./features/userAuthSlice";
+import  staffProfileSlice  from "./features/staffProfileSlice";
+
 
 
 const store = configureStore({
@@ -14,6 +16,7 @@ const store = configureStore({
         ledger: ledgerSlice,
         member: memberSlice,
         userAuth: userAuthSlice,
+        staffProfiles: staffProfileSlice,
     }
 })
 

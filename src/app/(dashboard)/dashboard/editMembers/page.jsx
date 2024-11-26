@@ -85,7 +85,7 @@ export default function EditMember() {
     <div className="md:px-6 pt-4 sm:px-14 m-3">
       <div className="flex items-center gap-8">
         <button
-          onClick={() => router.push("/dashboard/member")}
+          onClick={() => router.push("/dashboard/members")}
           className="flex items-center gap-2 font-normal cursor-pointer"
         >
           <Back />
@@ -126,7 +126,7 @@ export default function EditMember() {
               onChange={handleChange}
               errorMessage={errors?.phone}
             />
-            <TextInput
+            {/* <TextInput
               label="Role"
               id="role"
               name="role"
@@ -135,7 +135,7 @@ export default function EditMember() {
               value={formData.role}
               onChange={handleChange}
               errorMessage={errors?.role}
-            />
+            /> */}
           </div>
             <Button spin={processing} disabled={processing} className="w-3/6 mt-7">
               Update

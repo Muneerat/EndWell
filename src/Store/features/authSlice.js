@@ -32,6 +32,9 @@ const authSlice = createSlice({
             state.errors = {};
             state.message = action.payload?.message;
             setToken('admin',action.payload?.token);
+            if (action.payload?.id) {
+                localStorage.setItem("userId", action.payload.id);
+            }
             
         });
         builder.addCase(signIn.rejected, (state,action) => {
@@ -70,6 +73,7 @@ const authSlice = createSlice({
             state.errors = {};
             state.message = action.payload?.message;
             removeToken('admin');
+            localStorage.removeItem("userId");
         })
         builder.addCase(logout.rejected, (state,action) => {
             state.processing = false;

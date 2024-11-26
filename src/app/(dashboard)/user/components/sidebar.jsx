@@ -18,7 +18,7 @@ const sideItemsTop = [
     icon: <Overview />,
     id: "overview",
   },
-  { label: "Update Profile", link: "/user/update-profile", icon: <Setting />, id: "Update" },
+  { label: "Profile", link: "/user/profile", icon: <Setting />, id: "profile" },
   { label: "Change Password", link: "/user/change-password", icon: <Setting />, id: "Change" },
 ];
 

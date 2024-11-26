@@ -18,7 +18,7 @@ import { addToast } from "@/Store/features/toastSlice";
 export default function MainMenu() {
   const dispatch = useDispatch()
   const router = useRouter();
-  const {isSuccess} = useSelector(state => state.auth);
+  const {userId} = useSelector(state => state.auth);
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   
   const handleLogout = () => {
@@ -33,6 +33,17 @@ export default function MainMenu() {
       type: 'success',
       message: 'You have been logged out successfully'
     }))
+  }
+  console.log(userId);
+  
+
+  const handleView = () => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      router.push(`/dashboard/staffProfile?user_id=${userId}`);
+    }
+    // router.push('/admin/profile')
+    // router.push(`/dashboard/viewStaff?user_id=${staff.id}`);
   }
 //   useEffect(() => {
 //     if (isSuccess) {
@@ -65,7 +76,7 @@ export default function MainMenu() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleView}>Profile</DropdownMenuItem>
             <DropdownMenuItem >
               <button onClick={handleLogout} type="button">
               Logout
