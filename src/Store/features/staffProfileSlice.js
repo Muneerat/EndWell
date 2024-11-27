@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getProfile } from "@/Services/authService";
 import { staffProfile } from "@/Services/staffProfileService";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   processing: false,
@@ -30,6 +29,8 @@ const staffProfileSlice = createSlice({
       state.errors = null;
       state.message = "Profile fetched successfully.";
       state.profile = action.payload; // Update with profile data
+      console.log(state.profile);
+      
      
       
     });

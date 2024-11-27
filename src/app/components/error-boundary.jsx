@@ -20,7 +20,8 @@ class ErrorBoundary extends Component {
 
   resetError = () => {
     this.setState({ hasError: false });
-    const router = useRouter();
+    this.props.router.push("/dashboard/overview");
+    // const router = useRouter();
     // router.push("dashboard/overview");
   };
 

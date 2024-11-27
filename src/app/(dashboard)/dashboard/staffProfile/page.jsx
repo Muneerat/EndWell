@@ -14,7 +14,7 @@ export default function ViewStaff() {
 
   useEffect(() => {
     if (user_id) {
-      dispatch(staffProfile({ user_id }));
+      dispatch(staffProfile());
       
     }
   }, [dispatch, user_id]);

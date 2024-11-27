@@ -21,6 +21,9 @@ export default function MainMenu() {
   const {userId} = useSelector(state => state.auth);
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const { profile,  } = useSelector((state) => state.staffProfiles);
+
+console.log(profile);
+
   const handleLogout = () => {
     if (!isLoggingOut){
       setIsLoggingOut(true);
@@ -55,7 +58,7 @@ export default function MainMenu() {
         <Hamburger />
       </div>
       <div className="w-full flex items-center gap-4">
-        <h1 className="text-2xl font-semibold">Hello {profile.first_name || "-"} {profile.last_name || "-"},</h1>
+        <h1 className="text-2xl font-semibold">Hello {profile.first_name || "Staff"} {profile.last_name || ""},</h1>
         {/* <input
           type="text"
           className={`hidden  outline-none rounded-lg shadow-sm focus:outline-1 focus:ring-0 px-2 py-3 my-1 mx-2 md:block w-full md:w-3/6 placeholder:text-sm bg-[#F0F0F0]`}
@@ -71,7 +74,7 @@ export default function MainMenu() {
           {/* <AvatarImage src="https://github.com/shadcn.png"  /> */}
           
           <AvatarFallback>
-          {profile.first_name?.[0]?.toUpperCase()}
+          {profile.first_name?.[0]?.toUpperCase() || "Staff"}
           {profile.last_name?.[0]?.toUpperCase()}
           </AvatarFallback>
         </Avatar>
