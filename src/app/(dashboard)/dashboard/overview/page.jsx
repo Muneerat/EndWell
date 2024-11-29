@@ -36,6 +36,7 @@ import { MemberColumns } from "@/app/data/member";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { addToast } from "@/Store/features/toastSlice";
+import { dashboardData } from "./action";
 
 export default function Overview() {
    const totalLedgers = useSelector((state) => state.ledger.totalLedgers)
@@ -44,11 +45,22 @@ export default function Overview() {
   const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
   const router = useRouter();
+  const [dashboard, setDashboard] = useState({});
 
   useEffect(() => {
-    dispatch(getAllMembers())
-     dispatch(getAllLedger())
-  },[dispatch]);
+    const dashboardDatas = async () => {
+      try {
+        const response = await dashboardData();
+        console.log(response, 'dashboard');
+        setDashboard(response)
+      }catch(error){
+        console.log("Failed to fetch dashboard data:", error);
+      }
+    }
+    dashboardDatas();
+    // dispatch(getAllMembers())
+    //  dispatch(getAllLedger())
+  },[]);
 
   const handleActions = {
     view: (member) => {
@@ -110,9 +122,9 @@ const columnsWithActions = MemberColumns.map((column) =>
     <div className="">
       <div className="flex md:flex-row flex-col justify-between w-full px-6 pt-7 pb-1 flex-reverse flex-shrink ">
         <div className="grid lg:grid-cols-3  md:grid-cols-2  grid-cols-1 my-2  gap-8 text-primary ">
-          <Card text='No. of Members' number={totalMembers || 0} />
-          <Card text='No. of ledger uploaded' number={totalLedgers || 0} />
-          <Card text='No. of  sent' number="0" />
+        <Card text="No. of Members" number={dashboard?.no_members || 0} />
+          <Card text="No. of Ledgers Uploaded" number={dashboard?.no_ledgers || 0} />
+          <Card text="No. of Sent SMS" number={dashboard?.no_sent_sms || 0} />
         </div>
         <div className="flex  justify-start justify- gap-2 ">
           <ButtonUpload text="Upload Ledger" icon={<Upload2/>} link="upload-ledger"/>

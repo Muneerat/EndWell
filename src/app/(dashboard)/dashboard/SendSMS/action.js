@@ -6,7 +6,18 @@ export const fetchMessageParameters = async () => {
             { headers: {Role: 'admin'}}
         )
         return response.data.message_parameters
-    }catch{
-        throw error.message 
+    }catch(error){
+        throw error.response?.data || error.message 
+    }
+}
+
+export const sendTransactionSms = async (formData) => {
+    try{
+        const response = await axios.post("/admin/message/transaction-sms",formData,
+            { headers: {Role: 'admin'}}
+        )
+        return response.data.message
+    }catch(error){
+        throw error.response?.data || error.message 
     }
 }

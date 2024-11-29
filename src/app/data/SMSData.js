@@ -15,35 +15,35 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 
-export const SMSData = [
-    {
-        id: "1",
-        name: "ODEBODE I.A",
-        number: '0706924568',
-        date: "13/56/2024",
-        status: "Delivered",
-      },
-      {
-        id: "1",
-        name: "ODEBODE I.A",
-        number: '0706924568',
-        date: "13/56/2024",
-        status: "Pending",
-      },
-]
+// export const SMSData = [
+//     {
+//         id: "1",
+//         name: "ODEBODE I.A",
+//         number: '0706924568',
+//         date: "13/56/2024",
+//         status: "Delivered",
+//       },
+//       {
+//         id: "1",
+//         name: "ODEBODE I.A",
+//         number: '0706924568',
+//         date: "13/56/2024",
+//         status: "Pending",
+//       },
+// ]
 export const SMSColumns = [
   {
-    accessorKey: "id",
+    accessorKey: "ID",
     header: "S/N",
 
  cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("id")}</div>
+      <div className="capitalize">{row.getValue("ID")}</div>
     ),
     enableSorting: false,
     enableHiding: false,
   },
     {
-    accessorKey: "name",
+    accessorKey: "member_name",
     header: ({ column }) => {
       return (
         <Button
@@ -55,13 +55,13 @@ export const SMSColumns = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue("member_name")}</div>,
   },
   {
-    accessorKey: "number",
+    accessorKey: "phone",
     header: "Phone number",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("number")}</div>
+      <div className="capitalize">{row.getValue("phone")}</div>
     ),
   },
    {

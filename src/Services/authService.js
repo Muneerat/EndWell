@@ -20,7 +20,7 @@ export const signIn = createAsyncThunk(
             }
             else {
                 console.log(error.request)
-                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
+                return rejectWithValue({status: 500, message:'Network error.'});
             }
         }
     }
@@ -39,7 +39,7 @@ export const logout = createAsyncThunk(
             }
             else{
                 console.log(error.request)
-                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
+                return rejectWithValue({status: 500, message:'Network error.'});
             }
         }
     }
@@ -63,7 +63,7 @@ export const userSignIn = createAsyncThunk(
             }
             else {
                 console.log(error.request)
-                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
+                return rejectWithValue({status: 500, message:'Network error.'});
             }
         }
     }
@@ -82,7 +82,7 @@ export const userLogout = createAsyncThunk(
             }
             else{
                 console.log(error.request)
-                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
+                return rejectWithValue({status: 500, message:'Network error.'});
             }
         }
     }
