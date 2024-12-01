@@ -26,6 +26,7 @@ export default function SignIn() {
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem("_APP_ADMIN_TOKEN_KEY_");
+
       if (token) {
         router.push("/dashboard/overview");
       } else {
@@ -40,6 +41,13 @@ export default function SignIn() {
     const result = await dispatch(signIn({ email, password }));
     if (result.payload && result.payload.token) {
       localStorage.setItem("_APP_ADMIN_TOKEN_KEY_", result.payload.token);
+      localStorage.setItem(
+        "_APP_ADMIN_REFRESH_TOKEN_KEY_",
+        result.payload.refresh_token
+      );
+      const expirationTime =
+        new Date().getTime() + 1 * 60 * 60 * 1000 + 45 * 60 * 1000;
+      localStorage.setItem("_APP_ADMIN_EXPIRATION_TIME_KEY_", expirationTime);
       router.refresh();
       router.push("/dashboard/overview");
       dispatch(

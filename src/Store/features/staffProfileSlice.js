@@ -51,3 +51,4 @@ const staffProfileSlice = createSlice({
 });
 
 export default staffProfileSlice.reducer;
+export const { profile } = staffProfileSlice.actions;

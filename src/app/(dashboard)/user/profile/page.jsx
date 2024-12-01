@@ -5,36 +5,39 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import Button from "@/app/components/Button";
 import Spinner from "@/app/components/Spinner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getMemberProfile } from "@/Services/memberProfileService";
 
 export default function ViewStaff() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const user_id = searchParams.get("user_id"); // Fetch the user_id from query parameters
-  const [staff, setStaff] = useState(null);
+  const [members, setMembers] = useState({});
   const {userInfo,message} = useSelector((state) => state.userAuth)
-
-
+  // const {member} = useSelector((state) => state.memberProfile)
+  const dispatch = useDispatch()
   useEffect(() => {
-    console.log(userInfo, message);
-    
-    // if (user_id) {
-    //   const fetchStaff = async () => {
-    //     try {
-    //       const response = await axios.get(`admin/user/profile`, {
-    //         headers: {Role: 'admin'},
-    //         params: { user_id },
-    //       });
-    //       console.log(response.data);
+    dispatch(getMemberProfile({}))
+  },[])
+  console.log(userInfo, message, user_id);
+  // useEffect(() => {
+  //   console.log(userInfo, message, user_id);
 
-    //       setStaff(response.data.data); // Set staff data
-    //     } catch (error) {
-    //       console.error("Failed to fetch staff:", error);
-    //     }
-    //   };
-    //   fetchStaff();
-    // }
-  }, [userInfo]);
+   
+
+  //     const fetchStaff = async () => {
+  //       try {
+  //         const response = await axios.get(`/member/profile`);
+  //         console.log(response.data);
+
+  //         setMembers(response.data.data); 
+  //       } catch (error) {
+  //         console.log("Failed to fetch member:", error);
+  //       }
+  //     };
+  //     fetchStaff();
+    
+  // }, [userInfo]);
 
 //   if (!staff)
 //     return (
@@ -56,65 +59,53 @@ export default function ViewStaff() {
         <h1 className="font-bold text-2xl">Profile</h1>
         <Button
           onClick={() =>
-            router.push(`/dashboard/editStaff?user_id=${staff.id}`)
+            router.push(`/dashboard/editStaff?user_id=${members.id}`)
           }
         >
           Edit
         </Button>
       </div>
 
-      {/* Profile Picture and Email */}
       <div>
         <div className="rounded-full h-12 w-12 bg-[#141E2F] text-white flex justify-center mx-auto items-center">
           {userInfo.first_name?.[0]?.toUpperCase()}
           {userInfo.last_name?.[0]?.toUpperCase()}
         </div>
-        {/* <div className="text-[#A3A3A3] items-center text-center mt-2">
-          {staff.email}
-        </div> */}
+        
       </div>
 
       {/* Personal Information */}
-      {/* <div className="grid grid-cols-1  gap-8 my-6">
+      <div className="grid grid-cols-1  gap-8 my-6">
         <div className="flex items-center gap-x-6">
           <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
             First Name:
           </span>
-          <span className="capitalize text-sm">{staff.first_name || "-"}</span>
+          <span className="capitalize text-sm">{userInfo.first_name || "-"}</span>
         </div>
         <div className="flex items-center gap-x-6">
           <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
             Last Name:
           </span>
-          <span className="capitalize text-sm">{staff.last_name || "-"}</span>
+          <span className="capitalize text-sm">{userInfo.last_name || "-"}</span>
         </div>
         <div className="flex items-center gap-x-6">
           <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
             Phone No:
           </span>
-          <span className="capitalize text-sm">{staff.phone || "N/A"}</span>
+          <span className="capitalize text-sm">{userInfo.phone || "N/A"}</span>
         </div>
         <div className="flex items-center gap-x-6">
           <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
             Role:
           </span>
-          <span className="capitalize text-sm">{staff.role || "N/A"}</span>
+          <span className="capitalize text-sm">{userInfo.role || "N/A"}</span>
         </div>
-        <div className="flex items-center gap-x-6">
-          <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-            Department:
-          </span>
-          <span className="capitalize text-sm">
-            {staff.department || "N/A"}
-          </span>
-        </div>
-      </div> */}
+      </div>
 
       {/* Back Button */}
       <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button>
     </div>
      <div>
-      <h1>here</h1>
      </div>
     </div>
   );

@@ -20,9 +20,12 @@ export default function MainMenu() {
   const router = useRouter();
   const {userId} = useSelector(state => state.auth);
   const [isLoggingOut, setIsLoggingOut] = useState(false)
-  const { profile,  } = useSelector((state) => state.staffProfiles);
+  const { profile} = useSelector((state) => state.staffProfiles);
 
 console.log(profile);
+const state = useSelector((state) => state);
+console.log("Full Redux State:", state);
+
 
   const handleLogout = () => {
     if (!isLoggingOut){

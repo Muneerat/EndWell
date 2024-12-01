@@ -2,14 +2,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from '@/libs/axios'
 
-export const getProfile = createAsyncThunk(
+
+export const getMemberProfile = createAsyncThunk(
     'auth/profile',
     async ({ }, { rejectWithValue }) => {
         try {
             // const response = await axios.get('/profile');
-            const response = await axios.get(`/admin/member/profile`, {
-                params: { member_id },
-              });
+            const response = await axios.get(`/member/profile`);
             
             return response.data.data;  
         } catch (error) {
@@ -22,6 +21,27 @@ export const getProfile = createAsyncThunk(
         }
     }
 )
+
+// export const getProfile = createAsyncThunk(
+//     'auth/profile',
+//     async ({ }, { rejectWithValue }) => {
+//         try {
+//             // const response = await axios.get('/profile');
+//             const response = await axios.get(`/admin/member/profile`, {
+//                 params: { member_id },
+//               });
+            
+//             return response.data.data;  
+//         } catch (error) {
+//             if (error.response){
+//                 return rejectWithValue(error.response)
+//             }
+//             else {
+//                 return rejectWithValue(error.request);
+//             }
+//         }
+//     }
+// )
 
 // const fetchMember = async () => {
 //     try {

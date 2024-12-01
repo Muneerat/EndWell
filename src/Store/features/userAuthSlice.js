@@ -1,5 +1,6 @@
 
 import { logout, signIn, userLogout, userSignIn } from "@/Services/authService";
+import { getMemberProfile } from "@/Services/memberProfileService";
 import { getToken, removeToken, setToken } from "@/utils/authToken";
 import { createSlice } from "@reduxjs/toolkit"
 
@@ -35,13 +36,13 @@ const userAuth = createSlice({
                 localStorage.setItem("userId", action.payload.id);
             }
             setToken(action.payload?.token);
-            state.userInfo = {
-                id: action.payload?.id,
-                firstName: action.payload?.first_name,
-                lastName: action.payload?.last_name,
-                phone: action.payload?.phone,
-                role: action.payload?.role,
-            }; 
+            // state.userInfo = {
+            //     id: action.payload?.id,
+            //     firstName: action.payload?.first_name,
+            //     lastName: action.payload?.last_name,
+            //     phone: action.payload?.phone,
+            //     role: action.payload?.role,
+            // }; 
             
         });
         builder.addCase(userSignIn.rejected, (state,action) => {
@@ -86,6 +87,9 @@ const userAuth = createSlice({
             state.isSuccess = false;
             state.isError = true;
             state.message = action.payload?.message ?? 'Logout Failed';
+        });
+        builder.addCase(getMemberProfile.fulfilled, (state, action) => {
+            state.userInfo = action.payload;
         });
         
 

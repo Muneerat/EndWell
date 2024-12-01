@@ -37,30 +37,34 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { addToast } from "@/Store/features/toastSlice";
 import { dashboardData } from "./action";
+import handleErrors from "@/app/data/handleErrors";
 
 export default function Overview() {
-   const totalLedgers = useSelector((state) => state.ledger.totalLedgers)
-   const totalMembers = useSelector((state) => state.member.totalMembers)
    const {members,loading} = useSelector((state) => state.member )
   const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
   const router = useRouter();
   const [dashboard, setDashboard] = useState({});
+  const [error,setError] = useState()
 
   useEffect(() => {
     const dashboardDatas = async () => {
       try {
         const response = await dashboardData();
-        console.log(response, 'dashboard');
         setDashboard(response)
       }catch(error){
+        handleErrors(error, setError(error.response))
         console.log("Failed to fetch dashboard data:", error);
       }
     }
-    dashboardDatas();
-    // dispatch(getAllMembers())
     //  dispatch(getAllLedger())
+    dashboardDatas();
+  
   },[]);
+  
+  useEffect(() => {
+    dispatch(getAllMembers())
+  },[dispatch])
 
   const handleActions = {
     view: (member) => {
