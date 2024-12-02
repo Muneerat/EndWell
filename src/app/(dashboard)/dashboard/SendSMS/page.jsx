@@ -19,6 +19,7 @@ import handleErrors from "@/app/data/handleErrors";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { getAllMembers } from "@/Services/membersServie";
+import { useRouter } from "next/navigation";
 
 export default function SendSMS() {
   const [file, setFile] = useState(null);
@@ -34,6 +35,7 @@ export default function SendSMS() {
   const dispatch = useDispatch();
   const [members, setMemberData] = useState([]);
   const [selectedMember, setSelectedMember] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const loadMembers = async () => {
@@ -100,9 +102,9 @@ export default function SendSMS() {
 
     // Add specific logic for all members
     if (selectedMember === "all") {
-      formData.append("member_id", "all"); // Indicate to backend that it's for all members
+      formData.append("member_id", "all"); 
     } else {
-      formData.append("member_id", selectedMember); // Add specific member ID
+      formData.append("member_id", selectedMember); 
     }
 
     setProcessing(true);
@@ -110,14 +112,14 @@ export default function SendSMS() {
     try {
       const response = await sendTransactionSms(formData);
       setErrors("");
-      console.log(response, formData ,"success");
+    
       dispatch(
         addToast({
           type: "success",
           message: response,
         })
       );
-      console.log(response ,"success");
+      router.push('/dashboard/sms')
       
     } catch (error) {
       handleErrors(error, setErrors(error.message));

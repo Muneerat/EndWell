@@ -6,7 +6,6 @@ import ledgerSlice from "./features/ledgerSlice";
 import memberSlice from "./features/memberSlice";
 import userAuthSlice from "./features/userAuthSlice";
 import  staffProfileSlice  from "./features/staffProfileSlice";
-import memberProfileSlice from "./features/memberProfileSlice"
 
 
 
@@ -18,7 +17,6 @@ const store = configureStore({
         member: memberSlice,
         userAuth: userAuthSlice,
         staffProfiles: staffProfileSlice,
-        memberProfile: memberProfileSlice, 
     }
 })
 

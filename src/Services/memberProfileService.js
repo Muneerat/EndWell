@@ -13,10 +13,14 @@ export const getMemberProfile = createAsyncThunk(
             return response.data.data;  
         } catch (error) {
             if (error.response){
-                return rejectWithValue(error.response)
+                  console.log(error.response.data.message)
+                // return rejectWithValue(error.response.data)
+                return rejectWithValue({status: error.response.status, message: error.response.data.message})
+    
             }
             else {
-                return rejectWithValue(error.request);
+                console.log(error.request)
+                return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
             }
         }
     }

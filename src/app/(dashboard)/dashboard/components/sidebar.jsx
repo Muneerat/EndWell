@@ -40,6 +40,12 @@ const sideItemsTop = [
     icon: <Staff />,
     id: "staff",
   },
+  {
+    label: "Transaction History",
+    link: "/dashboard/transaction",
+    icon: <Staff />,
+    id: "transaction",
+  },
 ];
 
 const sideItemsBottom = [

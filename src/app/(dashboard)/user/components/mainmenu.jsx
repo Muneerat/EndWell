@@ -22,7 +22,8 @@ export default function MainMenu() {
   const {isSuccess} = useSelector(state => state.auth);
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const {userInfo} = useSelector((state) => state.userAuth)
-
+   console.log(userInfo);
+   
   useEffect(() => {
     dispatch(getMemberProfile({}))
   },[])
@@ -43,12 +44,8 @@ export default function MainMenu() {
    
 
   const handleView = () => {
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      router.push(`/dashboard/staffProfile?user_id=${userId}`);
-    }
-    // router.push('/admin/profile')
-    // router.push(`/dashboard/viewStaff?user_id=${staff.id}`);
+    
+      router.push(`/user/profile`);
   }
   return (
     <div className="flex justify-between items-center w-full  shadow-sm px-4 py-3  bg-white m-auto md:pr-20 left-0 fixed  z-40 top-0 flex-shrink-0 sm:pl-[280px]" >
@@ -76,7 +73,7 @@ export default function MainMenu() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleView}>Profile</DropdownMenuItem>
             <DropdownMenuItem >
               <button onClick={handleLogout} type="button">
               Logout

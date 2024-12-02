@@ -76,14 +76,18 @@ export const staffProfile = createAsyncThunk(
   "profile/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/admin/profile"); // Replace with your API URL
-      console.log(response)
-      return response.data; // Ensure this matches the expected profile structure
+      const response = await axios.get("/admin/profile",  {headers: { Role: "admin" }},); // Replace with your API URL
+    
+      return response.data.data; 
     } catch (error) {
-      if (error.response && error.response.data) {
-        return rejectWithValue(error.response.data); // Pass server error
-      }
-      return rejectWithValue({ message: error.message }); // Pass generic error
+        if (error.response){
+            return rejectWithValue({status: error.response.status, message: error.response.data.message})
+
+        }
+        else {
+            console.log(error.request)
+            return rejectWithValue({status: 500, message:'Network error: Unable to reach the server.'});
+        }
     }
   }
 );

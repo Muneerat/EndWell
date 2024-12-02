@@ -1,5 +1,6 @@
 
 import { logout, signIn } from "@/Services/authService";
+import { staffProfile } from "@/Services/staffProfileService";
 import { getToken, removeToken, setToken } from "@/utils/authToken";
 import { createSlice } from "@reduxjs/toolkit"
 
@@ -80,6 +81,9 @@ const authSlice = createSlice({
             state.isSuccess = false;
             state.isError = true;
             state.message = action.payload?.message ?? 'Logout Failed';
+        });
+        builder.addCase(staffProfile.fulfilled, (state, action) => {
+            state.userInfo = action.payload;
         });
         
 

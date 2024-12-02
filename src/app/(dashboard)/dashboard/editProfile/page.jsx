@@ -68,7 +68,7 @@ export default function EditStaff() {
        type:'success',
        message: response.data.message
      }))
-      // console.log(response.data.message)
+      
       router.push("/dashboard/staffProfile");
     } catch (error) {
       console.log("Failed to update staff:", error);

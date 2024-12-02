@@ -25,12 +25,15 @@ export default function UpdateProfile() {
     e.preventDefault();
     setProcessing(true);
     try {
-     const response = await axios.post("/member/update-profile", { first_name, last_name,phone});
+     const response = await axios.post("/member/change-password", { password, confirm_password});
+     console.log(password, confirm_password,response.data.message);
+     
      dispatch(addToast({
        type:'success',
        message: response.data.message
      }))
-      router.push('/admin/SignIn');
+
+      router.push('/user/profile');
       return response.data;
     } catch (error) {
      handleErrors(error,setErrors)
@@ -45,25 +48,11 @@ export default function UpdateProfile() {
     <div className="my-auto h-full w-full flex justify-center items-center">
       <div className="bg-white py-10 px-6 rounded shadow m-auto w-full sm:max-w-md">
       <div>{(errors ) && <p className="text-red-700">{errors?.email} </p>  }</div>
-        <h2 className="text-4xl text-ash-950 font-semibold">Update Profile</h2>
+        <h2 className="text-4xl text-ash-950 font-semibold">Update Password</h2>
         <div className="my-4 text-sm text-gray-600">
         Kindly enter a new and secure password below.
         </div>
         <form className="space-y-6" onSubmit={submit}>
-        <div>
-            <TextInput
-              className="w-full block"
-              label="Enter otp"
-              id="code"
-              maxLength="255"
-              placeholder="Enter otp"
-              autoComplete='code'
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              errorMessage={errors?.code}
-              name='code'
-            />
-          </div>
           <div>
             <PasswordInput
               className="w-full block"
