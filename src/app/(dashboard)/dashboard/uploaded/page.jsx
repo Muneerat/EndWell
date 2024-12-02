@@ -92,7 +92,7 @@ useEffect(()=> {
         ) :
         (
         <DataTable data={ledgers} columns={UploadColumns}/>
-        )}
+        )}            <p>lo            <p>load</p>ad</p>
       </div>
     </div>
   );
