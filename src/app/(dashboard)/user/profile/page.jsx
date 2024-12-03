@@ -15,7 +15,7 @@ export default function ViewStaff() {
   const [members, setMembers] = useState({});
   
   const { userInfo, message } = useSelector((state) => state.userAuth);
-  // const {member} = useSelector((state) => state.memberProfile)
+  //  const {member} = useSelector((state) => state.memberProfile)
   const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(getMemberProfile({}));
@@ -25,30 +25,30 @@ export default function ViewStaff() {
   //     dispatch(getMemberProfile({ id: user_id }));
   //   }
   // }, [user_id, dispatch]);
-  useEffect(() => {
-    console.log(user_id);
-    
-    if (user_id) {
-      dispatch(getMemberProfile({ id: user_id }));
-    }
-  }, [user_id, dispatch]);
-
   // useEffect(() => {
-  //   console.log(userInfo, message, user_id);
+  //   console.log(user_id);
+    
+  //   if (user_id) {
+  //     dispatch(getMemberProfile({ id: user_id }));
+  //   }
+  // }, [user_id, dispatch]);
 
-  //     const fetchStaff = async () => {
-  //       try {
-  //         const response = await axios.get(`/member/profile`);
-  //         console.log(response.data);
+  useEffect(() => {
+    console.log(userInfo, message, user_id);
 
-  //         setMembers(response.data.data);
-  //       } catch (error) {
-  //         console.log("Failed to fetch member:", error);
-  //       }
-  //     };
-  //     fetchStaff();
+      const fetchStaff = async () => {
+        try {
+          const response = await axios.get(`/member/profile`);
+          console.log(response.data);
 
-  // }, [userInfo]);
+          setMembers(response.data.data);
+        } catch (error) {
+          console.log("Failed to fetch member:", error);
+        }
+      };
+      fetchStaff();
+
+  }, [userInfo]);
 
   //   if (!staff)
   //     return (
@@ -79,8 +79,8 @@ export default function ViewStaff() {
 
         <div>
           <div className="rounded-full h-12 w-12 bg-[#141E2F] text-white flex justify-center mx-auto items-center">
-            {userInfo.first_name?.[0]?.toUpperCase()}
-            {userInfo.last_name?.[0]?.toUpperCase()}
+            {members.first_name?.[0]?.toUpperCase()}
+            {members.last_name?.[0]?.toUpperCase()}
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export default function ViewStaff() {
               First Name:
             </span>
             <span className="capitalize text-sm">
-              {userInfo.first_name || "-"}
+              {members.first_name || "-"}
             </span>
           </div>
           <div className="flex items-center gap-x-6">
@@ -99,7 +99,7 @@ export default function ViewStaff() {
               Last Name:
             </span>
             <span className="capitalize text-sm">
-              {userInfo.last_name || "-"}
+              {members.last_name || "-"}
             </span>
           </div>
           <div className="flex items-center gap-x-6">
@@ -107,14 +107,14 @@ export default function ViewStaff() {
               Phone No:
             </span>
             <span className="capitalize text-sm">
-              {userInfo.phone || "N/A"}
+              {members.phone || "N/A"}
             </span>
           </div>
           <div className="flex items-center gap-x-6">
             <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
               Role:
             </span>
-            <span className="capitalize text-sm">{userInfo.role || "N/A"}</span>
+            <span className="capitalize text-sm">{members.role || "N/A"}</span>
           </div>
         </div>
 

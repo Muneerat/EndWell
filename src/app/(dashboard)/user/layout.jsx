@@ -63,6 +63,7 @@ export default function UserLayout({ children }) {
   }
   return (
     <div className="flex ">
+      <Toaster />
       <Sidebar />
      
         <MainMenu />

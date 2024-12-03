@@ -19,10 +19,8 @@ import { getMemberProfile } from "@/Services/memberProfileService";
 export default function MainMenu() {
   const dispatch = useDispatch()
   const router = useRouter();
-  const {isSuccess} = useSelector(state => state.auth);
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const {userInfo} = useSelector((state) => state.userAuth)
-   console.log(userInfo);
    
   useEffect(() => {
     dispatch(getMemberProfile({}))

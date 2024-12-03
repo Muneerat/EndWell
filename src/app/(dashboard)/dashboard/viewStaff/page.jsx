@@ -116,7 +116,7 @@ export default function ViewStaff() {
       </div>
 
       {/* Back Button */}
-      <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button>
+      {/* <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button> */}
     </div>
      <div>
 

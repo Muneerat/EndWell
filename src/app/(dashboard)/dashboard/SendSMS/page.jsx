@@ -79,7 +79,13 @@ export default function SendSMS() {
     const loadMonths = async () => {
       try {
         const monthData = await fetchMonths();
-        setMonths(Object.keys(monthData.months));
+        const formattedMonths = Object.entries(monthData.months).map(
+          ([key, value]) => ({
+            key,
+            value,
+          })
+        );
+        setMonths(formattedMonths);
       } catch (error) {
         handleErrors(error, setErrors("The month field is required."));
       }
@@ -158,19 +164,18 @@ export default function SendSMS() {
                 ))}
               </SelectContent>
             </Select>
-
             <Select onValueChange={(value) => setSelectedMonth(value)}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={selectedMonth || "Select Month"} />
-              </SelectTrigger>
-              <SelectContent>
-                {months.map((month) => (
-                  <SelectItem key={month} value={month}>
-                    {month}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder={selectedMonth || "Select Month"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {months.map((month) => (
+                    <SelectItem key={month.value} value={String(month.value)}>
+                      {month.key}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
             <Select onValueChange={(value) => setSelectedMember(value)}>
               <SelectTrigger className="w-[200px]">

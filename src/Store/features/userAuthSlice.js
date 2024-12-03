@@ -81,6 +81,7 @@ const userAuth = createSlice({
             state.errors = {};
             state.message = action.payload?.message;
             removeToken();
+            localStorage.removeItem("_APP_USER_TOKEN_KEY_");
         })
         builder.addCase(userLogout.rejected, (state,action) => {
             state.processing = false;

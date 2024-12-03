@@ -68,9 +68,9 @@ export default function ViewStaff() {
           <span className="capitalize text-sm">{profile.department || "N/A"}</span>
         </div>
       </div>
-      {/* <Button className="w-52 my-10" onClick={() => router.push("/staff")}>
+      <Button className="w-52 my-10" onClick={() => router.push("/dashboard/update-password")}>
         Update Password
-      </Button> */}
+      </Button>
     </div>
   );
 }

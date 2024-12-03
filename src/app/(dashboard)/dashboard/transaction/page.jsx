@@ -575,7 +575,7 @@ export default function Transaction() {
     const fetchTransactions = async () => {
       if (!selectedYear && !selectedMonth) return;
       setLoading(true);
-      setTransaction([]); // Reset transactions before fetching
+      setTransaction([]); 
       try {
         const response = await fetchTransaction({
           month: selectedMonth,
@@ -597,7 +597,7 @@ export default function Transaction() {
             uploaded_by: transaction.uploaded_by,
           }));
           setTransaction(transactions);
-          setErrors(null); // Clear previous errors
+          setErrors(null); 
         }
       } catch (error) {
         handleErrors(error, setErrors);

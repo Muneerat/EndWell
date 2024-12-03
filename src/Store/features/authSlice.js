@@ -75,6 +75,8 @@ const authSlice = createSlice({
             state.message = action.payload?.message;
             removeToken('admin');
             localStorage.removeItem("userId");
+            localStorage.removeItem("_APP_ADMIN_REFRESH_TOKEN_KEY_");
+            localStorage.removeItem("_APP_ADMIN_EXPIRATION_TIME_KEY_");
         })
         builder.addCase(logout.rejected, (state,action) => {
             state.processing = false;
