@@ -82,6 +82,8 @@ const userAuth = createSlice({
             state.message = action.payload?.message;
             removeToken();
             localStorage.removeItem("_APP_USER_TOKEN_KEY_");
+            localStorage.removeItem("_APP_USER_REFRESH_TOKEN_KEY_");
+            localStorage.removeItem("_APP_USER_EXPIRATION_TIME_KEY_");
         })
         builder.addCase(userLogout.rejected, (state,action) => {
             state.processing = false;

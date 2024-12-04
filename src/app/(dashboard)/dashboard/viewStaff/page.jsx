@@ -7,6 +7,7 @@ import Button from "@/app/components/Button";
 import Spinner from "@/app/components/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { staffProfile } from "@/Services/staffProfileService";
+import { fetchPermissions } from "./action";
 
 export default function ViewStaff() {
   const router = useRouter();
@@ -15,6 +16,8 @@ export default function ViewStaff() {
   const [staff, setStaff] = useState(null);
   const { profile,errors } = useSelector((state) => state.staffProfiles);
   const dispatch = useDispatch();
+  const [permissions, setPermissions] = useState([]);
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
 
   // useEffect(() => {
   //   if (user_id) {
@@ -30,9 +33,7 @@ export default function ViewStaff() {
             headers: {Role: 'admin'},
             params: { user_id },
           });
-          console.log(response.data);
-
-          setStaff(response.data.data); // Set staff data
+          setStaff(response.data.data); 
         } catch (error) {
           console.error("Failed to fetch staff:", error);
         }
@@ -40,6 +41,33 @@ export default function ViewStaff() {
       fetchStaff();
     }
   }, [user_id]);
+
+  //Fetch permissions
+  // useEffect(() => {
+  //   const loadPermissions = async () => {
+  //     try{
+  //       const allPermissions = await fetchPermissions();
+  //       // const formatPermissions = Object.entries(allPermissions.permissions).map(
+  //       //   ([key, value]) => ({
+  //       //     key,
+  //       //     value,
+  //       //   })
+  //       // )
+  //       setPermissions(allPermissions.data);
+  //     }catch(error){
+  //       console.log("Failed to fetch permissions:", error);
+  //     }
+  //   }
+  //   loadPermissions();
+  // })
+
+  // const handleCheckboxChange = (permissionId) => {
+  //   setSelectedPermissions((prev) =>
+  //     prev.includes(permissionId)
+  //       ? prev.filter((id) => id !== permissionId) // Remove if already selected
+  //       : [...prev, permissionId] // Add if not selected
+  //   );
+  // };
 
   if (!staff)
     return (
@@ -118,9 +146,25 @@ export default function ViewStaff() {
       {/* Back Button */}
       {/* <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button> */}
     </div>
-     <div>
-
-     </div>
+     {/* <div>
+      <h1>Permissions</h1>
+      <div className="grid grid-cols-1 gap-3">
+        {permissions.map((permission) => (
+          <label
+            key={permission.id}
+            className="flex items-center space-x-3"
+          >
+            <input
+              type="checkbox"
+              checked={selectedPermissions.includes(permission.id)}
+              onChange={() => handleCheckboxChange(permission.id)}
+              className="form-checkbox h-5 w-5 text-blue-600"
+            />
+            <span className="text-sm">{permission.name}</span>
+          </label>
+        ))}
+      </div>
+     </div> */}
     </div>
   );
 }

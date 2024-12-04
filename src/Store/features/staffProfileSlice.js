@@ -28,8 +28,8 @@ const staffProfileSlice = createSlice({
       state.isError = false;
       state.errors = null;
       state.message = "Profile fetched successfully.";
-      state.profile = action.payload; // Update with profile data
-      console.log(state.profile);
+      state.profile = action.payload; 
+
       
      
       
@@ -40,12 +40,12 @@ const staffProfileSlice = createSlice({
       state.isError = true;
 
       if (action.payload?.data) {
-        state.message = action.payload.data.message; // Error message from server
+        state.message = action.payload.data.message; 
       } else {
         state.message = "An unexpected error occurred.";
       }
 
-      state.errors = action.payload?.data || action.payload; // Save detailed errors if available
+      state.errors = action.payload?.data || action.payload; 
     });
   },
 });

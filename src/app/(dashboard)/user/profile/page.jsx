@@ -13,6 +13,7 @@ export default function ViewStaff() {
   const searchParams = useSearchParams();
   const user_id = searchParams.get("user_id"); // Fetch the user_id from query parameters
   const [members, setMembers] = useState({});
+  const [loading, setLoading] = useState(false);
   
   const { userInfo, message } = useSelector((state) => state.userAuth);
   //  const {member} = useSelector((state) => state.memberProfile)
@@ -37,6 +38,7 @@ export default function ViewStaff() {
     console.log(userInfo, message, user_id);
 
       const fetchStaff = async () => {
+        setLoading(true);
         try {
           const response = await axios.get(`/member/profile`);
           console.log(response.data);
@@ -44,22 +46,25 @@ export default function ViewStaff() {
           setMembers(response.data.data);
         } catch (error) {
           console.log("Failed to fetch member:", error);
+        }finally{
+          setLoading(false);
         }
+
       };
       fetchStaff();
 
   }, [userInfo]);
 
-  //   if (!staff)
-  //     return (
-  //       <div className="flex justify-center items-center mt-20">
-  //         <Spinner
-  //           className="border-2 border-primary "
-  //           size={9}
-  //           spin={true}
-  //         ></Spinner>
-  //       </div>
-  //     );
+    if (loading)
+      return (
+        <div className="flex justify-center items-center mt-20">
+          <Spinner
+            className="border-2 border-primary "
+            size={9}
+            spin={true}
+          ></Spinner>
+        </div>
+      );
 
   return (
     <div>

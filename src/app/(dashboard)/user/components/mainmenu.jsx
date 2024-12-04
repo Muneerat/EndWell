@@ -64,9 +64,11 @@ export default function MainMenu() {
             <DropdownMenu>
         <DropdownMenuTrigger>
         <Avatar className="w-14 h-14 border-[#000680] text-black border-2 rounded-full">
-          {/* <AvatarImage src="https://github.com/shadcn.png"  /> */}
-          
-          <AvatarFallback>  {userInfo.first_name || "Member"}</AvatarFallback>
+      
+          <AvatarFallback> 
+          {userInfo.first_name?.[0]?.toUpperCase() || "Member"}
+          {userInfo.last_name?.[0]?.toUpperCase()}
+             </AvatarFallback>
         </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-white">

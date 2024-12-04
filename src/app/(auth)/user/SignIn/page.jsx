@@ -40,6 +40,13 @@ export default function SignIn() {
     const result = await dispatch(userSignIn({ phone, password }));
     if (result.payload && result.payload.token) {
       localStorage.setItem("_APP_USER_TOKEN_KEY_", result.payload.token);
+      localStorage.setItem(
+        "_APP_USER_REFRESH_TOKEN_KEY_",
+        result.payload.refresh_token
+      );
+      const expirationTime =
+        new Date().getTime() + 1 * 60 * 60 * 1000 + 45 * 60 * 1000;
+      localStorage.setItem("_APP_USER_EXPIRATION_TIME_KEY_", expirationTime);
       router.refresh();
       router.push("/user/overview");
       dispatch(

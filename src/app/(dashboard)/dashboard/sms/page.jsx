@@ -65,7 +65,7 @@ export default function SMS() {
         </div>
       </div>
       <BoardFilter text='Messages'>
-      <div className="flex gap-6 ">
+      {/* <div className="flex gap-6 ">
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="2024" />
@@ -87,7 +87,7 @@ export default function SMS() {
             </SelectContent>
           </Select>
      
-        </div>
+        </div> */}
       </BoardFilter>
       <div>
         {/* <DataTable data={SMSDatas} columns={SMSColumns}/> */}

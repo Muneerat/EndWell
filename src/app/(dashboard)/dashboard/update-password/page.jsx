@@ -13,9 +13,6 @@ import { useDispatch } from "react-redux";
 export default function UpdateProfile() {
   const [password, setPassword] = useState("")
   const [confirm_password, setConfirmPassword] = useState("")
-  const [code, setCode] = useState("");
-  // const [resending, setResending] = useState(false)
-  // const [secondsLeft, setSecondsLeft] = useState(60)
   const [processing, setProcessing] = useState(false)
   const [errors, setErrors] = useState({});
   const router = useRouter()
@@ -25,7 +22,7 @@ export default function UpdateProfile() {
     e.preventDefault();
     setProcessing(true);
     try {
-     const response = await axios.post("/admin/change-password", { password, confirm_password});
+     const response = await axios.post("/admin/change-password", { password, confirm_password},{ headers: {Role: 'admin'},});
      console.log(password, confirm_password,response.data.message);
      
      dispatch(addToast({
