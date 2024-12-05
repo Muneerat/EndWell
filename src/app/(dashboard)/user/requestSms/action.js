@@ -45,7 +45,7 @@ export const fetchRequestTypes = async () => {
  * @param {FormData} formData FormData containing the file and other data.
  * @returns {Promise} Axios response for the upload.
  */
-export const uploadLedger = async (formData) => {
+export const fetchRequest = async (formData) => {
   try {
     const response = await axios.post("/member/request/sms", formData, {
       headers: {
