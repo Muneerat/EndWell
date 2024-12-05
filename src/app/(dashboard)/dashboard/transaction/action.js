@@ -4,7 +4,7 @@ export const fetchTransaction = async ({month,year,id = null}) => {
   try {
     const response = await axios.get("/admin/transaction/history", {
       headers: { Role: "admin" },
-      params: { month, year, id },
+      params: { month, year, member_id: id || undefined  },
     });
     console.log(response.data.transactions);
 

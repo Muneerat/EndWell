@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const fetchTransaction = async ({month,year,id = null}) => {
+export const fetchTransactionUser = async ({month,year,member_id }) => {
   try {
     const response = await axios.get("/admin/transaction/history", {
-      params: { month, year, id },
+      params: { month, year, member_id },
     });
-    console.log(response.data.transactions);
+   
 
     return response.data.transactions;
   } catch (error) {

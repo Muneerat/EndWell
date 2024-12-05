@@ -46,12 +46,12 @@ const sideItemsTop = [
     icon: <Staff />,
     id: "transaction",
   },
-  // {
-  //   label: "Eoyasset",
-  //   link: "/dashboard/eoyasset",
-  //   icon: <Staff />,
-  //   id: "eoyasset",
-  // },
+  {
+    label: "Eoyasset",
+    link: "/dashboard/eoyasset",
+    icon: <Staff />,
+    id: "eoyasset",
+  },
 ];
 
 const sideItemsBottom = [

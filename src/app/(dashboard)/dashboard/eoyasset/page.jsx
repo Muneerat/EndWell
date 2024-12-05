@@ -17,9 +17,10 @@ import { DataTable } from "../components/table";
 import BoardFilter from "../components/board";
 import { TransactionColumns } from "@/app/data/transaction";
 import { fetchEoyasset } from "./action";
+import { EoyassetColumns } from "@/app/data/eoyasset";
 
 export default function Eoyasset() {
-  const [transaction, setTransaction] = useState([]);
+  const [eoyasset, setEoyasset] = useState([]);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setErrors] = useState(null);
@@ -75,34 +76,47 @@ export default function Eoyasset() {
   }, []);
 
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const fetchEoyassets = async () => {
       if (!selectedYear && !selectedMonth) return;
       setLoading(true);
-      setTransaction([]); 
+      setEoyasset([]);
       try {
         const response = await fetchEoyasset({
-        
           year: selectedYear,
-          id: selectedMember === "all" ? null : selectedMember,
+          id: selectedMember === "all" ? null : Number(selectedMember),
         });
+        console.log("Fetching with: ", {
+          year: selectedYear,
+          id: selectedMember === "all" ? null : Number(selectedMember),
+        });
+        
+        console.log(response);
         if (response.length === 0) {
           setErrors("No transactions found for the selected criteria.");
         } else {
-            console.log(response);
-            
-        //   const transactions = response.map((transaction, index) => ({
-        //     id: index + 1,
-        //     member_name: transaction.member_name,
-        //     total_contribution: transaction.total_contribution,
-        //     total_dividend: transaction.total_dividend,
-        //     withdrawable_dividend: transaction.withdrawable_dividend,
-        //     month: transaction.month,
-        //     year: transaction.year,
-        //     date: transaction.date,
-        //     uploaded_by: transaction.uploaded_by,
-        //   }));
-          setTransaction(transactions);
-          setErrors(null); 
+
+          const Eoyasset = response.map((eoyasset, index) => ({
+            id: index + 1,
+            member_id: eoyasset.member_id,
+            member_name: eoyasset.member_name,
+            january: eoyasset.january,
+            february: eoyasset.february,
+            march: eoyasset.march,
+            april: eoyasset.april,
+            may: eoyasset.may,
+            june: eoyasset.june,
+            july: eoyasset.july,
+            august: eoyasset.august,
+            september: eoyasset.september,
+            october: eoyasset.october,
+            november: eoyasset.november,
+            december: eoyasset.december,
+            eoyasset: eoyasset.eoyasset,
+            total_dividend: eoyasset.total_dividend,
+            total_withdrawable: eoyasset.total_withdrawable,
+          }));
+          setEoyasset(Eoyasset);
+          setErrors(null);
         }
       } catch (error) {
         handleErrors(error, setErrors);
@@ -111,15 +125,15 @@ export default function Eoyasset() {
       }
     };
 
-    fetchTransactions();
-  }, [selectedMonth, selectedYear, selectedMember]);
+    fetchEoyassets();
+  }, [selectedYear, selectedMember]);
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
       <form>
         <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
-          <BoardFilter text="Ecoyasset History">
+          <BoardFilter text="Eoyasset History">
             <div className="flex gap-6 mb-5">
               <Select onValueChange={(value) => setSelectedYear(value)}>
                 <SelectTrigger className="w-[180px]">
@@ -164,7 +178,7 @@ export default function Eoyasset() {
               </Select>
             </div>
           </BoardFilter>
-          {/* {loading ? (
+          {loading ? (
             <div className="flex justify-center items-center mt-20">
 
               <Spinner
@@ -173,11 +187,11 @@ export default function Eoyasset() {
                 spin={loading}
               />
             </div>
-          ) : transaction.length > 0 ? (
-            <DataTable data={transaction} columns={TransactionColumns} />
+          ) : eoyasset.length > 0 ? (
+            <DataTable data={eoyasset} columns={EoyassetColumns} />
           ) : (
             <p className="text-center text-gray-600">No transactions found.</p>
-          )} */}
+          )}
         </div>
       </form>
     </div>

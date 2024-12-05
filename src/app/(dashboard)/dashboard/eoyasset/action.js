@@ -1,14 +1,13 @@
 import axios from "axios";
 
-export const fetchEoyasset = async ({year,id = null}) => {
+export const fetchEoyasset = async ({year,id }) => {
   try {
     const response = await axios.get("/admin/transaction/eoyasset", {
       headers: { Role: "admin" },
-      params: {year, id },
+      params: {year, member_id: id || undefined },
     });
-    console.log(response.data.data);
 
-    return response.data.transactions;
+    return response.data.data;
   } catch (error) {
     throw error.response?.data || error.message;
   }

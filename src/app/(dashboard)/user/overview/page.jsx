@@ -18,13 +18,13 @@
 //   //       asset: data.asset,
 //   //       dividend: data.dividend,
 //   //       withdrawable: data.withdrawable,
-      
+
 //   //   };
 //   // })
 
 //   return (
 //     <div className="">
-    
+
 //       <BoardFilter text='Your Requests'>
 //       <ButtonUpload text="Request Report" icon={<UpArrow/>}  link="requestSms"/>
 //       </BoardFilter>
@@ -35,10 +35,9 @@
 //   );
 // }
 
-
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchTransaction } from "./action";
+import { fetchTransaction, fetchTransactionUser } from "./action";
 import handleErrors from "@/app/data/handleErrors";
 // import { fetchMonths, fetchYears } from "../upload-ledger/action";
 import {
@@ -54,7 +53,8 @@ import ButtonUpload from "../../dashboard/components/button";
 import { DataTable } from "../../dashboard/components/table";
 import BoardFilter from "../../dashboard/components/board";
 import { TransactionColumns } from "@/app/data/transaction";
-import { fetchMonths, fetchYears } from "../../dashboard/upload-ledger/action";
+import { UpArrow } from "@/assets/icon";
+import { fetchMonths, fetchYears } from "../requestSms/action";
 
 export default function Transaction() {
   const [transaction, setTransaction] = useState([]);
@@ -66,7 +66,7 @@ export default function Transaction() {
   const [selectedMonth, setSelectedMonth] = useState("");
   const dispatch = useDispatch();
 
-  const {userInfo} = useSelector((state) => state.userAuth)
+  const { userInfo} = useSelector((state) => state.userAuth);
 
 
   useEffect(() => {
@@ -99,26 +99,26 @@ export default function Transaction() {
     loadMonths();
   }, []);
 
+
   useEffect(() => {
     const fetchTransactions = async () => {
       if (!selectedYear && !selectedMonth) return;
       setLoading(true);
       setTransaction([]);
+      
       try {
-        console.log("Fetching transactions for user ID:", userInfo.id)
-        const response = await fetchTransaction({
-          month: selectedMonth,
-          year: selectedYear,
-          id: userInfo.id,
+        console.log("Fetching transactions for user ID:", userInfo.id);
+        const response = await fetchTransactionUser({
+          month: parseInt(selectedMonth),
+          year: parseInt(selectedYear),
+          member_id: userInfo.id,
         });
-        const userTransactions = response.filter(
-          (transaction) => transaction.id === userInfo.id 
-        );
 
-        if (userTransactions.length === 0) {
-          setErrors("No transactions found for the selected criteria.");
+  
+        if (response.length === 0) {
+          setErrors("No record found for request period.");
         } else {
-          const transactions = userTransactions.map((transaction, index) => ({
+          const transactions = response.map((transaction, index) => ({
             id: index + 1,
             member_name: transaction.member_name,
             total_contribution: transaction.total_contribution,
@@ -144,7 +144,11 @@ export default function Transaction() {
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
+      <div className="flex justify-end mr-10">
+      <ButtonUpload text="Request Report" icon={<UpArrow/>}  link="requestSms"/>
+      </div>
       <form>
+     
         <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
           <BoardFilter text="Transaction History">
@@ -178,13 +182,18 @@ export default function Transaction() {
           </BoardFilter>
           {loading ? (
             <div className="flex justify-center items-center mt-20">
-              <Spinner className="border-2 border-primary" size={9} spin={loading} />
+              <Spinner
+                className="border-2 border-primary"
+                size={9}
+                spin={loading}
+              />
             </div>
           ) : transaction.length > 0 ? (
             <DataTable data={transaction} columns={TransactionColumns} />
           ) : (
-            <p className="text-center text-gray-600">No transactions found.</p>
+            <p className="text-center text-gray-600">No record found for request period</p>
           )}
+          {/* No record found for request period */}
         </div>
       </form>
     </div>
