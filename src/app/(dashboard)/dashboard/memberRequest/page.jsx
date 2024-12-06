@@ -18,15 +18,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLedgers } from "@/Store/features/ledgerSlice";
 import Spinner from "@/app/components/Spinner";
 import { getAllLedger } from "@/Services/ledgerService";
+import { memberRequestsColumns } from "@/app/data/memberRequest";
 
 export default function MemberRequest() {
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [uploadData, setUploadData] = useState([]);
   const dispatch = useDispatch();
-  const { ledgers, totalLedgers, loading, error } = useSelector(
-    (state) => state.ledger
-  );
+//   const { ledgers, totalLedgers, loading, error } = useSelector(
+//     (state) => state.ledger
+//   );
 
   //fetch all ledger files
   useEffect(() => {
@@ -35,25 +36,23 @@ export default function MemberRequest() {
       try{
         const response = await axios.get("/transaction-request",{ headers: {Role: 'admin'},});
         const data = await response.data.member_requests;
-        console.log(data);
-        
-        // const memberRequests = data.map((ledger,index) => ({
-        //   ID: index + 1,
-        //   id: ledger.id,
-        //   member_name: ledger.member_name,
-        //   month: ledger.month,
-        //   dateUploaded: ledger.phone,
-        //   status: ledger.request_date,
-        //   uploaded_by: ledger.request_type,
-         //   status: ledger.status,
-        //   uploaded_by: ledger.year,
-        // }))
-        // setUploadData(ledgers);
+        const memberRequests = data.map((memberRequest,index) => ({
+          ID: index + 1,
+          id: memberRequest.id,
+          member_name: memberRequest.member_name,
+          month: memberRequest.month,
+          phone: memberRequest.phone,
+          request_date: memberRequest.request_date,
+          request_type: memberRequest.request_type,
+           status: memberRequest.status,
+          year: memberRequest.year,
+        }))
+        setUploadData(memberRequests);
 
-        // dispatch(setLedgers(ledgers))
+       
         return response.data.member_requests
       }catch(error){
-        console.log("Failed to fetch ledger files", error);
+        console.log("Failed to fetch member requests files", error);
       }finally{
         setProcessing(false)
       }
@@ -64,41 +63,25 @@ export default function MemberRequest() {
   return (
     <div className="">
       <div className="flex justify-end w-full px-6 py-5 ">
-        <div className="flex ">
-          <ButtonUpload
-            text="Upload Ledger"
-            icon={<Upload2 />}
-            link="upload-ledger"
-          />
-        </div>
       </div>
-      <BoardFilter text="Uploaded file">
+      <BoardFilter text="Member request sms transactions ">
         <div className="flex gap-6 ">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-            </SelectContent>
-          </Select>
+          
         </div>
       </BoardFilter>
-      {/* <div>
-        {loading ? (
+      <div>
+        {processing ? (
           <div className="flex justify-center items-center mt-32">
             <Spinner
-              spin={loading}
+              spin={processing}
               className="border-2 border-primary "
               size={9}
             />
           </div>
         ) : (
-          <DataTable data={ledgers} columns={UploadColumns} />
+          <DataTable data={uploadData} columns={memberRequestsColumns} />
         )}
-      </div> */}
+      </div>
     </div>
   );
 }

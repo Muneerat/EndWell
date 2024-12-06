@@ -16,7 +16,7 @@ import {
 } from "@radix-ui/react-icons"
 
 
-export const UploadColumns = [
+export const memberRequestsColumns = [
   {
     accessorKey: "ID",
     header: "S/N",
@@ -50,10 +50,24 @@ export const UploadColumns = [
     ),
   },
    {
-    accessorKey: "dateUploaded",
-    header: "Date Uploaded",
+    accessorKey: "phone",
+    header: "Phone",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("dateUploaded")}</div>
+      <div className="capitalize">{row.getValue("phone")}</div>
+    ),
+  },
+  {
+    accessorKey: "request_date",
+    header: "Request Date",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("request_date")}</div>
+    ),
+  },
+  {
+    accessorKey: "request_type",
+    header: "Request Type",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("request_type")}</div>
     ),
   },
    {
@@ -64,10 +78,10 @@ export const UploadColumns = [
     ),
   },
   {
-    accessorKey: "uploaded_by",
-    header: "Uploaded By",
+    accessorKey: "year",
+    header: "Year",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("uploaded_by")}</div>
+      <div className="capitalize">{row.getValue("year")}</div>
     ),
   },
 ]
