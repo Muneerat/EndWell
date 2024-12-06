@@ -52,6 +52,18 @@ const sideItemsTop = [
     icon: <Staff />,
     id: "eoyasset",
   },
+  {
+    label: "Member Request",
+    link: "/dashboard/memberRequest",
+    icon: <Staff />,
+    id: "memberRequest",
+  },
+  {
+    label: "Sms Counter",
+    link: "/dashboard/smsCounter",
+    icon: <Staff />,
+    id: "smsCounter",
+  },
 ];
 
 const sideItemsBottom = [

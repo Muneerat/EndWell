@@ -5,7 +5,6 @@ export const fetchPermissions = async () => {
     const response = await axios.get("/permissions", {
       headers: { Role: "admin" },
     });
-    console.log(response.data);
 
     return response.data.transactions;
   } catch (error) {

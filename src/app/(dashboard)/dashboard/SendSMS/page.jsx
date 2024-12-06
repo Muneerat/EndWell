@@ -28,7 +28,7 @@ export default function SendSMS() {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [messageParameters, setMessageParameters] = useState([]);
-  const [messageText, setMessageText] = useState("");
+  // const [messageText, setMessageText] = useState("");
   const [errors, setErrors] = useState("");
   const [processing, setProcessing] = useState(false);
   const [memberId] = useState(1);
@@ -51,17 +51,17 @@ export default function SendSMS() {
     loadMembers();
   }, [dispatch]);
 
-  useEffect(() => {
-    const loadMessageParameters = async () => {
-      try {
-        const messageData = await fetchMessageParameters();
-        setMessageParameters(messageData);
-      } catch (error) {
-        handleErrors(error, setErrors("Failed to load message parameters."));
-      }
-    };
-    loadMessageParameters();
-  }, []);
+  // useEffect(() => {
+  //   const loadMessageParameters = async () => {
+  //     try {
+  //       const messageData = await fetchMessageParameters();
+  //       setMessageParameters(messageData);
+  //     } catch (error) {
+  //       handleErrors(error, setErrors("Failed to load message parameters."));
+  //     }
+  //   };
+  //   loadMessageParameters();
+  // }, []);
 
   useEffect(() => {
     const loadYears = async () => {
@@ -96,21 +96,21 @@ export default function SendSMS() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!selectedYear || !selectedMonth || !messageText || !selectedMember) {
-      setErrors("Please select a year, month, member, and enter a message.");
+    if (!selectedYear || !selectedMonth || !selectedMember) {
+      setErrors("Please select a year, month, and member.");
       return;
     }
 
     const formData = new FormData();
     formData.append("year", selectedYear);
     formData.append("month", selectedMonth);
-    formData.append("message", messageText);
+    // formData.append("message", messageText);
 
     // Add specific logic for all members
     if (selectedMember === "all") {
-      formData.append("member_id", "all"); 
+      formData.append("member_id", "all");
     } else {
-      formData.append("member_id", selectedMember); 
+      formData.append("member_id", selectedMember);
     }
 
     setProcessing(true);
@@ -118,15 +118,14 @@ export default function SendSMS() {
     try {
       const response = await sendTransactionSms(formData);
       setErrors("");
-    
+
       dispatch(
         addToast({
           type: "success",
           message: response,
         })
       );
-      router.push('/dashboard/sms')
-      
+      router.push("/dashboard/sms");
     } catch (error) {
       handleErrors(error, setErrors(error.message));
     } finally {
@@ -165,24 +164,24 @@ export default function SendSMS() {
               </SelectContent>
             </Select>
             <Select onValueChange={(value) => setSelectedMonth(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={selectedMonth || "Select Month"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {months.map((month) => (
-                    <SelectItem key={month.value} value={String(month.value)}>
-                      {month.key}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={selectedMonth || "Select Month"} />
+              </SelectTrigger>
+              <SelectContent>
+                {months.map((month) => (
+                  <SelectItem key={month.value} value={String(month.value)}>
+                    {month.key}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
             <Select onValueChange={(value) => setSelectedMember(value)}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select Member" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Members</SelectItem>{" "}
+                <SelectItem value="all">All Members</SelectItem>
                 {/* Add All Members Option */}
                 {members.map((member) => (
                   <SelectItem key={member.id} value={String(member.id)}>
@@ -192,7 +191,7 @@ export default function SendSMS() {
               </SelectContent>
             </Select>
           </div>
-          <div>
+          {/* <div>
             <div className="grid grid-cols-1  gap-3 my-6">
               <div className="flex items-center gap-x-6">
                 <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
@@ -243,8 +242,8 @@ export default function SendSMS() {
                 </span>
               </div>
             </div>
-          </div>
-          <Label
+          </div> */}
+          {/* <Label
             htmlFor="message"
             text="Type your Message here"
             className="text-[#070606]"
@@ -255,11 +254,13 @@ export default function SendSMS() {
             placeholder="Dear (contributor’s name), your ENDWELL balances as of (Month) (Year) are: Total Contribution = (Total Contribution); Total Dividend = (Total Dividend); Withdrawable Dividend = (Withdrawable Dividend)."
             value={messageText}
             onChange={(e) => setMessageText(e.target.value)}
-          />
+          /> */}
+          <div className="flex justify-center">
 
           <Button className="md:w-2/6 my-5" disabled={processing}>
             {processing ? "Processing..." : "Send Message"}
           </Button>
+          </div>
         </div>
       </form>
     </div>
