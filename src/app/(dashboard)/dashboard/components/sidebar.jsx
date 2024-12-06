@@ -55,7 +55,7 @@ const sideItemsTop = [
 ];
 
 const sideItemsBottom = [
-  { label: "Settings", link: "#", icon: <Setting />, id: "settings" },
+  { label: "Settings", link: "/dashboard/setting", icon: <Setting />, id: "settings" },
   { label: "Help", link: "#", icon: <Help />, id: "logout" },
 ];
 
