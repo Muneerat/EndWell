@@ -15,7 +15,7 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
 
-export const memberRequestsColumns = [
+export const SmsCountColumns = [
   {
     accessorKey: "ID",
     header: "S/N",
@@ -48,37 +48,17 @@ export const memberRequestsColumns = [
       <div className="capitalize flex gap-2">{row.getValue("month")}</div>
     ),
   },
-  {
-    accessorKey: "phone",
-    header: "Phone",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("phone")}</div>
-    ),
-  },
-  {
-    accessorKey: "request_date",
-    header: "Request Date",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("request_date")}</div>
-    ),
-  },
-  {
-    accessorKey: "request_type",
-    header: "Request Type",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("request_type")}</div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
+ 
   {
     accessorKey: "year",
     header: "Year",
     cell: ({ row }) => <div className="capitalize">{row.getValue("year")}</div>,
+  },
+  {
+    accessorKey: "no_of_message",
+    header: "No of message ",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("no_of_message")}</div>
+    ),
   },
 ];
