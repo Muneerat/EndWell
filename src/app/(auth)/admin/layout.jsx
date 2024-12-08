@@ -20,7 +20,7 @@ export default function GuestLayout({ children }) {
  
 useEffect(() => {
     if (!(alert.type && alert.message)) {
-      return; // Skip if no valid alert
+      return; 
     }
 
     // Show the toast based on alert type

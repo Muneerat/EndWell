@@ -19,6 +19,19 @@ const sideItemsTop = [
     id: "overview",
   },
   { label: "Profile", link: "/user/profile", icon: <Setting />, id: "profile" },
+
+  {
+    label: "Member Request",
+    link: "/user/memberRequest",
+    icon: <Setting />,
+    id: "memberRequest",
+  },
+  {
+    label: "Sms Counter",
+    link: "/user/smsCounter",
+    icon: <Setting />,
+    id: "smsCounter",
+  },
   
 ];
 

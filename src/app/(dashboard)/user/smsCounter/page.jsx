@@ -9,15 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/app/components/Spinner";
-import { DataTable } from "../components/table";
-import BoardFilter from "../components/board";
 import { TransactionColumns } from "@/app/data/transaction";
 import { EoyassetColumns } from "@/app/data/eoyasset";
-import { fetchMonths, fetchYears } from "../upload-ledger/action";
 import { getAllMembers } from "@/Services/membersServie";
 import { SmsCountColumns } from "@/app/data/SmsCounts";
+import { DataTable } from "../../dashboard/components/table";
+import BoardFilter from "../../dashboard/components/board";
+import { fetchMonths, fetchYears } from "../requestSms/action";
 
 export default function SMSCount() {
   const [smsCounts, setSmsCounts] = useState([]);
@@ -30,6 +30,7 @@ export default function SMSCount() {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedMember, setSelectedMember] = useState("all");
   const dispatch = useDispatch();
+  const { userInfo} = useSelector((state) => state.userAuth);
 
   useEffect(() => {
     const loadMembers = async () => {
@@ -84,11 +85,11 @@ export default function SMSCount() {
         const response = await fetchSMSCount({
           year: selectedYear,
           month: selectedMonth,
-          id: selectedMember === "all" ? null : Number(selectedMember),
+          member_id: userInfo.id,
         });
         console.log("Fetching with: ", {
           year: selectedYear,
-          id: selectedMember === "all" ? null : Number(selectedMember),
+          member_id: userInfo.id,
         });
         
         console.log(response);
@@ -115,9 +116,7 @@ export default function SMSCount() {
     };
 
     fetchSMSCounts();
-  }, [selectedYear,selectedMonth, selectedMember]);
-
-  
+  }, [selectedYear,selectedMonth, userInfo.id]);
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
@@ -152,7 +151,7 @@ export default function SMSCount() {
                 </SelectContent>
               </Select>
 
-              <Select onValueChange={(value) => setSelectedMember(value)}>
+              {/* <Select onValueChange={(value) => setSelectedMember(value)}>
                 <SelectTrigger className="w-[200px]">
                   <SelectValue
                     placeholder={selectedMember || "Select Member"}
@@ -166,7 +165,7 @@ export default function SMSCount() {
                     </SelectItem>
                   ))}
                 </SelectContent>
-              </Select>
+              </Select> */}
             </div>
           </BoardFilter>
           {loading ? (

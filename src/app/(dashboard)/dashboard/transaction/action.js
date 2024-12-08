@@ -6,7 +6,7 @@ export const fetchTransaction = async ({month,year,id = null}) => {
       headers: { Role: "admin" },
       params: { month, year, member_id: id || undefined  },
     });
-    console.log(response.data.transactions);
+   
 
     return response.data.transactions;
   } catch (error) {

@@ -331,6 +331,15 @@ import { fetchTransaction } from "./action";
 import handleErrors from "@/app/data/handleErrors";
 import { fetchMonths, fetchYears } from "../upload-ledger/action";
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -343,6 +352,9 @@ import Spinner from "@/app/components/Spinner";
 import { DataTable } from "../components/table";
 import BoardFilter from "../components/board";
 import { TransactionColumns } from "@/app/data/transaction";
+import { Button } from "@/components/ui/button";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
 
 export default function Transaction() {
   const [transaction, setTransaction] = useState([]);
@@ -355,6 +367,7 @@ export default function Transaction() {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedMember, setSelectedMember] = useState("all");
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const loadMembers = async () => {
@@ -438,6 +451,37 @@ export default function Transaction() {
     fetchTransactions();
   }, [selectedMonth, selectedYear, selectedMember]);
 
+    // Actions for table
+    // const handleActions = {
+    //   edit: (transaction) => {
+    //     if (transaction.id) {
+    //       router.push(`/dashboard/editTransaction?id=${transaction.id}`);
+    //     }
+    //   },
+    // };;
+
+  const columnsWithActions = TransactionColumns.map((column) =>
+    column.id === "actions"
+      ? {
+          ...column,
+          cell: ({ row }) => (
+            <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0  ">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-white">
+              <DropdownMenuSeparator />
+              {/* <DropdownMenuItem onClick={() => handleActions.edit(row.original)}>Edit</DropdownMenuItem> */}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          ),
+        }
+      : column
+  );
+
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
       <form>
@@ -498,7 +542,7 @@ export default function Transaction() {
               />
             </div>
           ) : transaction.length > 0 ? (
-            <DataTable data={transaction} columns={TransactionColumns} />
+            <DataTable data={transaction} columns={columnsWithActions} />
           ) : (
             <p className="text-center text-gray-600">No transactions found.</p>
           )}

@@ -16,14 +16,16 @@ import {
 } from "@radix-ui/react-icons";
 
 export const SmsCountColumns = [
-  {
-    accessorKey: "ID",
-    header: "S/N",
-
-    cell: ({ row }) => <div className="capitalize">{row.getValue("ID")}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
+    {
+        accessorKey: "ID",
+        header: "S/N",
+    
+     cell: ({ row }) => (
+          <div className="capitalize">{row.getValue("ID")}</div>
+        ),
+        enableSorting: false,
+        enableHiding: false,
+      },
   {
     accessorKey: "member_name",
     header: ({ column }) => {
