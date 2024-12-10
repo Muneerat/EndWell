@@ -1,12 +1,15 @@
 "use client";
 import {
   Cancel,
+  EOYAssets,
   Hamburger,
   Help,
+  MemberRequest,
   Members,
   Overview,
   Setting,
   SMS,
+  SMSCounter,
   Staff,
   Uploaded,
 } from "../../../../assets/icon";
@@ -49,19 +52,19 @@ const sideItemsTop = [
   {
     label: "Eoyasset",
     link: "/dashboard/eoyasset",
-    icon: <Staff />,
+    icon: <EOYAssets />,
     id: "eoyasset",
   },
   {
     label: "Member Request",
     link: "/dashboard/memberRequest",
-    icon: <Staff />,
+    icon: <MemberRequest />,
     id: "memberRequest",
   },
   {
     label: "Sms Counter",
     link: "/dashboard/smsCounter",
-    icon: <Staff />,
+    icon: <SMSCounter />,
     id: "smsCounter",
   },
 ];

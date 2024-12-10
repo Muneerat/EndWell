@@ -29,7 +29,7 @@ export default function MainMenu() {
 
   useEffect(() => {
     dispatch(staffProfile({}));
-  }, []);
+  }, [dispatch]);
 
   const handleLogout = () => {
     if (!isLoggingOut) {

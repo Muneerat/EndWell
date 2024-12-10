@@ -428,7 +428,7 @@ export default function Transaction() {
           setErrors("No transactions found for the selected criteria.");
         } else {
           const transactions = response.map((transaction, index) => ({
-            id: index + 1,
+            id: transaction.id,
             member_name: transaction.member_name,
             total_contribution: transaction.total_contribution,
             total_dividend: transaction.total_dividend,
@@ -452,13 +452,15 @@ export default function Transaction() {
   }, [selectedMonth, selectedYear, selectedMember]);
 
     // Actions for table
-    // const handleActions = {
-    //   edit: (transaction) => {
-    //     if (transaction.id) {
-    //       router.push(`/dashboard/editTransaction?id=${transaction.id}`);
-    //     }
-    //   },
-    // };;
+    const handleActions = {
+      edit: (transaction) => {
+        if (transaction.id) {
+          router.push(
+            `/dashboard/editTransaction?id=${transaction.id}&month=${selectedMonth}&year=${selectedYear}`
+          );
+        }
+      },
+    };;
 
   const columnsWithActions = TransactionColumns.map((column) =>
     column.id === "actions"
@@ -474,7 +476,7 @@ export default function Transaction() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-white">
               <DropdownMenuSeparator />
-              {/* <DropdownMenuItem onClick={() => handleActions.edit(row.original)}>Edit</DropdownMenuItem> */}
+              <DropdownMenuItem onClick={() => handleActions.edit(row.original)}>Edit</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           ),
@@ -542,7 +544,7 @@ export default function Transaction() {
               />
             </div>
           ) : transaction.length > 0 ? (
-            <DataTable data={transaction} columns={columnsWithActions} />
+            <DataTable data={transaction} columns={TransactionColumns} />
           ) : (
             <p className="text-center text-gray-600">No transactions found.</p>
           )}
