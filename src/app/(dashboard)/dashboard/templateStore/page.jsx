@@ -9,6 +9,7 @@ import { fetchMessageTemplate } from "../setting/action";
 import handleErrors from "@/app/data/handleErrors";
 import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/Spinner";
+import { Back } from "@/assets/icon";
 
 export default function TemplateStore() {
   const [messageTemplate, setMessageTemplate] = useState({
@@ -89,9 +90,19 @@ export default function TemplateStore() {
   }
 
   return (
-    <div>
+    <div className="">
+        <div className="flex items-center gap-8 p-5">
+        <button
+          onClick={() => router.push("/dashboard/setting")}
+          className="flex items-center gap-2 font-normal cursor-pointer"
+        >
+          <Back />
+          <p>Back</p>
+        </button>
+        <h1 className="font-bold text-2xl">Edit SMS Template</h1>
+      </div>
       <form onSubmit={handleSubmit} className="m-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full bg-[#fff] md:p-5 mt-6 pb-32 rounded-md">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full bg-[#fff] md:p-5 p-5 mt-6 pb-32 rounded-md">
           <div>
             <label
               htmlFor="general_message"

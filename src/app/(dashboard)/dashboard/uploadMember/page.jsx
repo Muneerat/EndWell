@@ -63,7 +63,7 @@ export default function UploadMember() {
   return (
     <div className="md:px-6 sm:px-5">
       <BoardFilter text="Members">
-        <ButtonUpload text="Upload Multiple" icon={<Smile />} link="uploadMember" />
+        <ButtonUpload text="Add new member" icon={<Smile />} link="addMember" />
       </BoardFilter>
       <div className="bg-white flex flex-col justify-center my-20 md:p-10 p-5 w-full md:w-3/5 shadow-sm rounded-md mx-auto items-center">
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">

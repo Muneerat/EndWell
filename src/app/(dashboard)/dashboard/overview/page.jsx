@@ -137,7 +137,7 @@ const columnsWithActions = MemberColumns.map((column) =>
       </div>
       <BoardFilter text='Members'>
       <div className="flex flex-row gap-1 md:gap-6 ">
-          <Select>
+          {/* <Select>
             <SelectTrigger className="md:w-[180px] ">
               <SelectValue placeholder="2024" />
             </SelectTrigger>
@@ -146,8 +146,8 @@ const columnsWithActions = MemberColumns.map((column) =>
               <SelectItem value="2024">2024</SelectItem>
               <SelectItem value="2024">2024</SelectItem>
             </SelectContent>
-          </Select>
-          <Select>
+          </Select> */}
+          {/* <Select>
             <SelectTrigger className="md:w-[180px] ">
               <SelectValue placeholder="September" />
             </SelectTrigger>
@@ -156,7 +156,7 @@ const columnsWithActions = MemberColumns.map((column) =>
               <SelectItem value="dark">September</SelectItem>
               <SelectItem value="system">September</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         
         </div>
       </BoardFilter>

@@ -85,18 +85,14 @@ export default function Eoyasset() {
           year: selectedYear,
           id: selectedMember === "all" ? null : Number(selectedMember),
         });
-        console.log("Fetching with: ", {
-          year: selectedYear,
-          id: selectedMember === "all" ? null : Number(selectedMember),
-        });
-        
-        console.log(response);
+ 
+ 
         if (response.length === 0) {
           setErrors("No transactions found for the selected criteria.");
         } else {
 
           const Eoyasset = response.map((eoyasset, index) => ({
-            id: index + 1,
+            ID: index + 1,
             member_id: eoyasset.member_id,
             member_name: eoyasset.member_name,
             january: eoyasset.january,
@@ -130,7 +126,7 @@ export default function Eoyasset() {
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
-      <form>
+   
         <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
           <BoardFilter text="Eoyasset History">
@@ -193,7 +189,7 @@ export default function Eoyasset() {
             <p className="text-center text-gray-600">No transactions found.</p>
           )}
         </div>
-      </form>
+   
     </div>
   );
 }

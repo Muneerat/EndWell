@@ -18,11 +18,11 @@ import {
 
 export const EoyassetColumns = [
   {
-    accessorKey: "id",
+    accessorKey: "ID",
     header: "S/N",
 
  cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("id")}</div>
+      <div className="capitalize">{row.getValue("ID")}</div>
     ),
     enableSorting: false,
     enableHiding: false,

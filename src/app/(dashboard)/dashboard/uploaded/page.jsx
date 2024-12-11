@@ -71,7 +71,7 @@ export default function Uploaded() {
       </div>
       <BoardFilter text="Uploaded file">
         <div className="flex gap-6 ">
-          <Select>
+          {/* <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter" />
             </SelectTrigger>
@@ -80,7 +80,7 @@ export default function Uploaded() {
               <SelectItem value="2024">2024</SelectItem>
               <SelectItem value="2024">2024</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
       </BoardFilter>
       <div>
