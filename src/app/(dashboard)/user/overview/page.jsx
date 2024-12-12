@@ -144,7 +144,7 @@ export default function Transaction() {
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
-      <div className="flex justify-end mr-10">
+      <div className="flex justify-end md:mr-10">
       <ButtonUpload text="Request Report" icon={<UpArrow/>}  link="requestSms"/>
       </div>
       <form>

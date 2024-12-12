@@ -257,7 +257,7 @@ export function EOYAssets({ className }) {
 }
 export function MemberRequest({ className }) {
   return (
-    <svg className={`w-6 h-6 ${className}`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">n
+    <svg className={`w-5 h-5 ${className}`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">n
 <path d="M6 9C6.79565 9 7.55871 8.68393 8.12132 8.12132C8.68393 7.55871 9 6.79565 9 6C9 5.20435 8.68393 4.44129 8.12132 3.87868C7.55871 3.31607 6.79565 3 6 3C5.20435 3 4.44129 3.31607 3.87868 3.87868C3.31607 4.44129 3 5.20435 3 6C3 6.79565 3.31607 7.55871 3.87868 8.12132C4.44129 8.68393 5.20435 9 6 9ZM6 9V21M18 15C18.7956 15 19.5587 15.3161 20.1213 15.8787C20.6839 16.4413 21 17.2044 21 18C21 18.7956 20.6839 19.5587 20.1213 20.1213C19.5587 20.6839 18.7956 21 18 21C17.2044 21 16.4413 20.6839 15.8787 20.1213C15.3161 19.5587 15 18.7956 15 18C15 17.2044 15.3161 16.4413 15.8787 15.8787C16.4413 15.3161 17.2044 15 18 15ZM18 15V7.5C18 6.96957 17.7893 6.46086 17.4142 6.08579C17.0391 5.71071 16.5304 5.5 16 5.5H13.5" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 <path d="M14.5 8L12 5.5L14.5 3" stroke="#5B5B5B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
@@ -267,7 +267,7 @@ export function MemberRequest({ className }) {
 }
 export function SMSCounter({ className }) {
   return (
-    <svg className={`w-6 h-6 ${className}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={`w-5 h-5 ${className}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.4109 14.083L5.61436 16.667L0.818359 14.083M10.4109 14.083V19.25H0.818359V14.083M10.4109 14.083L7.77086 12.1375M0.818359 14.083L5.61436 10.5485L6.84786 11.457M9.24586 3.628H16.9204M9.24586 5.905H16.9204M9.24586 8.1825H14.1109M17.8834 0.75H8.14586C7.80161 0.75 7.47146 0.886753 7.22803 1.13018C6.98461 1.3736 6.84786 1.70375 6.84786 2.048V13.06L8.88036 11.0275H17.8834C18.2276 11.0275 18.5578 10.8907 18.8012 10.6473C19.0446 10.4039 19.1814 10.0738 19.1814 9.7295V2.048C19.1814 1.70375 19.0446 1.3736 18.8012 1.13018C18.5578 0.886753 18.2276 0.75 17.8834 0.75Z" stroke="#5B5B5B" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 

@@ -114,8 +114,8 @@ export default function SMSCount() {
   }, [selectedYear,selectedMonth, userInfo.id]);
 
   return (
-    <div className="md:px-6 py-10 sm:px-1 m-3">
-        <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
+    <div className="md:px-6 py-10 sm:px-1 md:m-3">
+        <div className="flex flex-col my-5  md:p-5 w-full lg: shadow-sm rounded-md mx-auto">
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
           <BoardFilter text="SMS Count History">
             <div className="flex md:flex-row flex-col  gap-6 mb-5">

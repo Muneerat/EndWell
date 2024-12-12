@@ -87,7 +87,7 @@ export default function Sidebar() {
               <Cancel />
             </button>
           </header>
-          <section className="flex flex-col gap-4">
+          <section className="flex flex-col gap-4 mb-3">
             {sideItemsTop.map((item, index) => (
               <Link
                 key={index}
