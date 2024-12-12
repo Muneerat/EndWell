@@ -39,12 +39,15 @@ export default function RequestSms() {
       try {
         const allRequestType = await fetchRequestTypes();
         const requestTypeArray = Object.values(allRequestType); // Extract values as an array
-      console.log(requestTypeArray)
+        console.log(requestTypeArray);
         console.log(typeof requestTypeArray);
         // console.log(allRequestType.months);
-        console.log(allRequestType, typeof allRequestType, Array.isArray(allRequestType));
+        console.log(
+          allRequestType,
+          typeof allRequestType,
+          Array.isArray(allRequestType)
+        );
 
-        
         setRequestType(allRequestType);
       } catch (error) {
         setErrors("Failed to load years.");
@@ -85,7 +88,15 @@ export default function RequestSms() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedYear || !selectedMonth || !selectedRequestType || !phoneNumber) {
+    const normalizedRequestType = Array.isArray(selectedRequestType)
+      ? selectedRequestType
+      : [selectedRequestType];
+    if (
+      !selectedYear ||
+      !selectedMonth ||
+      !normalizedRequestType.length ||
+      !phoneNumber
+    ) {
       console.log("All fields are required.");
       setErrors("All fields are required.");
       return;
@@ -99,11 +110,11 @@ export default function RequestSms() {
       year: selectedYear,
       month: selectedMonth,
       phoneNumber,
-      requestType: selectedRequestType,
+      request_type: String(normalizedRequestType),
     };
 
     try {
-      console.log("click",requestData);
+      console.log("click", requestData);
 
       setLoading(true);
       setErrors(null);
@@ -172,7 +183,7 @@ export default function RequestSms() {
               </Select>
             </div>
             <div className="my-5">
-            <TextInput
+              <TextInput
                 className="w-full block border-primary border-2 text-[#3E3E3E]"
                 label="Phone number"
                 id="number"
@@ -204,7 +215,7 @@ export default function RequestSms() {
                   />
                 </SelectTrigger>
                 <SelectContent>
-                  {requestTypes.map((requestType,index) => (
+                  {requestTypes.map((requestType, index) => (
                     <SelectItem key={index} value={requestType}>
                       {requestType}
                     </SelectItem>

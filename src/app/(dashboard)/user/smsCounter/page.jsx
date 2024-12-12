@@ -18,6 +18,7 @@ import { SmsCountColumns } from "@/app/data/SmsCounts";
 import { DataTable } from "../../dashboard/components/table";
 import BoardFilter from "../../dashboard/components/board";
 import { fetchMonths, fetchYears } from "../requestSms/action";
+import { userSmsCountColumns } from "@/app/data/userSmsCount";
 
 export default function SMSCount() {
   const [smsCounts, setSmsCounts] = useState([]);
@@ -87,23 +88,17 @@ export default function SMSCount() {
           month: selectedMonth,
           member_id: userInfo.id,
         });
-        console.log("Fetching with: ", {
-          year: selectedYear,
-          member_id: userInfo.id,
-        });
-        
-        console.log(response);
+    
         if (response.length === 0) {
           setErrors("No transactions found for the selected criteria.");
         } else {
-
-            // {member_name: 'FADIPE M.O TEST', month: 12, year: 2024, no_of_message: 3}
           const SmsCounts = response.map((SmsCount, index) => ({
             ID: index + 1,
             member_name: SmsCount.member_name,
             month: SmsCount.month,
             year: SmsCount.year,
             no_of_message: SmsCount.no_of_message,
+            total_amount: SmsCount.total_amount,
           }));
           setSmsCounts(SmsCounts);
           setErrors(null);
@@ -120,11 +115,10 @@ export default function SMSCount() {
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
-      <form>
         <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
           <BoardFilter text="SMS Count History">
-            <div className="flex gap-6 mb-5">
+            <div className="flex md:flex-row flex-col  gap-6 mb-5">
               <Select onValueChange={(value) => setSelectedYear(value)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={selectedYear || "Select Year"} />
@@ -178,12 +172,11 @@ export default function SMSCount() {
               />
             </div>
           ) : smsCounts.length > 0 ? (
-            <DataTable data={smsCounts} columns={SmsCountColumns} />
+            <DataTable data={smsCounts} columns={userSmsCountColumns} />
           ) : (
             <p className="text-center text-gray-600">No transactions found.</p>
           )}
         </div>
-      </form>
     </div>
   );
 }
