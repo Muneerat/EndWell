@@ -6,7 +6,6 @@ export const fetchSMSCount = async ({year,month,id }) => {
       headers: { Role: "admin" },
       params: {year,month, member_id: id || undefined },
     });
-console.log(response);
 
     return response.data.records;
   } catch (error) {

@@ -188,7 +188,7 @@ export default function AdminLayout({ children }) {
           }
         }
       } catch (error) {
-        console.error("Token validation error:", error);
+        console.log("Token validation error:", error);
         clearAuthData();
         router.push("/admin/SignIn");
       }

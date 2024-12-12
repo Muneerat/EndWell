@@ -63,4 +63,18 @@ export const SmsCountColumns = [
       <div className="capitalize">{row.getValue("no_of_message")}</div>
     ),
   },
+  {
+    accessorKey: "no_of_unit_used",
+    header: "Number of unit used",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("no_of_unit_used")}</div>
+    ),
+  },
+  {
+    accessorKey: "total_amount",
+    header: "Total Amount",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("total_amount")}</div>
+    ),
+  },
 ];

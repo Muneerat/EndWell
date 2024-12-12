@@ -35,13 +35,11 @@ export default function ViewStaff() {
   // }, [user_id, dispatch]);
 
   useEffect(() => {
-    console.log(userInfo, message, user_id);
 
       const fetchStaff = async () => {
         setLoading(true);
         try {
           const response = await axios.get(`/member/profile`);
-          console.log(response.data);
 
           setMembers(response.data.data);
         } catch (error) {

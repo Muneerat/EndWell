@@ -102,6 +102,14 @@ export default function Setting() {
             {messageTemplate.withdrawable_dividend_message || "N/A"}
           </span>
         </div>
+        <div className="md:flex items-center gap-x-6">
+          <span className="sm:w-40 flex-shrink-0 text-sm font-bold">
+          Price per unit:
+          </span>
+          <span className="capitalize text-sm">
+            {messageTemplate.price_per_unit || "N/A"}
+          </span>
+        </div>
       </div>
 
 

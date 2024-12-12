@@ -149,10 +149,10 @@ export default function Transaction() {
       </div>
       <form>
      
-        <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
+        <div className="flex flex-col my-5 md:p-5 w-full lg: shadow-sm rounded-md mx-auto">
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
           <BoardFilter text="Transaction History">
-            <div className="flex gap-6 mb-5">
+            <div className="flex md:flex-row flex-col gap-6 mb-5">
               <Select onValueChange={(value) => setSelectedYear(value)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={selectedYear || "Select Year"} />

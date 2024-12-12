@@ -11,7 +11,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TextInput from "@/app/components/TextInput";
-import { fetchMonths, fetchRequest, fetchRequestTypes, fetchYears } from "./action";
+import {
+  fetchMonths,
+  fetchRequest,
+  fetchRequestTypes,
+  fetchYears,
+} from "./action";
 import { addToast } from "@/Store/features/toastSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -33,8 +38,13 @@ export default function RequestSms() {
     const loadRequestType = async () => {
       try {
         const allRequestType = await fetchRequestTypes();
-        console.log(allRequestType);
+        const requestTypeArray = Object.values(allRequestType); // Extract values as an array
+      console.log(requestTypeArray)
+        console.log(typeof requestTypeArray);
+        // console.log(allRequestType.months);
+        console.log(allRequestType, typeof allRequestType, Array.isArray(allRequestType));
 
+        
         setRequestType(allRequestType);
       } catch (error) {
         setErrors("Failed to load years.");
@@ -75,48 +85,46 @@ export default function RequestSms() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("click");
-      // if (!selectedYear || !selectedMonth || !selectedRequestType || !phoneNumber) {
-      //   console.log("All fields are required.");
-      //   setErrors("All fields are required.");
-      //   return;
-      // }
+    if (!selectedYear || !selectedMonth || !selectedRequestType || !phoneNumber) {
+      console.log("All fields are required.");
+      setErrors("All fields are required.");
+      return;
+    }
     const formData = new FormData();
     formData.append("year", selectedYear);
     formData.append("month", selectedMonth);
 
-      // Prepare data
-      const requestData = {
-        year: selectedYear,
-        month: selectedMonth,
-        phoneNumber,
-        requestType: selectedRequestType,
-      };
-  
-      try {
-        console.log("click");
-        
-        setLoading(true);
-        setErrors(null);
-        const response =  await fetchRequest(requestData);
-        setErrors("");
-        console.log(response);
-        dispatchEvent(
-          addToast({
-            type: "success",
-            message: "SMS request submitted successfully",
-          })
-        )
-        routerpush("")
-      }catch (error) {
-        console.log(error);
-        
-        handleErrors(error, setErrors(error.message));
-        
-      } finally {
-        setLoading(false);
-      }
-  }
+    // Prepare data
+    const requestData = {
+      year: selectedYear,
+      month: selectedMonth,
+      phoneNumber,
+      requestType: selectedRequestType,
+    };
+
+    try {
+      console.log("click",requestData);
+
+      setLoading(true);
+      setErrors(null);
+      const response = await fetchRequest(requestData);
+      setErrors("");
+      console.log(response);
+      dispatch(
+        addToast({
+          type: "success",
+          message: "SMS request submitted successfully",
+        })
+      );
+      // routerpush("");
+    } catch (error) {
+      console.log(error);
+
+      handleErrors(error, setErrors(error.message));
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="px-6 py-10">
       <div className="flex items-center gap-8">
@@ -132,50 +140,54 @@ export default function RequestSms() {
       </div>
       <div className="bg-white flex flex-col justify-center my-20 md:p-10 p-5 w-full md:w-2/5 shadow-md rounded-md mx-auto items-center">
         <div className="flex flex-col gap-6 mb-12 w-full md:w-4/5">
-        <div>{error && <p className="pb-8 text-red-700 text-sm">{error}</p>}</div>  
-        <form onSubmit={handleSubmit}>
-        <div className="flex gap-6 mb-5">
-            <Select onValueChange={(value) => setSelectedYear(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={selectedYear || "Select Year"} />
-              </SelectTrigger>
-              <SelectContent>
-                {years.map((year) => (
-                  <SelectItem key={year} value={String(year)}>
-                    {year}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div>
+            {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="flex gap-6 mb-5">
+              <Select onValueChange={(value) => setSelectedYear(value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={selectedYear || "Select Year"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map((year) => (
+                    <SelectItem key={year} value={String(year)}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-            <Select onValueChange={(value) => setSelectedMonth(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={selectedMonth || "Select Month"} />
-              </SelectTrigger>
-              <SelectContent>
-                {months.map((month) => (
-                  <SelectItem key={month.value} value={String(month.value)}>
-                    {month.key}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="my-5">
+              <Select onValueChange={(value) => setSelectedMonth(value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={selectedMonth || "Select Month"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {months.map((month) => (
+                    <SelectItem key={month.value} value={String(month.value)}>
+                      {month.key}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="my-5">
             <TextInput
-              className="w-full block border-primary border-2 text-[#3E3E3E] m"
-              label="Phone number"
-              id="number"
-              maxLength="255"
-              placeholder="081234567892"
-              type="number"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="py-2">Request type</label>
+                className="w-full block border-primary border-2 text-[#3E3E3E]"
+                label="Phone number"
+                id="number"
+                maxLength="255"
+                placeholder="081234567892"
+                type="number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              {/* <label className="py-2">Request type</label>
             <Select onValueChange={(value) => setSelectedRequestType(value)}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder={selectedMonth || "Request type"} />
+                  <SelectValue placeholder={selectedRequestType || "Request type"} />
                 </SelectTrigger>
                 <SelectContent>
                   {requestTypes.map((requestType) => (
@@ -184,20 +196,28 @@ export default function RequestSms() {
                     </SelectItem>
                   ))}
                 </SelectContent>
+              </Select> */}
+              <Select onValueChange={(value) => setSelectedRequestType(value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue
+                    placeholder={selectedRequestType || "Request type"}
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {requestTypes.map((requestType,index) => (
+                    <SelectItem key={index} value={requestType}>
+                      {requestType}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
-          </div>
-          <div className="flex justify-center">
-          <Button
-            spin={loading}
-            disabled={loading}
-            className="w-3/6 my-5 "
-          >
-            Send request
-          </Button>
-
-          </div>
-        </form>
-       
+            </div>
+            <div className="flex justify-center">
+              <Button spin={loading} disabled={loading} className="w-3/6 my-5 ">
+                Send request
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

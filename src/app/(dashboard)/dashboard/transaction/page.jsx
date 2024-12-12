@@ -1,4 +1,3 @@
-
 // "use client";
 // import React, { useEffect, useState } from "react";
 // import { fetchTransaction } from "./action";
@@ -338,7 +337,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -417,7 +416,7 @@ export default function Transaction() {
     const fetchTransactions = async () => {
       if (!selectedYear && !selectedMonth) return;
       setLoading(true);
-      setTransaction([]); 
+      setTransaction([]);
       try {
         const response = await fetchTransaction({
           month: selectedMonth,
@@ -428,7 +427,7 @@ export default function Transaction() {
           setErrors("No transactions found for the selected criteria.");
         } else {
           const transactions = response.map((transaction, index) => ({
-            ID: index + 1 ,
+            ID: index + 1,
             id: transaction.id,
             member_name: transaction.member_name,
             total_contribution: transaction.total_contribution,
@@ -440,7 +439,7 @@ export default function Transaction() {
             uploaded_by: transaction.uploaded_by,
           }));
           setTransaction(transactions);
-          setErrors(null); 
+          setErrors(null);
         }
       } catch (error) {
         handleErrors(error, setErrors);
@@ -452,16 +451,16 @@ export default function Transaction() {
     fetchTransactions();
   }, [selectedMonth, selectedYear, selectedMember]);
 
-    // Actions for table
-    const handleActions = {
-      edit: (transaction) => {
-        if (transaction.id) {
-          router.push(
-            `/dashboard/editTransaction?id=${transaction.id}&month=${selectedMonth}&year=${selectedYear}`
-          );
-        }
-      },
-    };;
+  // Actions for table
+  const handleActions = {
+    edit: (transaction) => {
+      if (transaction.id) {
+        router.push(
+          `/dashboard/editTransaction?id=${transaction.id}&month=${selectedMonth}&year=${selectedYear}`
+        );
+      }
+    },
+  };
 
   const columnsWithActions = TransactionColumns.map((column) =>
     column.id === "actions"
@@ -469,17 +468,21 @@ export default function Transaction() {
           ...column,
           cell: ({ row }) => (
             <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0  ">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white">
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleActions.edit(row.original)}>Edit</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0  ">
+                  <span className="sr-only">Open menu</span>
+                  <DotsHorizontalIcon className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-white">
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => handleActions.edit(row.original)}
+                >
+                  Edit
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ),
         }
       : column
@@ -487,69 +490,65 @@ export default function Transaction() {
 
   return (
     <div className="md:px-6 md:py-10 sm:px-1 md:m-3">
-    
-        <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md md:mx-auto">
-          {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
-          <BoardFilter text="Transaction History">
-            <div className="flex md:flex-row flex-col gap-5 mb-5">
-              <Select onValueChange={(value) => setSelectedYear(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={selectedYear || "Select Year"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {years.map((year) => (
-                    <SelectItem key={year} value={String(year)}>
-                      {year}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+      <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md md:mx-auto">
+        {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
+        <BoardFilter text="Transaction History">
+          <div className="flex md:flex-row flex-col gap-5 mb-5">
+            <Select onValueChange={(value) => setSelectedYear(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={selectedYear || "Select Year"} />
+              </SelectTrigger>
+              <SelectContent>
+                {years.map((year) => (
+                  <SelectItem key={year} value={String(year)}>
+                    {year}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-              <Select onValueChange={(value) => setSelectedMonth(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={selectedMonth || "Select Month"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {months.map((month) => (
-                    <SelectItem key={month.value} value={String(month.value)}>
-                      {month.key}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <Select onValueChange={(value) => setSelectedMonth(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={selectedMonth || "Select Month"} />
+              </SelectTrigger>
+              <SelectContent>
+                {months.map((month) => (
+                  <SelectItem key={month.value} value={String(month.value)}>
+                    {month.key}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-              <Select onValueChange={(value) => setSelectedMember(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue
-                    placeholder={ "Select Member"}
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Members</SelectItem>
-                  {members.map((member) => (
-                    <SelectItem key={member.id} value={String(member.id)}>
-                      {member.first_name} {member.last_name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </BoardFilter>
-          {loading ? (
-            <div className="flex justify-center items-center mt-20">
-
-              <Spinner
-                className="border-2 border-primary"
-                size={9}
-                spin={loading}
-              />
-            </div>
-          ) : transaction.length > 0 ? (
-            <DataTable data={transaction} columns={TransactionColumns} />
-          ) : (
-            <p className="text-center text-gray-600">No transactions found.</p>
-          )}
-        </div>
+            <Select onValueChange={(value) => setSelectedMember(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={"Select Member"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Members</SelectItem>
+                {members.map((member) => (
+                  <SelectItem key={member.id} value={String(member.id)}>
+                    {member.first_name} {member.last_name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </BoardFilter>
+        {loading ? (
+          <div className="flex justify-center items-center mt-20">
+            <Spinner
+              className="border-2 border-primary"
+              size={9}
+              spin={loading}
+            />
+          </div>
+        ) : transaction.length > 0 ? (
+          <DataTable data={transaction} columns={columnsWithActions} />
+        ) : (
+          <p className="text-center text-gray-600">No transactions found.</p>
+        )}
+      </div>
     </div>
   );
 }

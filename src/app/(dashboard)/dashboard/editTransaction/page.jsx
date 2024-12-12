@@ -28,51 +28,6 @@ export default function EditTransaction() {
   const [loading, setLoading] = useState(false);
 
   // Fetch Transaction Details
-  // useEffect(() => {
-  //   if (!id || !month || !year) {
-  //     dispatch(
-  //       addToast({
-  //         type: "error",
-  //         message: "Missing required parameters: id, month, or year.",
-  //       })
-  //     );
-  //     router.push("/dashboard/transaction");
-  //     return;
-  //   }
-
-  //   const fetchTransactionDetails = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await axios.get(`/transaction/history`, {
-  //         headers: { Role: "admin" },
-  //         params: { id: 1,month: 1, year:2024 },
-  //       });
-  //     console.log(id,month,year);
-      
-  //       const transaction = response.data.transactions;
-  //       console.log(transaction,response);
-        
-  //       setFormData({
-  //         total_contribution: transaction.total_contribution,
-  //         total_dividend: transaction.total_dividend,
-  //         withdrawable_dividend: transaction.withdrawable_dividend,
-  //       });
-  //     } catch (error) {
-  //       console.error("Failed to fetch transaction:", error);
-  //       dispatch(
-  //         addToast({
-  //           type: "error",
-  //           message: "Failed to fetch transaction details.",
-  //         })
-  //       );
-  //       router.push("/dashboard/transaction");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchTransactionDetails();
-  // }, [id, month, year, dispatch, router]);
   useEffect(() => {
     if (!id || !month || !year) {
       dispatch(
@@ -84,43 +39,59 @@ export default function EditTransaction() {
       router.push("/dashboard/transaction");
       return;
     }
-  
+
     const fetchTransactionDetails = async () => {
+      if (!id) {
+        console.error("Missing transaction ID");
+        dispatch(
+          addToast({
+            type: "error",
+            message: "Transaction ID is missing.",
+          })
+        );
+        router.push("/dashboard/transaction");
+        return;
+      }
+    
       setLoading(true);
       try {
-        const response = await axios.get(`/transaction/history`, {
-          headers: { Role: "admin" },
-          params: { id, month, year },
-        });
-  
-        console.log("API Response:", response.data.transactions);
-  
-        const transaction = response.data.transactions; // Ensure this matches your API response structure
-        // if (!transaction) {
-        //   throw new Error("Transaction not found for the given parameters.");
-        // }
-  
+        console.log("Fetching transaction details for ID:", id);
+        const token = localStorage.getItem("_APP_ADMIN_TOKEN_KEY_");
+        const response = await axios.get(
+          "/admin/transaction/id", // Changed to POST to send id in the body
+          { id }, // Sending id in the request body
+          { headers: { Authorization: `Bearer ${token}` } }
+          
+        );
+    
+        console.log("API Response:", response);
+    
+        const transaction = response.data.transactions;
+        if (!transaction) {
+          throw new Error("Transaction not found in API response.");
+        }
+    
         setFormData({
           total_contribution: transaction.total_contribution,
           total_dividend: transaction.total_dividend,
           withdrawable_dividend: transaction.withdrawable_dividend,
         });
       } catch (error) {
-        console.log("Failed to fetch transaction:", error);
+        console.log("Error fetching transaction:", error.response || error.message);
         dispatch(
           addToast({
             type: "error",
             message: error.response?.data?.message || "Failed to fetch transaction details.",
           })
         );
-        // router.push("/dashboard/transaction");
       } finally {
         setLoading(false);
       }
     };
-  
+    
     fetchTransactionDetails();
   }, [id, month, year, dispatch, router]);
+
   
 
   // Handle Input Changes
@@ -170,7 +141,7 @@ export default function EditTransaction() {
         </button>
         <h1 className="font-bold text-2xl">Edit Transaction</h1>
       </div>
-      <div className="bg-white flex flex-col my-20 p-8 w-full shadow-sm rounded-md max-w-[1050px]">
+      {/* <div className="bg-white flex flex-col my-20 p-8 w-full shadow-sm rounded-md max-w-[1050px]">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full bg-[#fff] md:p-5 mt-6 pb-32 rounded-md">
             <TextInput
@@ -208,7 +179,7 @@ export default function EditTransaction() {
             Update
           </Button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 }

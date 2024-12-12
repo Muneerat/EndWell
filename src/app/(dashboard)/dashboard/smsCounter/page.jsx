@@ -37,7 +37,9 @@ export default function SMSCount() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        setMembers(response.payload);
+        console.log(response.payload);
+
+        setMembers(response.payload || []);
       } catch (error) {
         setErrors("Failed to load member data.");
       }
@@ -86,23 +88,19 @@ export default function SMSCount() {
           month: selectedMonth,
           id: selectedMember === "all" ? null : Number(selectedMember),
         });
-        console.log("Fetching with: ", {
-          year: selectedYear,
-          id: selectedMember === "all" ? null : Number(selectedMember),
-        });
-        
-        console.log(response);
+
         if (response.length === 0) {
           setErrors("No transactions found for the selected criteria.");
         } else {
-
-            // {member_name: 'FADIPE M.O TEST', month: 12, year: 2024, no_of_message: 3}
+          // {member_name: 'FADIPE M.O TEST', month: 12, year: 2024, no_of_message: 3}
           const SmsCounts = response.map((SmsCount, index) => ({
             ID: index + 1,
             member_name: SmsCount.member_name,
             month: SmsCount.month,
             year: SmsCount.year,
             no_of_message: SmsCount.no_of_message,
+            no_of_unit_used: SmsCount.no_of_unit_used,
+            total_amount: SmsCount.total_amount,
           }));
           setSmsCounts(SmsCounts);
           setErrors(null);
@@ -115,9 +113,7 @@ export default function SMSCount() {
     };
 
     fetchSMSCounts();
-  }, [selectedYear,selectedMonth, selectedMember]);
-
-  
+  }, [selectedYear, selectedMonth, selectedMember]);
 
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
@@ -154,24 +150,22 @@ export default function SMSCount() {
 
               <Select onValueChange={(value) => setSelectedMember(value)}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue
-                    placeholder={"Select Member"}
-                  />
+                  <SelectValue placeholder={"Select Member"} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Members</SelectItem>
-                  {members.map((member) => (
-                    <SelectItem key={member.id} value={String(member.id)}>
-                      {member.first_name} {member.last_name}
-                    </SelectItem>
-                  ))}
+                  {Array.isArray(members) &&
+                    members.map((member) => (
+                      <SelectItem key={member.id} value={String(member.id)}>
+                        {member.first_name} {member.last_name}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
           </BoardFilter>
           {loading ? (
             <div className="flex justify-center items-center mt-20">
-
               <Spinner
                 className="border-2 border-primary"
                 size={9}

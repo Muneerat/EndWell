@@ -58,7 +58,7 @@ export default function TemplateStore() {
 
     try {
       const response = await axios.post(
-        `/admin/message/template/store`,
+        `/admin/message/setting/store`,
         messageTemplate,
         { headers: { Role: "admin" } }
       );
@@ -210,6 +210,28 @@ export default function TemplateStore() {
             {errors.withdrawable_dividend_message && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.withdrawable_dividend_message}
+              </p>
+            )}
+          </div>
+          <div>
+            <label
+              htmlFor="withdrawable_dividend_message"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Price per unit
+            </label>
+            <textarea
+              id="price_per_unit"
+              name="price_per_unit"
+              className="w-full p-2 border border-gray-300 rounded-md resize-none"
+              placeholder="price_per_uni"
+              value={messageTemplate.price_per_unit}
+              onChange={handleChange}
+              rows={4}
+            />
+            {errors.price_per_unit && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.price_per_unit}
               </p>
             )}
           </div>
