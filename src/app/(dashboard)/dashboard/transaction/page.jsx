@@ -426,6 +426,8 @@ export default function Transaction() {
         if (response.length === 0) {
           setErrors("No transactions found for the selected criteria.");
         } else {
+          console.log(response);
+          
           const transactions = response.map((transaction, index) => ({
             ID: index + 1,
             id: transaction.id,
