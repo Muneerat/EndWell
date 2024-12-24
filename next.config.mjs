@@ -5,7 +5,6 @@
 
 export default {
   async redirects() {
-    console.log("Applying redirect from '/' to '/admin'");
     return [
       {
         source: "/",

@@ -39,31 +39,7 @@ export default function Member() {
 
        //fetch all users 
   useEffect(() => {
-    // const members = async () => {
-    //   setProcessing(true);
-    //   try {
-    //     const response = await axios.get("/admin/member/all");
-    //     const data = await response.data.users;
 
-    //     const formattedData = data.map((member, index) => ({
-    //        ID: index + 1,
-    //        id: member.id,
-    //       first_name: member.first_name,
-    //       last_name: member.last_name,
-    //       phone: member.phone,
-    //     }));
-    //     setMemberData(formattedData);
-    //     dispatch(setMember(formattedData))
-
-    //     return response.data;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }finally{
-    //     setProcessing(false);
-    //   }
-
-    // };
-    // members();
      dispatch(getAllMembers())
   }, [dispatch]);
 
