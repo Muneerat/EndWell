@@ -9,21 +9,10 @@ export default {
     return [
       {
         source: "/",
-        destination: "/admin/signIn",
+        destination: "/admin/SignIn",
         permanent: false,
       },
     ];
   },
 };
 
-// export default {
-//   async redirects() {
-//     return [
-//       {
-//         source: "/",
-//         destination: "/admin/SignIn",
-//         permanent: true,
-//       },
-//     ];
-//   },
-// };
