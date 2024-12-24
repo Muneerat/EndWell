@@ -17,7 +17,7 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "EndWell",
-  description: "Admin Dashboard",
+  description: "EndWell",
 };
 
 export default function RootLayout({ children }) {
