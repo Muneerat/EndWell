@@ -374,7 +374,12 @@ export default function Transaction() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        setMembers(response.payload);
+        if(response?.payload &&Array.isArray(response.payload)){
+          setMembers(response.payload);
+        }else{
+          setErrors(response.payload?.message || "No record found.");
+          setMembers([]);
+        }
       } catch (error) {
         setErrors("Failed to load member data.");
       }

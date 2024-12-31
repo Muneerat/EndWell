@@ -1,15 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import { fetchTransaction } from "./action";
 import handleErrors from "@/app/data/handleErrors";
 import { fetchMonths, fetchYears } from "../upload-ledger/action";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 import { useDispatch } from "react-redux";
 import { getAllMembers } from "@/Services/membersServie";
 import Spinner from "@/app/components/Spinner";
@@ -18,6 +19,14 @@ import BoardFilter from "../components/board";
 import { TransactionColumns } from "@/app/data/transaction";
 import { fetchEoyasset } from "./action";
 import { EoyassetColumns } from "@/app/data/eoyasset";
+// import "select2";
+// import $ from "jquery";
+// import "select2/dist/js/select2.min.js";
+// import "select2/dist/css/select2.min.css";
+// import Select from "react-select";
+// import Select from "react-select/dist/declarations/src/Select";
+import SelectSearch from "react-select-search";
+import Select from 'react-select'
 
 export default function Eoyasset() {
   const [eoyasset, setEoyasset] = useState([]);
@@ -27,17 +36,22 @@ export default function Eoyasset() {
   const [years, setYears] = useState([]);
   const [months, setMonths] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedMember, setSelectedMember] = useState("all");
   const dispatch = useDispatch();
 
+  // Fetch members
   useEffect(() => {
     const loadMembers = async () => {
       try {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        setMembers(response.payload);
+        if(response?.payload &&Array.isArray(response.payload)){
+          setMembers(response.payload);
+        }else{
+          setErrors(response.payload?.message || "No record found.");
+          setMembers([]);
+        }
       } catch (error) {
         setErrors("Failed to load member data.");
       }
@@ -45,6 +59,16 @@ export default function Eoyasset() {
     loadMembers();
   }, [dispatch]);
 
+    const memberOptions = [
+    { value: "all", label: "All Members" },
+    ...members.map((member) => ({
+      value: member.id,
+      label: `${member.first_name} ${member.last_name}`,
+    })),
+  ];
+
+
+  // Fetch years
   useEffect(() => {
     const loadYears = async () => {
       try {
@@ -57,6 +81,7 @@ export default function Eoyasset() {
     loadYears();
   }, []);
 
+  // Fetch months
   useEffect(() => {
     const loadMonths = async () => {
       try {
@@ -75,9 +100,10 @@ export default function Eoyasset() {
     loadMonths();
   }, []);
 
+  // Fetch eoyassets
   useEffect(() => {
     const fetchEoyassets = async () => {
-      if (!selectedYear && !selectedMonth) return;
+      if (!selectedYear) return;
       setLoading(true);
       setEoyasset([]);
       try {
@@ -85,12 +111,10 @@ export default function Eoyasset() {
           year: selectedYear,
           id: selectedMember === "all" ? null : Number(selectedMember),
         });
- 
- 
+
         if (response.length === 0) {
           setErrors("No transactions found for the selected criteria.");
         } else {
-
           const Eoyasset = response.map((eoyasset, index) => ({
             ID: index + 1,
             member_id: eoyasset.member_id,
@@ -124,72 +148,65 @@ export default function Eoyasset() {
     fetchEoyassets();
   }, [selectedYear, selectedMember]);
 
+  // const selectRef = useRef(null);
+
+  // useEffect(() => {
+  //   if (selectRef.current) {
+  //     $(selectRef.current).select2();
+  
+  //     // Optional: Clean up the select2 instance on unmount
+  //     return () => {
+  //       $(selectRef.current).select2('destroy');
+  //     };
+  //   }
+  // }, []);
+
+    const handleMemberChange = (selectedOption) => {
+    setSelectedMember(selectedOption?.value || "all");
+  };
+
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
-   
-        <div className="flex flex-col my-5 md:p-1 p-5 w-full lg: shadow-sm rounded-md mx-auto">
-          {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
-          <BoardFilter text="Eoyasset History">
-            <div className="flex gap-6 mb-5">
-              <Select onValueChange={(value) => setSelectedYear(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={selectedYear || "Select Year"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {years.map((year) => (
-                    <SelectItem key={year} value={String(year)}>
-                      {year}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+      <div className="flex flex-col my-5 md:p-1 p-5 w-full lg:shadow-sm rounded-md mx-auto">
+        {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
+        <BoardFilter text="Eoyasset History">
+          <div className="flex gap-6 mb-5">
+            {/* <Select onValueChange={(value) => setSelectedYear(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={selectedYear || "Select Year"} />
+              </SelectTrigger>
+              <SelectContent>
+                {years.map((year) => (
+                  <SelectItem key={year} value={String(year)}>
+                    {year}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select> */}
 
-              {/* <Select onValueChange={(value) => setSelectedMonth(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={selectedMonth || "Select Month"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {months.map((month) => (
-                    <SelectItem key={month.value} value={String(month.value)}>
-                      {month.key}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select> */}
-
-              <Select onValueChange={(value) => setSelectedMember(value)}>
-                <SelectTrigger className="w-[200px]">
-                  <SelectValue
-                    placeholder={selectedMember || "Select Member"}
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Members</SelectItem>
-                  {members.map((member) => (
-                    <SelectItem key={member.id} value={String(member.id)}>
-                      {member.first_name} {member.last_name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </BoardFilter>
-          {loading ? (
-            <div className="flex justify-center items-center mt-20">
-
-              <Spinner
-                className="border-2 border-primary"
-                size={9}
-                spin={loading}
-              />
-            </div>
-          ) : eoyasset.length > 0 ? (
-            <DataTable data={eoyasset} columns={EoyassetColumns} />
-          ) : (
-            <p className="text-center text-gray-600">No transactions found.</p>
-          )}
-        </div>
-   
+       <Select
+              options={memberOptions}
+              placeholder="Select Member"
+              onChange={handleMemberChange}
+              value={memberOptions.find((opt) => opt.value === selectedMember)}
+              className="w-[200px]"
+            />
+          </div>
+        </BoardFilter>
+        {loading ? (
+          <div className="flex justify-center items-center mt-20">
+            <Spinner
+              className="border-2 border-primary"
+              size={9}
+              spin={loading}
+            />
+          </div>
+        ) : eoyasset.length > 0 ? (
+          <DataTable data={eoyasset} columns={EoyassetColumns} />
+        ) : (
+          <p className="text-center text-gray-600">No transactions found.</p>
+        )}
+      </div>
     </div>
   );
 }

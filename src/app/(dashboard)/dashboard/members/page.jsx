@@ -107,7 +107,7 @@ export default function Member() {
         <ButtonUpload text="Add new member" icon={<Smile />} link="addMember" />
       </BoardFilter>
       <div>
-        {loading ? (
+        {/* {loading ? (
           <div className="flex justify-center items-center mt-32">
             <Spinner
               spin={loading}
@@ -117,9 +117,34 @@ export default function Member() {
           </div>
         ) : error?(
           <div>{error}</div>
-        ):
+        ):Array.isArray(members) &&  members.length > 0 ? 
          (
           <DataTable data={members} columns={columnsWithActions} />
+        ):
+        (
+          (
+            !loading && !error && <p>No members found.</p>
+          )
+        )} */}
+              {loading ? (
+          <div className="flex justify-center items-center mt-32">
+            <Spinner
+              spin={loading}
+              className="border-2 border-primary"
+              size={9}
+            />
+          </div>
+        ) : error ? (
+          <div className="pb-8 text-red-700 text-sm">
+            {/* Safely render error message */}
+            {typeof error === "string"
+              ? error
+              : error.message || "An unexpected error occurred."}
+          </div>
+        ) : Array.isArray(members) && members.length > 0 ? (
+          <DataTable data={members} columns={columnsWithActions} />
+        ) : (
+          !loading && !error && <p>No members found.</p>
         )}
       </div>
     </div>
