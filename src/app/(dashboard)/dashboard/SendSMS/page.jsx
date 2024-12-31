@@ -4,7 +4,7 @@ import UploadFile from "../components/upload";
 import Button from "@/app/components/Button";
 import { Back } from "@/assets/icon";
 import {
-  Select,
+  Select as CustomSelect,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -20,6 +20,7 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { getAllMembers } from "@/Services/membersServie";
 import { useRouter } from "next/navigation";
+import Select from "react-select";
 
 export default function SendSMS() {
   const [file, setFile] = useState(null);
@@ -43,7 +44,12 @@ export default function SendSMS() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        setMemberData(response.payload);
+        if(response?.payload &&Array.isArray(response.payload)){
+          setMembers(response.payload);
+        }else{
+          setErrors(response.payload?.message || "No record found.");
+          setMembers([]);
+        }
       } catch (error) {
         handleErrors(error, setErrors("Failed to load member data."));
       }
@@ -51,6 +57,35 @@ export default function SendSMS() {
     loadMembers();
   }, [dispatch]);
 
+
+  const memberOptions = [
+    { value: "select", label: "Select Members" },
+  { value: "all", label: "All Members" },
+  ...members.map((member) => ({
+    value: member.id,
+    label: `${member.first_name} ${member.last_name}`,
+  })),
+];
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    border: '2px solid #000680',
+    padding: '6px',
+  }),
+  option: (base, { isFocused, isSelected }) => ({
+    ...base,
+    backgroundColor: isFocused ? '#fff' : isSelected ? '#fff' : '#fff',
+    color: '#333',
+    padding: '10px',
+  }),
+};
+
+  const handleMemberChange = (selectedOption) => {
+  setSelectedMember(selectedOption?.value || "all");
+};
   // useEffect(() => {
   //   const loadMessageParameters = async () => {
   //     try {
@@ -151,7 +186,7 @@ export default function SendSMS() {
             {errors && <p className="pb-8 text-red-700 text-sm">{errors}</p>}
           </div>
           <div className="flex flex-col md:flex-row gap-6 items-center justify-center mb-8">
-            <Select onValueChange={(value) => setSelectedYear(value)}>
+            <CustomSelect onValueChange={(value) => setSelectedYear(value)}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={selectedYear || "Select Year"} />
               </SelectTrigger>
@@ -162,8 +197,8 @@ export default function SendSMS() {
                   </SelectItem>
                 ))}
               </SelectContent>
-            </Select>
-            <Select onValueChange={(value) => setSelectedMonth(value)}>
+            </CustomSelect>
+            <CustomSelect onValueChange={(value) => setSelectedMonth(value)}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={selectedMonth || "Select Month"} />
               </SelectTrigger>
@@ -174,22 +209,31 @@ export default function SendSMS() {
                   </SelectItem>
                 ))}
               </SelectContent>
-            </Select>
-
+            </CustomSelect>
+{/* 
             <Select onValueChange={(value) => setSelectedMember(value)}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select Member" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Members</SelectItem>
-                {/* Add All Members Option */}
+                Add All Members Option
                 {members.map((member) => (
                   <SelectItem key={member.id} value={String(member.id)}>
                     {member.first_name} {member.last_name}
                   </SelectItem>
                 ))}
               </SelectContent>
-            </Select>
+            </Select> */}
+
+                   <Select
+                          options={memberOptions}
+                          placeholder="Select Member"
+                          onChange={handleMemberChange}
+                          value={memberOptions.find((opt) => opt.value === selectedMember)}
+                          className="w-[180px] "
+                          styles={customStyles}
+                        />
           </div>
           {/* <div>
             <div className="grid grid-cols-1  gap-3 my-6">

@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { fetchTransaction } from "./action";
 import handleErrors from "@/app/data/handleErrors";
 import { fetchMonths, fetchYears } from "../upload-ledger/action";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
+import {
+  Select as CustomSelect,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useDispatch } from "react-redux";
 import { getAllMembers } from "@/Services/membersServie";
 import Spinner from "@/app/components/Spinner";
@@ -19,14 +19,9 @@ import BoardFilter from "../components/board";
 import { TransactionColumns } from "@/app/data/transaction";
 import { fetchEoyasset } from "./action";
 import { EoyassetColumns } from "@/app/data/eoyasset";
-// import "select2";
-// import $ from "jquery";
-// import "select2/dist/js/select2.min.js";
-// import "select2/dist/css/select2.min.css";
-// import Select from "react-select";
-// import Select from "react-select/dist/declarations/src/Select";
 import SelectSearch from "react-select-search";
-import Select from 'react-select'
+// import Select from 'react-select'
+import Select from "react-select";
 
 export default function Eoyasset() {
   const [eoyasset, setEoyasset] = useState([]);
@@ -46,9 +41,9 @@ export default function Eoyasset() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        if(response?.payload &&Array.isArray(response.payload)){
+        if (response?.payload && Array.isArray(response.payload)) {
           setMembers(response.payload);
-        }else{
+        } else {
           setErrors(response.payload?.message || "No record found.");
           setMembers([]);
         }
@@ -59,14 +54,14 @@ export default function Eoyasset() {
     loadMembers();
   }, [dispatch]);
 
-    const memberOptions = [
+  const memberOptions = [
+    { value: "select", label: "Select Members" },
     { value: "all", label: "All Members" },
     ...members.map((member) => ({
       value: member.id,
       label: `${member.first_name} ${member.last_name}`,
     })),
   ];
-
 
   // Fetch years
   useEffect(() => {
@@ -148,20 +143,23 @@ export default function Eoyasset() {
     fetchEoyassets();
   }, [selectedYear, selectedMember]);
 
-  // const selectRef = useRef(null);
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      backgroundColor: "#fff",
+      borderRadius: "8px",
+      border: "2px solid #000680",
+      padding: "6px",
+    }),
+    option: (base, { isFocused, isSelected }) => ({
+      ...base,
+      backgroundColor: isFocused ? "#fff" : isSelected ? "#fff" : "#fff",
+      color: "#333",
+      padding: "10px",
+    }),
+  };
 
-  // useEffect(() => {
-  //   if (selectRef.current) {
-  //     $(selectRef.current).select2();
-  
-  //     // Optional: Clean up the select2 instance on unmount
-  //     return () => {
-  //       $(selectRef.current).select2('destroy');
-  //     };
-  //   }
-  // }, []);
-
-    const handleMemberChange = (selectedOption) => {
+  const handleMemberChange = (selectedOption) => {
     setSelectedMember(selectedOption?.value || "all");
   };
 
@@ -171,7 +169,7 @@ export default function Eoyasset() {
         {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
         <BoardFilter text="Eoyasset History">
           <div className="flex gap-6 mb-5">
-            {/* <Select onValueChange={(value) => setSelectedYear(value)}>
+            <CustomSelect onValueChange={(value) => setSelectedYear(value)}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={selectedYear || "Select Year"} />
               </SelectTrigger>
@@ -182,14 +180,15 @@ export default function Eoyasset() {
                   </SelectItem>
                 ))}
               </SelectContent>
-            </Select> */}
+            </CustomSelect>
 
-       <Select
+            <Select
               options={memberOptions}
               placeholder="Select Member"
               onChange={handleMemberChange}
               value={memberOptions.find((opt) => opt.value === selectedMember)}
-              className="w-[200px]"
+              className="w-[180px] "
+              styles={customStyles}
             />
           </div>
         </BoardFilter>
