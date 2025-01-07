@@ -52,6 +52,7 @@ export default function Eoyasset() {
     loadMembers();
   }, [dispatch]);
 
+
   const memberOptions = [
     { value: "select", label: "Select Members" },
     { value: "all", label: "All Members" },
@@ -168,6 +169,7 @@ export default function Eoyasset() {
         <BoardFilter text="Eoyasset History">
           <div className="flex gap-6 mb-5">
             <CustomSelect onValueChange={(value) => setSelectedYear(value)}>
+            <CustomSelect onValueChange={(value) => setSelectedYear(value)}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={selectedYear || "Select Year"} />
               </SelectTrigger>
@@ -178,6 +180,7 @@ export default function Eoyasset() {
                   </SelectItem>
                 ))}
               </SelectContent>
+            </CustomSelect>
             </CustomSelect>
 
             <Select
