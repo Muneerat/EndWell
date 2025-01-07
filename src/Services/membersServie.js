@@ -205,7 +205,6 @@ export const getAllMembers = createAsyncThunk(
           message: message || "An error occurred while fetching members.",
         });
       } else {
-        console.log(error.request);
         return rejectWithValue({
           status: 500,
           message: "Network error: Unable to reach the server.",

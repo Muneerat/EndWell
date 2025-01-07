@@ -35,7 +35,6 @@ export default function SMS() {
                  date: member.date,
                  status: member.status,
               }));
-         console.log(response.message);
           setAllMessage(formattedData)
       }catch(error){
         console.log(error,"Failed to load messages.")
@@ -46,16 +45,7 @@ export default function SMS() {
     }; 
     allMessages();
   },[])
-  // const SMSDatas = SMSData.map((data,index) => {
-  //   return {
-  //       id: index,
-  //       name: data.name,
-  //       number: data.number,
-  //       date: data.date,
-  //       status: data.status,
-      
-  //   };
-  // })
+
   return (
     <div className="">
       <div className="flex justify-end w-full px-6 py-5 ">
@@ -65,29 +55,6 @@ export default function SMS() {
         </div>
       </div>
       <BoardFilter text='Messages'>
-      {/* <div className="flex gap-6 ">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="2024" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="September" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="september">September</SelectItem>
-              <SelectItem value="dark">September</SelectItem>
-              <SelectItem value="system">September</SelectItem>
-            </SelectContent>
-          </Select>
-     
-        </div> */}
       </BoardFilter>
       <div>
         {/* <DataTable data={SMSDatas} columns={SMSColumns}/> */}

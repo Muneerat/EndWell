@@ -94,8 +94,10 @@ export default function UploadLedger() {
     } catch (error) {
       handleErrors(
         error,
-        setErrors("Ledger already uploaded for the request month and year")
+        setErrors(error.message)
       );
+    
+      
     } finally {
       setProcessing(false);
     }

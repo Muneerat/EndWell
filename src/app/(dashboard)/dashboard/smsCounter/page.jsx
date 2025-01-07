@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { fetchSMSCount, fetchTransaction } from "./action";
 import handleErrors from "@/app/data/handleErrors";
 import {
-  Select,
+  Select as CustomSelect,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -18,6 +18,7 @@ import { EoyassetColumns } from "@/app/data/eoyasset";
 import { fetchMonths, fetchYears } from "../upload-ledger/action";
 import { getAllMembers } from "@/Services/membersServie";
 import { SmsCountColumns } from "@/app/data/SmsCounts";
+import Select from "react-select";
 
 export default function SMSCount() {
   const [smsCounts, setSmsCounts] = useState([]);
@@ -37,7 +38,6 @@ export default function SMSCount() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        console.log(response.payload);
 
         setMembers(response.payload || []);
       } catch (error) {
@@ -115,6 +115,35 @@ export default function SMSCount() {
     fetchSMSCounts();
   }, [selectedYear, selectedMonth, selectedMember]);
 
+  const memberOptions = [
+    { value: "select", label: "Select Members" },
+    { value: "all", label: "All Members" },
+    ...members.map((member) => ({
+      value: member.id,
+      label: `${member.first_name} ${member.last_name}`,
+    })),
+  ];
+
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      backgroundColor: "#fff",
+      borderRadius: "8px",
+      border: "2px solid #000680",
+      padding: "6px",
+    }),
+    option: (base, { isFocused, isSelected }) => ({
+      ...base,
+      backgroundColor: isFocused ? "#fff" : isSelected ? "#fff" : "#fff",
+      color: "#333",
+      padding: "10px",
+    }),
+  };
+
+  const handleMemberChange = (selectedOption) => {
+    setSelectedMember(selectedOption?.value || "all");
+  };
+
   return (
     <div className="md:px-6 py-10 sm:px-1 m-3">
       <form>
@@ -122,7 +151,7 @@ export default function SMSCount() {
           {error && <p className="pb-8 text-red-700 text-sm">{error}</p>}
           <BoardFilter text="SMS Count History">
             <div className="flex md:flex-row flex-col gap-6 mb-5">
-              <Select onValueChange={(value) => setSelectedYear(value)}>
+              <CustomSelect onValueChange={(value) => setSelectedYear(value)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={selectedYear || "Select Year"} />
                 </SelectTrigger>
@@ -133,9 +162,9 @@ export default function SMSCount() {
                     </SelectItem>
                   ))}
                 </SelectContent>
-              </Select>
+              </CustomSelect>
 
-              <Select onValueChange={(value) => setSelectedMonth(value)}>
+              <CustomSelect onValueChange={(value) => setSelectedMonth(value)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={selectedMonth || "Select Month"} />
                 </SelectTrigger>
@@ -146,9 +175,9 @@ export default function SMSCount() {
                     </SelectItem>
                   ))}
                 </SelectContent>
-              </Select>
+              </CustomSelect>
 
-              <Select onValueChange={(value) => setSelectedMember(value)}>
+              {/* <Select onValueChange={(value) => setSelectedMember(value)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={"Select Member"} />
                 </SelectTrigger>
@@ -161,7 +190,15 @@ export default function SMSCount() {
                       </SelectItem>
                     ))}
                 </SelectContent>
-              </Select>
+              </Select> */}
+                      <Select
+              options={memberOptions}
+              placeholder="Select Member"
+              onChange={handleMemberChange}
+              value={memberOptions.find((opt) => opt.value === selectedMember)}
+              className="w-[180px] "
+              styles={customStyles}
+            />
             </div>
           </BoardFilter>
           {loading ? (

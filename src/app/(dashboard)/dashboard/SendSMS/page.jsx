@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { getAllMembers } from "@/Services/membersServie";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
+import Dropdown from "../components/dropdown";
 
 export default function SendSMS() {
   const [file, setFile] = useState(null);
@@ -44,48 +45,47 @@ export default function SendSMS() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        if(response?.payload &&Array.isArray(response.payload)){
+        if (response?.payload && Array.isArray(response.payload)) {
           setMembers(response.payload);
-        }else{
+        } else {
           setErrors(response.payload?.message || "No record found.");
           setMembers([]);
         }
       } catch (error) {
-        handleErrors(error, setErrors("Failed to load member data."));
+        handleErrors(error, setErrors("No record found."));
       }
     };
     loadMembers();
   }, [dispatch]);
 
-
   const memberOptions = [
     { value: "select", label: "Select Members" },
-  { value: "all", label: "All Members" },
-  ...members.map((member) => ({
-    value: member.id,
-    label: `${member.first_name} ${member.last_name}`,
-  })),
-];
+    { value: "all", label: "All Members" },
+    ...members.map((member) => ({
+      value: member.id,
+      label: `${member.first_name} ${member.last_name}`,
+    })),
+  ];
 
-const customStyles = {
-  control: (base) => ({
-    ...base,
-    backgroundColor: '#fff',
-    borderRadius: '8px',
-    border: '2px solid #000680',
-    padding: '6px',
-  }),
-  option: (base, { isFocused, isSelected }) => ({
-    ...base,
-    backgroundColor: isFocused ? '#fff' : isSelected ? '#fff' : '#fff',
-    color: '#333',
-    padding: '10px',
-  }),
-};
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      backgroundColor: "#fff",
+      borderRadius: "8px",
+      border: "2px solid #000680",
+      padding: "6px",
+    }),
+    option: (base, { isFocused, isSelected }) => ({
+      ...base,
+      backgroundColor: isFocused ? "#fff" : isSelected ? "#fff" : "#fff",
+      color: "#333",
+      padding: "10px",
+    }),
+  };
 
   const handleMemberChange = (selectedOption) => {
-  setSelectedMember(selectedOption?.value || "all");
-};
+    setSelectedMember(selectedOption?.value || "all");
+  };
   // useEffect(() => {
   //   const loadMessageParameters = async () => {
   //     try {
@@ -181,7 +181,7 @@ const customStyles = {
         <h1 className="font-bold text-2xl">Send SMS</h1>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="bg-white flex flex-col my-20 p-8 w-full md:w-3/6 shadow-sm rounded-md mx-auto justify-center max-w-[700px]">
+        <div className="bg-white flex flex-col my-20 p-8 w-full md:w-5/6 shadow-sm rounded-md mx-auto justify-center max-w-[700px]">
           <div>
             {errors && <p className="pb-8 text-red-700 text-sm">{errors}</p>}
           </div>
@@ -190,7 +190,7 @@ const customStyles = {
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={selectedYear || "Select Year"} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="overflow-y-auto h-60">
                 {years.map((year) => (
                   <SelectItem key={year} value={String(year)}>
                     {year}
@@ -198,19 +198,15 @@ const customStyles = {
                 ))}
               </SelectContent>
             </CustomSelect>
-            <CustomSelect onValueChange={(value) => setSelectedMonth(value)}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={selectedMonth || "Select Month"} />
-              </SelectTrigger>
-              <SelectContent>
-                {months.map((month) => (
-                  <SelectItem key={month.value} value={String(month.value)}>
-                    {month.key}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </CustomSelect>
-{/* 
+            <Dropdown
+              options={months.map((month) => ({
+                label: month.key,
+                value: month.value,
+              }))}
+              onValueChange={(value) => setSelectedMonth(value)}
+              placeholder={selectedMonth || "Select Month"}
+            />
+            {/* 
             <Select onValueChange={(value) => setSelectedMember(value)}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select Member" />
@@ -226,84 +222,19 @@ const customStyles = {
               </SelectContent>
             </Select> */}
 
-                   <Select
-                          options={memberOptions}
-                          placeholder="Select Member"
-                          onChange={handleMemberChange}
-                          value={memberOptions.find((opt) => opt.value === selectedMember)}
-                          className="w-[180px] "
-                          styles={customStyles}
-                        />
+            <Select
+              options={memberOptions}
+              placeholder="Select Member"
+              onChange={handleMemberChange}
+              value={memberOptions.find((opt) => opt.value === selectedMember)}
+              className="w-[185px]"
+              styles={customStyles}
+            />
           </div>
-          {/* <div>
-            <div className="grid grid-cols-1  gap-3 my-6">
-              <div className="flex items-center gap-x-6">
-                <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-                  Contributor’s Name:
-                </span>
-                <span className="capitalize text-sm">
-                  {messageParameters["Contributor’s Name"]}
-                </span>
-              </div>
-              <div className="flex items-center gap-x-6">
-                <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-                  Total Contribution:
-                </span>
-                <span className="capitalize text-sm">
-                  {messageParameters["Total Contribution"]}
-                </span>
-              </div>
-              <div className="flex items-center gap-x-6">
-                <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-                  Total Dividend:
-                </span>
-                <span className="capitalize text-sm">
-                  {messageParameters["Total Dividend"]}
-                </span>
-              </div>
-              <div className="flex items-center gap-x-6">
-                <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-                  Withdrawable Dividend:
-                </span>
-                <span className="capitalize text-sm">
-                  {messageParameters["Withdrawable Dividend"]}
-                </span>
-              </div>
-              <div className="flex items-center gap-x-6">
-                <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-                  Month:
-                </span>
-                <span className="capitalize text-sm">
-                  {messageParameters["Month"]}
-                </span>
-              </div>
-              <div className="flex items-center gap-x-6">
-                <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-                  Year:
-                </span>
-                <span className="capitalize text-sm">
-                  {messageParameters["Year"]}
-                </span>
-              </div>
-            </div>
-          </div> */}
-          {/* <Label
-            htmlFor="message"
-            text="Type your Message here"
-            className="text-[#070606]"
-          />
-          <Textarea
-            id="message"
-            className="bg-[#F5F5F7] border-none shadow-lg w-full placeholder:text-[#5B5B5B] p-5 resize-none h-52"
-            placeholder="Dear (contributor’s name), your ENDWELL balances as of (Month) (Year) are: Total Contribution = (Total Contribution); Total Dividend = (Total Dividend); Withdrawable Dividend = (Withdrawable Dividend)."
-            value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
-          /> */}
           <div className="flex justify-center">
-
-          <Button className="md:w-2/6 my-5" disabled={processing}>
-            {processing ? "Processing..." : "Send Message"}
-          </Button>
+            <Button className="md:w-2/6 my-5" disabled={processing}>
+              {processing ? "Processing..." : "Send Message"}
+            </Button>
           </div>
         </div>
       </form>

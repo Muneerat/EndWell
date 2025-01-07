@@ -52,7 +52,7 @@ export default function MemberRequest() {
        
         return response.data.member_requests
       }catch(error){
-        console.log("Failed to fetch member requests files", error);
+        setErrors("Failed to fetch member requests files", error.message);
       }finally{
         setProcessing(false)
       }

@@ -19,8 +19,6 @@ import BoardFilter from "../components/board";
 import { TransactionColumns } from "@/app/data/transaction";
 import { fetchEoyasset } from "./action";
 import { EoyassetColumns } from "@/app/data/eoyasset";
-import SelectSearch from "react-select-search";
-// import Select from 'react-select'
 import Select from "react-select";
 
 export default function Eoyasset() {

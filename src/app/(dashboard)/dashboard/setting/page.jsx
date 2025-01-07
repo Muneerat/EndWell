@@ -22,8 +22,8 @@ export default function Setting() {
                 const response = await fetchMessageTemplate();
                 setMessageTemplate(response)
             }catch{
-                console.log('Failed to fetch message template')
-                 handleErrors(error, setErrors('Failed to load years.'));
+            
+                 handleErrors(error, setErrors('Failed to fetch message template'));
             } finally {
                 setLoading(false); 
             }
@@ -46,18 +46,6 @@ export default function Setting() {
   return (
     <div>
         <BoardFilter text="Message Template">
-        {/* <div className="flex gap-6 ">
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-            </SelectContent>
-          </Select>
-        </div> */}
       </BoardFilter>
       <div>
       <div className='flex justify-end mx-6'>
