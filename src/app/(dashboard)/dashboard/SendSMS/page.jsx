@@ -35,7 +35,7 @@ export default function SendSMS() {
   const [processing, setProcessing] = useState(false);
   const [memberId] = useState(1);
   const dispatch = useDispatch();
-  const [members, setMemberData] = useState([]);
+  const [members, setMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState("");
   const router = useRouter();
 
@@ -52,6 +52,7 @@ export default function SendSMS() {
           setMembers([]);
         }
       } catch (error) {
+
         handleErrors(error, setErrors("No record found."));
       }
     };
@@ -207,21 +208,20 @@ export default function SendSMS() {
               onValueChange={(value) => setSelectedMonth(value)}
               placeholder={selectedMonth || "Select Month"}
             />
-            {/* 
-            <Select onValueChange={(value) => setSelectedMember(value)}>
+            
+            {/* <CustomSelect onValueChange={(value) => setSelectedMember(value)}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select Member" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Members</SelectItem>
-                Add All Members Option
                 {members.map((member) => (
                   <SelectItem key={member.id} value={String(member.id)}>
                     {member.first_name} {member.last_name}
                   </SelectItem>
                 ))}
               </SelectContent>
-            </Select> */}
+            </CustomSelect> */}
 
             <Select
               options={memberOptions}

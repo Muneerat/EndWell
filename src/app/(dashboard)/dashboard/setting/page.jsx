@@ -22,6 +22,7 @@ export default function Setting() {
                 const response = await fetchMessageTemplate();
                 setMessageTemplate(response)
             }catch{
+            // console.log(error);
             
                  handleErrors(error, setErrors('Failed to fetch message template'));
             } finally {

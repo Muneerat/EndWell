@@ -7,7 +7,7 @@ import axios from "axios";
  */
 export const fetchMessageTemplate = async () => {
   try {
-    const response = await axios.get("/admin/message/settings", {headers: {Role: 'admin'},}); 
+    const response = await axios.get("/admin/message/template", {headers: {Role: 'admin'},}); 
  
     
     return response.data;

@@ -58,7 +58,7 @@ export default function TemplateStore() {
 
     try {
       const response = await axios.post(
-        `/admin/message/setting/store`,
+        `/admin/message/template/store`,
         messageTemplate,
         { headers: { Role: "admin" } }
       );
@@ -71,6 +71,8 @@ export default function TemplateStore() {
       );
       router.push("/dashboard/setting");
     } catch (error) {
+      console.log(error);
+      
       
       setErrors({ submit: "Failed to update message template." });
     } finally {
