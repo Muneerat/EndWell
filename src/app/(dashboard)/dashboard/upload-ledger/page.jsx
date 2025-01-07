@@ -10,12 +10,15 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
+  SelectLabel,
 } from "@/components/ui/select";
 import { fetchMonths, fetchYears, uploadLedger } from "./action";
 import handleErrors from "@/app/data/handleErrors";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/Store/features/toastSlice";
 import { useRouter } from "next/navigation";
+import Dropdown from "../components/dropdown";
 
 export default function UploadLedger() {
   const [file, setFile] = useState(null);
@@ -24,7 +27,7 @@ export default function UploadLedger() {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   // const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
   const [processing, setProcessing] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,7 +40,7 @@ export default function UploadLedger() {
         const yearArray = Object.values(allYears.months);
         setYears(yearArray);
       } catch (error) {
-        handleErrors(error, setErrors('The year field is required.'));
+        handleErrors(error, setErrors("The year field is required."));
       }
     };
     loadYears();
@@ -56,7 +59,7 @@ export default function UploadLedger() {
         );
         setMonths(formattedMonths);
       } catch (error) {
-        handleErrors(error, setErrors('The month field is required.'));
+        handleErrors(error, setErrors("The month field is required."));
       }
     };
     loadMonths();
@@ -89,8 +92,10 @@ export default function UploadLedger() {
       );
       router.push("/dashboard/uploaded");
     } catch (error) {
-      handleErrors(error, setErrors("Ledger already uploaded for the request month and year"));
-      
+      handleErrors(
+        error,
+        setErrors("Ledger already uploaded for the request month and year")
+      );
     } finally {
       setProcessing(false);
     }
@@ -111,34 +116,44 @@ export default function UploadLedger() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="bg-white flex flex-col justify-center my-5 md:my-20 md:p-10 p-5 w-full lg:w-3/5 shadow-sm rounded-md mx-auto items-center">
-        <div>{errors && <p className="pb-8 text-red-700 text-sm">{errors}</p>}</div>  
-         
+          <div>
+            {errors && <p className="pb-8 text-red-700 text-sm">{errors}</p>}
+          </div>
+
           <div className="flex gap-6 mb-16">
             <Select onValueChange={(value) => setSelectedYear(value)}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={selectedYear || "Select Year"} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="overflow-y-auto h-60">
                 {years.map((year) => (
                   <SelectItem key={year} value={String(year)}>
                     {year}
                   </SelectItem>
                 ))}
+
               </SelectContent>
             </Select>
-
-            <Select onValueChange={(value) => setSelectedMonth(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={selectedMonth || "Select Month"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {months.map((month) => (
-                    <SelectItem key={month.value} value={String(month.value)}>
-                      {month.key}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <Dropdown
+              options={months.map((month) => ({
+                label: month.key,
+                value: month.value,
+              }))}
+              onValueChange={(value) => setSelectedMonth(value)}
+              placeholder={selectedMonth || "Select Month"}
+            />
+            {/* <Select onValueChange={(value) => setSelectedMonth(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={selectedMonth || "Select Month"} />
+              </SelectTrigger>
+              <SelectContent className="overflow-y-auto h-60">
+                {months.map((month) => (
+                  <SelectItem key={month.value} value={String(month.value)}>
+                    {month.key}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select> */}
           </div>
           <UploadFile setFile={setFile} files={file} accept=".xls,.xlsx" />
           <Button

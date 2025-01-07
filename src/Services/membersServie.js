@@ -170,7 +170,6 @@ export const getAllMembers = createAsyncThunk(
         });
       }
 
-      console.log(response);
 
       // Conditionally format data based on the fields provided
       const formattedData = data.map((member, index) => {
@@ -198,7 +197,7 @@ export const getAllMembers = createAsyncThunk(
       return formattedData;
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
+       
         const { message, status } = error.response.data;
 
         return rejectWithValue({
