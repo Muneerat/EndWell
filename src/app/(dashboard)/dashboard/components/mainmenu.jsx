@@ -61,7 +61,7 @@ export default function MainMenu() {
         <Hamburger />
       </div>
       <div className="w-full flex items-center gap-4">
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-2xl font-semibold  capitalize">
           Hello {userInfo.first_name || "Staff"} {userInfo.last_name || ""},
         </h1>
         {/* <input
