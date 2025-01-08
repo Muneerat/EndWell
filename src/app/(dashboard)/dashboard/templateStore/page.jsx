@@ -58,7 +58,7 @@ export default function TemplateStore() {
 
     try {
       const response = await axios.post(
-        `/admin/message/template/store`,
+        `/admin/message/setting/store`,
         messageTemplate,
         { headers: { Role: "admin" } }
       );

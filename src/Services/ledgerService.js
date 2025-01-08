@@ -8,7 +8,6 @@ export const getAllLedger = createAsyncThunk(
             // const response = await axios.get('/profile');
             const response = await axios.get("/admin/ledger/all",{ headers: {Role: 'admin'}});
             const data = response.data.ledgers
-            
             const ledgers = data.map((ledger,index) => ({
                 ID: index + 1,
                 id: ledger.id,
@@ -17,7 +16,10 @@ export const getAllLedger = createAsyncThunk(
                 dateUploaded: ledger.date,
                 status: ledger.status,
                 uploaded_by: ledger.uploaded_by,
+                file_link: ledger.file_link
               }))
+             
+              
             return ledgers;  
         } catch (error) {
             if (error.response){

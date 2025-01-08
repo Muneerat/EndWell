@@ -70,43 +70,32 @@ export const UploadColumns = [
       <div className="capitalize">{row.getValue("uploaded_by")}</div>
     ),
   },
-  // {
-  //   accessorKey: "amount",
-  //   header: () => <div className="text-right">Amount</div>,
-  //   cell: ({ row }) => {
-  //     const amount = parseFloat(row.getValue("amount"))
-
-  //     // Format the amount as a dollar amount
-  //     const formatted = new Intl.NumberFormat("en-US", {
-  //       style: "currency",
-  //       currency: "USD",
-  //     }).format(amount)
-
-  //     return <div className="text-right font-medium">{formatted}</div>
-  //   },
-  // },
-  // {
-  //   id: "actions",
-  //   header: "Actions",
-  //   cell: ({ row }) => {
-  //     const payment = row.original
-
-  //     return (
-  //       <DropdownMenu>
-  //         <DropdownMenuTrigger asChild>
-  //           <Button variant="ghost" className="h-8 w-8 p-0  ">
-  //             <span className="sr-only">Open menu</span>
-  //             <DotsHorizontalIcon className="h-4 w-4" />
-  //           </Button>
-  //         </DropdownMenuTrigger>
-  //         <DropdownMenuContent align="end" className="bg-white">
-  //           <DropdownMenuSeparator />
-  //           <DropdownMenuItem>Edit</DropdownMenuItem>
-  //           <DropdownMenuItem>Delete</DropdownMenuItem>
-  //           <DropdownMenuItem>View</DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //       </DropdownMenu>
-  //     )
-  //   },
-  // },
+  {
+    accessorKey: "file_link",
+    header: "Download file",
+    cell: ({ row }) => {
+      const fileLink = row.getValue("file_link");
+      return (
+        <div className="flex items-center gap-2 justify-center">
+          <a href={fileLink}>
+             <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-primary hover:text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"
+              />
+            </svg>
+          </a>
+        </div>
+      )
+      // <div className="capitalize">{row.getValue("file_link")}</div>
+    },
+  },
 ]
