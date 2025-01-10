@@ -117,7 +117,7 @@ export default function UploadLedger() {
         <h1 className="font-bold text-2xl">Upload Ledger</h1>
       </div>
       <div className="my-10 mx-5 flex justify-end gap-4">
-      <h1 className="font-bold text-2xl ">Contribution upload sample</h1>
+      <h1 className="font-bold text-xl ">Contribution upload sample</h1>
       <a href="https://endwellapp.electroniccollectionsecg.com/sample/contribution_sample.xlsx">
              <svg
               xmlns="http://www.w3.org/2000/svg"

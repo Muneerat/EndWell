@@ -66,7 +66,7 @@ export default function UploadMember() {
         <ButtonUpload text="Add new member" icon={<Smile />} link="addMember" />
       </BoardFilter>
       <div className="m-10 flex justify-end gap-4">
-      <h1 className="font-bold text-2xl ">Member upload sample</h1>
+      <h1 className="font-bold text-xl ">Member upload sample</h1>
       <a href="https://endwellapp.electroniccollectionsecg.com/sample/member_sample.xlsx">
              <svg
               xmlns="http://www.w3.org/2000/svg"
