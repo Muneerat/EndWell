@@ -65,6 +65,25 @@ export default function UploadMember() {
       <BoardFilter text="Members">
         <ButtonUpload text="Add new member" icon={<Smile />} link="addMember" />
       </BoardFilter>
+      <div className="m-10 flex justify-end gap-4">
+      <h1 className="font-bold text-2xl ">Member upload sample</h1>
+      <a href="https://endwellapp.electroniccollectionsecg.com/sample/member_sample.xlsx">
+             <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-7 w-7 text-primary hover:text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"
+              />
+            </svg>
+          </a>
+      </div>
       <div className="bg-white flex flex-col justify-center my-20 md:p-10 p-5 w-full md:w-3/5 shadow-sm rounded-md mx-auto items-center">
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
           <UploadFile
