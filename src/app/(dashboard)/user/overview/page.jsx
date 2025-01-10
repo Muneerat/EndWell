@@ -1,40 +1,3 @@
-// 'use client'
-// import React, { useState } from "react";
-// import ButtonUpload from "../../dashboard/components/button";
-// import { DataTable } from "../../dashboard/components/table";
-// import { UpArrow,} from "@/assets/icon";
-// import BoardFilter from "../../dashboard/components/board";
-// import { TransactionColumns } from "@/app/data/transaction";
-// // import { OverviewColumns, OverviewData } from "@/app/data/overviewData";
-
-// export default function Overview() {
-//   const [transaction, setTransaction] = useState([]);
-//   // const [filter, setFilter] = useState('');
-//   // const OverviewDatas = OverviewData.map((data,index) => {
-//   //   return {
-//   //       id: index,
-//   //       name: data.name,
-//   //       number: data.number,
-//   //       asset: data.asset,
-//   //       dividend: data.dividend,
-//   //       withdrawable: data.withdrawable,
-
-//   //   };
-//   // })
-
-//   return (
-//     <div className="">
-
-//       <BoardFilter text='Your Requests'>
-//       <ButtonUpload text="Request Report" icon={<UpArrow/>}  link="requestSms"/>
-//       </BoardFilter>
-//       <div>
-//         <DataTable data={OverviewDatas} columns={TransactionColumns}/>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { fetchTransaction, fetchTransactionUser } from "./action";
@@ -157,7 +120,7 @@ export default function Transaction() {
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={selectedYear || "Select Year"} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="overflow-y-auto h-60">
                   {years.map((year) => (
                     <SelectItem key={year} value={String(year)}>
                       {year}
@@ -170,7 +133,7 @@ export default function Transaction() {
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={selectedMonth || "Select Month"} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="overflow-y-auto h-60">
                   {months.map((month) => (
                     <SelectItem key={month.value} value={String(month.value)}>
                       {month.key}

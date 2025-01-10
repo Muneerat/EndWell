@@ -97,7 +97,7 @@ export default function RequestSms() {
       !normalizedRequestType.length ||
       !phoneNumber
     ) {
-      console.log("All fields are required.");
+  
       setErrors("All fields are required.");
       return;
     }
@@ -114,13 +114,13 @@ export default function RequestSms() {
     };
 
     try {
-      console.log("click", requestData);
+     
 
       setLoading(true);
       setErrors(null);
       const response = await fetchRequest(requestData);
       setErrors("");
-      console.log(response);
+      // console.log(response);
       dispatch(
         addToast({
           type: "success",
@@ -160,7 +160,7 @@ export default function RequestSms() {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={selectedYear || "Select Year"} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="overflow-y-auto h-60">
                   {years.map((year) => (
                     <SelectItem key={year} value={String(year)}>
                       {year}
@@ -173,7 +173,7 @@ export default function RequestSms() {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={selectedMonth || "Select Month"} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="overflow-y-auto h-60">
                   {months.map((month) => (
                     <SelectItem key={month.value} value={String(month.value)}>
                       {month.key}

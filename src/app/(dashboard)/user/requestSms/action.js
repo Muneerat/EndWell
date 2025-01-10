@@ -32,7 +32,6 @@ export const fetchMonths = async () => {
 export const fetchRequestTypes = async () => {
     try {
       const response = await axios.get(`/request-types`); 
-      console.log(response);
       
       return response.data.months;
     } catch (error) {
