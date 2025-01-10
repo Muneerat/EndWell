@@ -39,14 +39,14 @@ export default function RequestSms() {
       try {
         const allRequestType = await fetchRequestTypes();
         const requestTypeArray = Object.values(allRequestType); // Extract values as an array
-        console.log(requestTypeArray);
-        console.log(typeof requestTypeArray);
-        // console.log(allRequestType.months);
-        console.log(
-          allRequestType,
-          typeof allRequestType,
-          Array.isArray(allRequestType)
-        );
+        // console.log(requestTypeArray);
+        // console.log(typeof requestTypeArray);
+        // // console.log(allRequestType.months);
+        // console.log(
+        //   allRequestType,
+        //   typeof allRequestType,
+        //   Array.isArray(allRequestType)
+        // );
 
         setRequestType(allRequestType);
       } catch (error) {
