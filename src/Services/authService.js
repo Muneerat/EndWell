@@ -19,7 +19,7 @@ export const signIn = createAsyncThunk(
 
             }
             else {
-                console.log(error.request)
+                console.log(error)
                 return rejectWithValue({status: 500, message:'Network error.'});
             }
         }

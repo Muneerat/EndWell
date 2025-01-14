@@ -1,5 +1,3 @@
-
-
 // "use client";
 // import React, { useEffect, useState } from "react";
 // import { fetchTransaction } from "./action";
@@ -193,6 +191,8 @@ import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
+import { addToast } from "@/Store/features/toastSlice";
+import axios from "axios";
 
 export default function Transaction() {
   const [transaction, setTransaction] = useState([]);
@@ -213,9 +213,9 @@ export default function Transaction() {
         const response = await dispatch(
           getAllMembers(["id", "first_name", "last_name"])
         );
-        if(response?.payload &&Array.isArray(response.payload)){
+        if (response?.payload && Array.isArray(response.payload)) {
           setMembers(response.payload);
-        }else{
+        } else {
           setErrors(response.payload?.message || "No record found.");
           setMembers([]);
         }
@@ -256,44 +256,41 @@ export default function Transaction() {
     loadMonths();
   }, []);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      if (!selectedYear && !selectedMonth) return;
-      setLoading(true);
-      setTransaction([]);
-      try {
-        const response = await fetchTransaction({
-          month: selectedMonth,
-          year: selectedYear,
-          id: selectedMember === "all" ? null : selectedMember,
-        });
-        if (response.length === 0) {
-          setErrors("No transactions found for the selected criteria.");
-        } else {
-          console.log(response);
-          
-          const transactions = response.map((transaction, index) => ({
-            ID: index + 1,
-            id: transaction.id,
-            member_name: transaction.member_name,
-            total_contribution: transaction.total_contribution,
-            total_dividend: transaction.total_dividend,
-            withdrawable_dividend: transaction.withdrawable_dividend,
-            month: transaction.month,
-            year: transaction.year,
-            date: transaction.date,
-            uploaded_by: transaction.uploaded_by,
-          }));
-          setTransaction(transactions);
-          setErrors(null);
-        }
-      } catch (error) {
-        handleErrors(error, setErrors);
-      } finally {
-        setLoading(false);
+  const fetchTransactions = async () => {
+    if (!selectedYear && !selectedMonth) return;
+    setLoading(true);
+    setTransaction([]);
+    try {
+      const response = await fetchTransaction({
+        month: selectedMonth,
+        year: selectedYear,
+        id: selectedMember === "all" ? null : selectedMember,
+      });
+      if (response.length === 0) {
+        setErrors("No transactions found for the selected criteria.");
+      } else {
+        const transactions = response.map((transaction, index) => ({
+          ID: index + 1,
+          id: transaction.id,
+          member_name: transaction.member_name,
+          total_contribution: transaction.total_contribution,
+          total_dividend: transaction.total_dividend,
+          withdrawable_dividend: transaction.withdrawable_dividend,
+          month: transaction.month,
+          year: transaction.year,
+          date: transaction.date,
+          uploaded_by: transaction.uploaded_by,
+        }));
+        setTransaction(transactions);
+        setErrors(null);
       }
-    };
-
+    } catch (error) {
+      handleErrors(error, setErrors);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchTransactions();
   }, [selectedMonth, selectedYear, selectedMember]);
 
@@ -304,6 +301,32 @@ export default function Transaction() {
         router.push(
           `/dashboard/editTransaction?id=${transaction.id}&month=${selectedMonth}&year=${selectedYear}`
         );
+      }
+    },
+    delete: async (transaction) => {
+
+      try {
+        const response = await axios.delete(`/admin/transaction/delete`, {
+          headers: { Role: "admin" },
+          data: { id: transaction.id },
+        });
+
+        fetchTransactions();
+        dispatch(
+          addToast({
+            type: "success",
+            message: response.data.message,
+          })
+        );
+        return response.data.message;
+      } catch (error) {
+        dispatch(
+          addToast({
+            type: "error",
+            message: error.response.data.message,
+          })
+        );
+      
       }
     },
   };
@@ -327,13 +350,18 @@ export default function Transaction() {
                 >
                   Edit
                 </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleActions.delete(row.original)}
+                >
+                  Delete
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ),
         }
       : column
   );
- 
+
   const memberOptions = [
     { value: "select", label: "Select Members" },
     { value: "all", label: "All Members" },
@@ -395,19 +423,6 @@ export default function Transaction() {
               </SelectContent>
             </CustomSelect>
 
-            {/* <Select onValueChange={(value) => setSelectedMember(value)}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={"Select Member"} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Members</SelectItem>
-                {members.map((member) => (
-                  <SelectItem key={member.id} value={String(member.id)}>
-                    {member.first_name} {member.last_name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select> */}
             <Select
               options={memberOptions}
               placeholder="Select Member"

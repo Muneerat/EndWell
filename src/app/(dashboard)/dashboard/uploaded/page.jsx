@@ -5,12 +5,20 @@ import ButtonUpload from "../components/button";
 import { DataTable } from "../components/table";
 import BoardFilter from "../components/board";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import {
+  CaretSortIcon,
+  ChevronDownIcon,
+  DotsHorizontalIcon,
+} from "@radix-ui/react-icons";
 import { Upload2 } from "@/assets/icon";
 import { UploadColumns, UploadData } from "@/app/data/UploadData";
 import axios from "axios";
@@ -18,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLedgers } from "@/Store/features/ledgerSlice";
 import Spinner from "@/app/components/Spinner";
 import { getAllLedger } from "@/Services/ledgerService";
+import { addToast } from "@/Store/features/toastSlice";
 
 export default function Uploaded() {
   const [processing, setProcessing] = useState(false);
@@ -56,7 +65,61 @@ export default function Uploaded() {
     // }
     // ledgerFiles();
     dispatch(getAllLedger());
+    
   }, [dispatch]);
+
+      // Actions for table
+      const handleActions = {
+        
+        delete: async (ledger) => {
+          try {
+            const response = await axios.delete(`/admin/ledger/delete`, {
+              headers: {Role: 'admin'},
+              data: { id: ledger.id }, 
+            });
+        
+            dispatch(getAllLedger());
+            dispatch(addToast({
+              type:'success',
+              message: response.data.message
+            }))
+            return response.data.message;
+  
+          } catch (error) {
+            dispatch(addToast({
+              type:'error',
+              message: error.response.data.message
+            }))
+          }
+        },
+      };
+
+
+  const columnsWithActions = UploadColumns.map((column) =>
+    column.id === "actions"
+      ? {
+          ...column,
+          cell: ({ row }) => (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0  ">
+                  <span className="sr-only">Open menu</span>
+                  <DotsHorizontalIcon className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-white">
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => handleActions.delete(row.original)}
+                >
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ),
+        }
+      : column
+  );
 
   return (
     <div className="">
@@ -70,8 +133,7 @@ export default function Uploaded() {
         </div>
       </div>
       <BoardFilter text="Uploaded file">
-        <div className="flex gap-6">
-        </div>
+        <div className="flex gap-6"></div>
       </BoardFilter>
       <div>
         {loading ? (
@@ -83,7 +145,7 @@ export default function Uploaded() {
             />
           </div>
         ) : (
-          <DataTable data={ledgers} columns={UploadColumns} />
+          <DataTable data={ledgers} columns={columnsWithActions} />
         )}
       </div>
     </div>
