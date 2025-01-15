@@ -35,6 +35,24 @@ export default function SignIn() {
     };
     checkAuth();
   }, [router]);
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem("_APP_ADMIN_TOKEN_KEY_");
+  
+      if (token) {
+        router.push("/dashboard/overview");
+      } else {
+        // Clear localStorage if no token is present
+        localStorage.removeItem("_APP_ADMIN_TOKEN_KEY_");
+        localStorage.removeItem("_APP_ADMIN_REFRESH_TOKEN_KEY_");
+        localStorage.removeItem("_APP_ADMIN_EXPIRATION_TIME_KEY_");
+        setIsLoading(false);
+      }
+    };
+  
+    checkAuth();
+  }, [router]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -37,7 +37,10 @@ import {
   TableHeader,
   TableRow,
 } from "../../../../components/ui/table"
-
+// import { Input } from "postcss"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { ChevronDown } from "lucide-react"
+import { Input } from "@/components/ui/input"
 
 export function DataTable({data, columns}) {
   const [sorting, setSorting] = React.useState([])
@@ -69,6 +72,42 @@ export function DataTable({data, columns}) {
 
   return (
     <div className="w- m-6">
+            <div className="flex items-center py-4">
+        <Input
+          placeholder="Filter firstname..."
+          value={(table.getColumn("first_name")?.getFilterValue()) ?? ""}
+          onChange={(event) =>
+            table.getColumn("first_name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
 
       <div className="rounded-md border bg-white
       ">

@@ -9,7 +9,7 @@ axios.interceptors.request.use(
          // Determine if the request is for admin or user
          const isAdmin = config.headers['Role'] === 'admin';
 
-         // Retrieve the appropriate token
+         // Retrieve  token
          const token = getToken(isAdmin ? 'admin' : 'user');
         
         if (token?.trim()?.length > 0) {
