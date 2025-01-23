@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
-} from "@radix-ui/react-icons"
+} from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,9 +17,9 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
-import { Button } from "../../../../components/ui/button"
+import { Button } from "../../../../components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -28,7 +28,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 import {
   Table,
   TableBody,
@@ -36,20 +36,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../../components/ui/table"
+} from "../../../../components/ui/table";
 // import { Input } from "postcss"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { ChevronDown } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
-export function DataTable({data, columns}) {
-  const [sorting, setSorting] = React.useState([])
-  const [columnFilters, setColumnFilters] = React.useState(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState({})
-  const [rowSelection, setRowSelection] = React.useState({})
+export function DataTable({ data, columns }) {
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -68,53 +70,61 @@ export function DataTable({data, columns}) {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
+
+  // const hasFirstNameColum = !!table.getColumn("first_name") ;
+  // const hasMemberNameColum = !!table.getColumn("member_name");
+  const hasFirstNameColumn = columns.some((col) => col.accessorKey === "first_name");
+  const hasMemberNameColumn = columns.some((col) => col.accessorKey === "member_name");
 
   return (
     <div className="w- m-6">
-            <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter firstname..."
-          value={(table.getColumn("first_name")?.getFilterValue()) ?? ""}
-          onChange={(event) =>
-            table.getColumn("first_name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+      {hasFirstNameColumn ? (
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter firstname..."
+            value={table.getColumn("first_name")?.getFilterValue() ?? ""}
+            onChange={(event) =>
+              table.getColumn("first_name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm border border-primary p-5 rounded-md"
+          />
+        </div>
+      ):hasMemberNameColumn ?(
+         <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter name..."
+            value={table.getColumn("member_name")?.getFilterValue() ?? ""}
+            onChange={(event) =>
+              table.getColumn("member_name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm border border-primary p-5 rounded-md"
+          />
+        </div>
+      ): ''
+      }
 
-      <div className="rounded-md border bg-white
-      ">
+       {/* {hasMemberNameColum && (
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter name..."
+            value={table.getColumn("member_name")?.getFilterValue() ?? ""}
+            onChange={(event) =>
+              table.getColumn("member_name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm border border-primary p-5 rounded-md"
+          />
+        </div>
+      )} */}
+
+      <div
+        className="rounded-md border bg-white
+      "
+      >
         <Table className="">
           <TableHeader className="bg-primary text-white ">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow  key={headerGroup.id} >
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead className="py-5" key={header.id}>
@@ -125,7 +135,7 @@ export function DataTable({data, columns}) {
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -136,10 +146,9 @@ export function DataTable({data, columns}) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                 
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}  className="px-4 py-5">
+                    <TableCell key={cell.id} className="px-4 py-5">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -185,7 +194,7 @@ export function DataTable({data, columns}) {
           </Button>
         </div>
       </div>
-   {/* <div className=" mt-6 bg-red-">
+      {/* <div className=" mt-6 bg-red-">
    <Pagination className="flex justify-end  items-end  ">
       <PaginationContent>
         <PaginationItem>
@@ -212,5 +221,5 @@ export function DataTable({data, columns}) {
     </Pagination>
    </div> */}
     </div>
-  )
+  );
 }
