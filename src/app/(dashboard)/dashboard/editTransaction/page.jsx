@@ -43,7 +43,6 @@ export default function EditTransaction() {
 
     const fetchTransactionDetails = async () => {
       if (!id) {
-        console.error("Missing transaction ID");
         dispatch(
           addToast({
             type: "error",
@@ -61,23 +60,19 @@ export default function EditTransaction() {
           headers: { Role: "admin" },
         });
 
-        console.log("API Response:", response.data);
-
         const transaction = response.data?.data;
         if (!transaction) {
           throw new Error("Transaction not found in API response.");
         }
+        
 
         setFormData({
-          total_contribution: transaction.total_contribution || "",
+          total_contribution: transaction.total_contribution ,
           total_dividend: transaction.total_dividend || "",
           withdrawable_dividend: transaction.withdrawable_dividend || "",
         });
       } catch (error) {
-        console.error(
-          "Error fetching transaction:",
-          error.response || error.message
-        );
+    
         dispatch(
           addToast({
             type: "error",
@@ -125,10 +120,7 @@ export default function EditTransaction() {
       );
       router.push("/dashboard/transaction");
     } catch (error) {
-      console.log(
-        "Failed to update transaction:",
-        error.response || error.message
-      );
+  
       handleErrors(error, setErrors);
       dispatch(
         addToast({
@@ -175,7 +167,7 @@ export default function EditTransaction() {
               id="total_contribution"
               name="total_contribution"
               placeholder="Enter the total contribution"
-              type="number"
+              type="text"
               value={formData.total_contribution}
               onChange={handleChange}
               errorMessage={errors?.total_contribution}
@@ -361,150 +353,6 @@ export default function EditTransaction() {
 //           </Button>
 //         </form>
 //       </div>
-//     </div>
-//   );
-// }
-// "use client";
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useSearchParams, useRouter } from "next/navigation";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import Spinner from "@/app/components/Spinner";
-
-// export default function TransactionEditPage() {
-//   const searchParams = useSearchParams();
-//   const router = useRouter();
-
-//   const [transaction, setTransaction] = useState(null);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(null);
-//   const [formData, setFormData] = useState({
-//     total_contribution: "",
-//     total_dividend: "",
-//     withdrawable_dividend: "",
-//   });
-
-//   const id = searchParams.get("id");
-//   const month = searchParams.get("month");
-//   const year = searchParams.get("year");
-//   console.log(id,month,year);
-
-//   // Fetch Transaction Data
-//   useEffect(() => {
-//     console.log('here is transaction ');
-
-//     const fetchTransactionDetails = async () => {
-//       if (!id || !month || !year) {
-//         setError("Missing required parameters: id, month, or year.");
-//         return;
-//       }
-
-//       setLoading(true);
-//       try {
-//         const response = await axios.get(`/transaction/${id}`, {
-//           headers: { Role: "admin" },
-//           params: { month, year },
-//         });
-//         setTransaction(response.data.transaction);
-//         setFormData({
-//           total_contribution: response.data.transaction.total_contribution,
-//           total_dividend: response.data.transaction.total_dividend,
-//           withdrawable_dividend: response.data.transaction.withdrawable_dividend,
-//         });
-//         setError(null);
-//       } catch (err) {
-//         setError(err.response?.data?.message || "Failed to fetch transaction.");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchTransactionDetails();
-//   }, [id, month, year]);
-
-//   // Handle Input Changes
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   // Update Transaction
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     setLoading(true);
-//     try {
-//       await axios.put(`/transaction/${id}`, formData, {
-//         headers: { Role: "admin" },
-//       });
-//       alert("Transaction updated successfully!");
-//       router.push("/dashboard/transactions"); // Redirect to transactions list
-//     } catch (err) {
-//       setError(err.response?.data?.message || "Failed to update transaction.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-2xl mx-auto p-6 shadow-md bg-white rounded-md">
-//       <h1 className="text-xl font-semibold mb-4">Edit Transaction</h1>
-//       {loading && (
-//         <div className="flex justify-center">
-//           <Spinner size={6} />
-//         </div>
-//       )}
-//       {error && <p className="text-red-600 mb-4">{error}</p>}
-//       {transaction && (
-//         <form onSubmit={handleSubmit} className="space-y-4">
-//           <div>
-//             <label htmlFor="total_contribution" className="block text-sm font-medium">
-//               Total Contribution
-//             </label>
-//             <Input
-//               id="total_contribution"
-//               name="total_contribution"
-//               value={formData.total_contribution}
-//               onChange={handleInputChange}
-//               type="number"
-//               required
-//             />
-//           </div>
-//           <div>
-//             <label htmlFor="total_dividend" className="block text-sm font-medium">
-//               Total Dividend
-//             </label>
-//             <Input
-//               id="total_dividend"
-//               name="total_dividend"
-//               value={formData.total_dividend}
-//               onChange={handleInputChange}
-//               type="number"
-//               required
-//             />
-//           </div>
-//           <div>
-//             <label htmlFor="withdrawable_dividend" className="block text-sm font-medium">
-//               Withdrawable Dividend
-//             </label>
-//             <Input
-//               id="withdrawable_dividend"
-//               name="withdrawable_dividend"
-//               value={formData.withdrawable_dividend}
-//               onChange={handleInputChange}
-//               type="number"
-//               required
-//             />
-//           </div>
-//           <div className="flex justify-end">
-//             <Button type="submit" className="w-full">
-//               Update Transaction
-//             </Button>
-//           </div>
-//         </form>
-//       )}
 //     </div>
 //   );
 // }
