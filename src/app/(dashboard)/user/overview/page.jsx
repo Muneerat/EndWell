@@ -109,7 +109,7 @@ export default function Transaction() {
       dispatch(
         addToast({
           type: "success",
-          message: response,
+          message: response.message,
         })
       );
     } catch (error) {
@@ -119,7 +119,6 @@ export default function Transaction() {
           message: error.message,
         })
       );
-      console.log(error.message);
 
       handleErrors(error, setErrors);
     }
