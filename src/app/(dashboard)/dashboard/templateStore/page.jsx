@@ -28,14 +28,14 @@ export default function TemplateStore() {
   useEffect(() => {
     // Fetch message Template
     const fetchMessage = async () => {
-        setLoading(true)
+      setLoading(true);
       try {
         const response = await fetchMessageTemplate();
         setMessageTemplate(response);
       } catch {
         console.log("Failed to fetch message template");
         handleErrors(errors, setErrors("Failed to load years."));
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -72,28 +72,27 @@ export default function TemplateStore() {
       router.push("/dashboard/setting");
     } catch (error) {
       console.log(error);
-      
-      
+
       setErrors({ submit: "Failed to update message template." });
     } finally {
       setProcessing(false);
     }
   };
   if (loading) {
-    return(
-        <div className="flex justify-center items-center my-auto h-screen">
+    return (
+      <div className="flex justify-center items-center my-auto h-screen">
         <Spinner
           className="border-2 border-primary "
           size={9}
           spin={true}
         ></Spinner>
       </div>
-    )
+    );
   }
 
   return (
     <div className="">
-        <div className="flex items-center gap-8 p-5">
+      <div className="flex items-center gap-8 p-5">
         <button
           onClick={() => router.push("/dashboard/setting")}
           className="flex items-center gap-2 font-normal cursor-pointer"
@@ -235,6 +234,26 @@ export default function TemplateStore() {
               <p className="text-red-500 text-sm mt-1">
                 {errors.price_per_unit}
               </p>
+            )}
+          </div>
+          <div>
+            <label
+              htmlFor="withdrawable_dividend_message"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Phon number
+            </label>
+            <textarea
+              id="phone"
+              name="phone"
+              className="w-full p-2 border border-gray-300 rounded-md resize-none"
+              placeholder="phone number"
+              value={messageTemplate.phone}
+              onChange={handleChange}
+              rows={4}
+            />
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
             )}
           </div>
         </div>
