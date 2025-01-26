@@ -106,10 +106,11 @@ export default function Transaction() {
   const requestWithdrawableDividend = async () => {
     try {
       const response = await RequestWithdrawableDividend({});
+
       dispatch(
         addToast({
           type: "success",
-          message: response.message,
+          message: response,
         })
       );
     } catch (error) {

@@ -1,31 +1,20 @@
 import { Excel } from "@/assets/icon";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
 
 export const userSmsCountColumns = [
-    {
-        accessorKey: "ID",
-        header: "S/N",
-    
-     cell: ({ row }) => (
-          <div className="capitalize">{row.getValue("ID")}</div>
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
+  {
+    accessorKey: "ID",
+    header: "S/N",
+
+    cell: ({ row }) => <div className="capitalize">{row.getValue("ID")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "member_name",
     header: ({ column }) => {
@@ -50,7 +39,7 @@ export const userSmsCountColumns = [
       <div className="capitalize flex gap-2">{row.getValue("month")}</div>
     ),
   },
- 
+
   {
     accessorKey: "year",
     header: "Year",

@@ -1,3 +1,4 @@
+import { Excel } from "@/assets/icon";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,7 +15,7 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
 
-export const MemberColumns = [
+export const WithdrawableColumns = [
   {
     accessorKey: "ID",
     header: "S/N",
@@ -24,50 +25,47 @@ export const MemberColumns = [
     enableHiding: false,
   },
   {
-    accessorKey: "first_name",
+    accessorKey: "member_name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          First Name
+          Member name
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("first_name")}</div>
+      <div className="capitalize">{row.getValue("member_name")}</div>
     ),
   },
   {
-    accessorKey: "last_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Last Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "year",
+    header: "Year",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("year")}</div>,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("last_name")}</div>
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
   {
-    accessorKey: "phone",
-    header: "Phone",
+    accessorKey: "created_at",
+    header: "created_at",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("phone")}</div>
+      <div className="capitalize">{row.getValue("created_at")}</div>
     ),
   },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
+      const payment = row.original;
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -78,9 +76,7 @@ export const MemberColumns = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-            <DropdownMenuItem>View</DropdownMenuItem>
+            <DropdownMenuItem>Edit Status</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
