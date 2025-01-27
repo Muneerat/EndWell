@@ -48,9 +48,8 @@ export default function WithdrawableDividend() {
           headers: { Role: "admin" },
         });
 
-        const statusOptions = response.data;
-        setRequestStatusOptions(response.data.data);
-        console.log(requestStatusOptions);
+        const statusOptions = response.data.data;
+        setRequestStatusOptions(statusOptions);
 
         console.log(response.data.data);
       } catch (e) {
