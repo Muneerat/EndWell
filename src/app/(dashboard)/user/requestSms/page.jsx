@@ -39,6 +39,8 @@ export default function RequestSms() {
       try {
         const allRequestType = await fetchRequestTypes();
         const requestTypeArray = Object.values(allRequestType); // Extract values as an array
+        console.log(allRequestType);
+
         // console.log(requestTypeArray);
         // console.log(typeof requestTypeArray);
         // // console.log(allRequestType.months);
@@ -97,7 +99,6 @@ export default function RequestSms() {
       !normalizedRequestType.length ||
       !phoneNumber
     ) {
-  
       setErrors("All fields are required.");
       return;
     }
@@ -114,13 +115,10 @@ export default function RequestSms() {
     };
 
     try {
-     
-
       setLoading(true);
       setErrors(null);
       const response = await fetchRequest(requestData);
       setErrors("");
-      // console.log(response);
       dispatch(
         addToast({
           type: "success",

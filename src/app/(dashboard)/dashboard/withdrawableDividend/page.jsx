@@ -37,7 +37,7 @@ export default function WithdrawableDividend() {
   const [errors, setErrors] = useState(null);
   const [uploadData, setUploadData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [selectedRequest, setSelectedRequest] = useState("");
   const [requestStatusOptions, setRequestStatusOptions] = useState([]);
 
   // Fetch request status options
@@ -47,12 +47,12 @@ export default function WithdrawableDividend() {
         const response = await axios.get(`/request-status`, {
           headers: { Role: "admin" },
         });
-        const statusOptions = Array.isArray(response.data) ? response.data : [];
-        setRequestStatusOptions(statusOptions);
+
+        const statusOptions = response.data;
+        setRequestStatusOptions(response.data.data);
         console.log(requestStatusOptions);
 
-        // setRequestStatusOptions(response.data); // Fallback to an empty array
-        console.log(response.data);
+        console.log(response.data.data);
       } catch (e) {
         console.error("Failed to fetch request status:", e);
       }
@@ -178,52 +178,55 @@ export default function WithdrawableDividend() {
         )}
       </div>
       {modalOpen && selectedRequest && (
-        <Card className="w-[350px] mx-auto mt-10">
-          <CardHeader>
-            <CardTitle>Edit Status</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="memberName">Member Name</Label>
-                  <Input
-                    id="memberName"
-                    value={selectedRequest.member_name}
-                    disabled
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="status">Status</Label>
-                  <Select
-                    onValueChange={handleStatusChange}
-                    value={selectedRequest.status || ""}
-                  >
-                    <SelectTrigger id="status">
-                      <SelectValue
-                        placeholder={selectedRequest.status || "Select"}
-                      />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      {Array.isArray(requestStatusOptions) &&
-                        requestStatusOptions.map((status) => (
-                          <SelectItem key={status} value={status}>
+        <div className="fixed inset-0  m-auto bg-black bg-opacity-70 z-50">
+          <Card className="w-[350px] m-auto mt-32 bg-white">
+            <CardHeader>
+              <CardTitle>Edit Status</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form>
+                <div className="grid w-full items-center gap-4">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="memberName">Member Name</Label>
+                    <Input
+                      id="memberName"
+                      value={selectedRequest.member_name}
+                      disabled
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="status">Status</Label>
+                    <Select
+                      onValueChange={handleStatusChange}
+                      value={selectedRequest.status || ""}
+                    >
+                      <SelectTrigger id="status">
+                        <SelectValue
+                          placeholder={selectedRequest.status || "Select"}
+                        />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        {requestStatusOptions.map((status, index) => (
+                          <SelectItem key={index} value={status}>
                             {status}
                           </SelectItem>
                         ))}
-                    </SelectContent>
-                  </Select>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline" onClick={() => setModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSave}>Save</Button>
-          </CardFooter>
-        </Card>
+              </form>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button variant="outline" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button className=" hover:text-primary" onClick={handleSave}>
+                Save
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
       )}
     </div>
   );
