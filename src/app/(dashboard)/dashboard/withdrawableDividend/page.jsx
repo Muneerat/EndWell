@@ -135,7 +135,7 @@ export default function WithdrawableDividend() {
       );
       setModalOpen(false);
     } catch (error) {
-      console.error("Failed to update request status:", error);
+      console.log("Failed to update request status:", error);
     } finally {
       setProcessing(false);
     }

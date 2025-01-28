@@ -9,6 +9,7 @@ import { getAllLedger } from "@/Services/ledgerService";
 import { memberRequestsColumns } from "@/app/data/memberRequest";
 import BoardFilter from "../../dashboard/components/board";
 import { DataTable } from "../../dashboard/components/table";
+import { addToast } from "@/Store/features/toastSlice";
 
 export default function MemberRequest() {
   const [processing, setProcessing] = useState(false);
@@ -44,7 +45,13 @@ export default function MemberRequest() {
 
         return response.data.member_requests;
       } catch (error) {
-        console.log("Failed to fetch member requests files", error);
+        dispatch(
+          addToast({
+            type: "error",
+            message:
+              error.response.data.message || "Failed to fetch request status",
+          })
+        );
       } finally {
         setProcessing(false);
       }
