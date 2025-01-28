@@ -31,6 +31,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { addToast } from "@/Store/features/toastSlice";
+import { useDispatch } from "react-redux";
 
 export default function WithdrawableDividend() {
   const [processing, setProcessing] = useState(false);
@@ -39,6 +41,7 @@ export default function WithdrawableDividend() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState("");
   const [requestStatusOptions, setRequestStatusOptions] = useState([]);
+  const dispatch = useDispatch();
 
   // Fetch request status options
   useEffect(() => {
@@ -50,10 +53,14 @@ export default function WithdrawableDividend() {
 
         const statusOptions = response.data.data;
         setRequestStatusOptions(statusOptions);
-
-        console.log(response.data.data);
       } catch (e) {
-        console.error("Failed to fetch request status:", e);
+        dispatch(
+          addToast({
+            type: "error",
+            message:
+              e.response.data.message || "Failed to fetch request status",
+          })
+        );
       }
     };
     fetchRequestStatus();
@@ -108,7 +115,7 @@ export default function WithdrawableDividend() {
     setProcessing(true);
     try {
       await axios.put(
-        `/admin/transaction/withdrawable/dividen/requestUpdate/`,
+        `/admin/transaction/withdrawable/dividen/requestUpdate`,
         {
           id: selectedRequest.id,
           status: selectedRequest.status,
@@ -117,6 +124,7 @@ export default function WithdrawableDividend() {
           headers: { Role: "admin" },
         }
       );
+
       // Update the UI with the new status
       setUploadData((prevData) =>
         prevData.map((item) =>
@@ -160,7 +168,7 @@ export default function WithdrawableDividend() {
   return (
     <div>
       <div className="flex justify-end w-full px-6 py-5"></div>
-      <BoardFilter text="Member request SMS transactions">
+      <BoardFilter text="Withdrawable Dividend Request">
         <div className="flex gap-6"></div>
       </BoardFilter>
       <div>

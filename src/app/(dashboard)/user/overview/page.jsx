@@ -30,6 +30,7 @@ export default function Transaction() {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const dispatch = useDispatch();
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const { userInfo } = useSelector((state) => state.userAuth);
 
@@ -104,6 +105,7 @@ export default function Transaction() {
   }, [selectedMonth, selectedYear, userInfo.id]);
 
   const requestWithdrawableDividend = async () => {
+    setIsRequesting(true);
     try {
       const response = await RequestWithdrawableDividend({});
 
@@ -122,6 +124,8 @@ export default function Transaction() {
       );
 
       handleErrors(error, setErrors);
+    } finally {
+      setIsRequesting(false);
     }
   };
 
@@ -133,6 +137,7 @@ export default function Transaction() {
           text="Request Withdrawable"
           icon={<UpArrow />}
           onClick={() => requestWithdrawableDividend()}
+          disabled={isRequesting}
         />
         <ButtonUpload
           text="Request Report"
@@ -187,7 +192,6 @@ export default function Transaction() {
               No record found for request period
             </p>
           )}
-          {/* No record found for request period */}
         </div>
       </form>
     </div>

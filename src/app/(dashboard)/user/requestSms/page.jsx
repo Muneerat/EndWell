@@ -38,18 +38,6 @@ export default function RequestSms() {
     const loadRequestType = async () => {
       try {
         const allRequestType = await fetchRequestTypes();
-        const requestTypeArray = Object.values(allRequestType); // Extract values as an array
-        console.log(allRequestType);
-
-        // console.log(requestTypeArray);
-        // console.log(typeof requestTypeArray);
-        // // console.log(allRequestType.months);
-        // console.log(
-        //   allRequestType,
-        //   typeof allRequestType,
-        //   Array.isArray(allRequestType)
-        // );
-
         setRequestType(allRequestType);
       } catch (error) {
         setErrors("Failed to load years.");
@@ -125,10 +113,7 @@ export default function RequestSms() {
           message: "SMS request submitted successfully",
         })
       );
-      // routerpush("");
     } catch (error) {
-      console.log(error);
-
       handleErrors(error, setErrors(error.message));
     } finally {
       setLoading(false);
