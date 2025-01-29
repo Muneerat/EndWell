@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import TextInput from "@/app/components/TextInput";
 import Button from "@/app/components/Button";
 import { addToast } from "@/Store/features/toastSlice";
 import { fetchMessageTemplate } from "../setting/action";

@@ -36,33 +36,6 @@ export default function ViewStaff() {
     }
   }, [user_id]);
 
-  //Fetch permissions
-  // useEffect(() => {
-  //   const loadPermissions = async () => {
-  //     try{
-  //       const allPermissions = await fetchPermissions();
-  //       // const formatPermissions = Object.entries(allPermissions.permissions).map(
-  //       //   ([key, value]) => ({
-  //       //     key,
-  //       //     value,
-  //       //   })
-  //       // )
-  //       setPermissions(allPermissions.data);
-  //     }catch(error){
-  //       console.log("Failed to fetch permissions:", error);
-  //     }
-  //   }
-  //   loadPermissions();
-  // })
-
-  // const handleCheckboxChange = (permissionId) => {
-  //   setSelectedPermissions((prev) =>
-  //     prev.includes(permissionId)
-  //       ? prev.filter((id) => id !== permissionId) // Remove if already selected
-  //       : [...prev, permissionId] // Add if not selected
-  //   );
-  // };
-
   if (!staff)
     return (
       <div className="flex justify-center items-center mt-20">
@@ -138,9 +111,6 @@ export default function ViewStaff() {
             </span>
           </div>
         </div>
-
-        {/* Back Button */}
-        {/* <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button> */}
       </div>
       {/* <div>
       <h1>Permissions</h1>
