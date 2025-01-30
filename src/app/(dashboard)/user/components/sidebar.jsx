@@ -36,6 +36,12 @@ const sideItemsTop = [
     icon: <SMSCounter />,
     id: "smsCounter",
   },
+  {
+    label: "Withdrawable Dividend",
+    link: "/user/withdrawableDividend",
+    icon: <MemberRequest />,
+    id: "withdrawableDividend",
+  },
 ];
 
 const sideItemsBottom = [
@@ -72,13 +78,13 @@ export default function Sidebar() {
           <Hamburger />
         </div>
       </button>
- 
+
       <div
         className={`md:flex flex-col min-h-screen w-[260px] items-center justify-between border-r md:w-[200px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       >
-           <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full">
           <header className="flex justify-between items-center mb-6">
             <h1 className="text-primary md:text-3xl text-2xl font-extrabold">
               END<span className="text-secondary">WELL</span>

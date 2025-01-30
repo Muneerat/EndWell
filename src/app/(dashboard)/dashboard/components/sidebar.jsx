@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import WithdrawableDividend from "../withdrawableDividend/page";
 
 const sideItemsTop = [
   {
@@ -68,11 +69,18 @@ const sideItemsTop = [
     icon: <SMSCounter />,
     id: "smsCounter",
   },
-];
-
-const sideItemsBottom = [
-  { label: "Settings", link: "/dashboard/setting", icon: <Setting />, id: "settings" },
-  { label: "Help", link: "#", icon: <Help />, id: "logout" },
+  {
+    label: "Withdrawable Dividend",
+    link: "/dashboard/withdrawableDividend",
+    icon: <TransactionHistory />,
+    id: "withdrawableDividend",
+  },
+  {
+    label: "Settings",
+    link: "/dashboard/setting",
+    icon: <Setting />,
+    id: "settings",
+  },
 ];
 
 export default function Sidebar() {
@@ -87,11 +95,10 @@ export default function Sidebar() {
     setActiveItem(id);
     // Close the sidebar on mobile after clicking an item
     if (window.innerWidth < 640) {
-      setIsSidebarOpen(false); 
+      setIsSidebarOpen(false);
+    }
   };
 
-  }
-   
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
@@ -104,11 +111,11 @@ export default function Sidebar() {
         className="md:hidden fixed top-2 left-0 z-50 p-2  rounded-md"
       >
         <div className="bg-[#D9D9D9] p-1 rounded-full flex md:hidden ">
-        <Hamburger />
-      </div>
+          <Hamburger />
+        </div>
       </button>
       <div
-        className={`md:flex flex-col min-h-screen w-[260px] items-center justify-between border-r md:w-[200px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
+        className={`md:flex flex-col scroll-smooth scrollable-container  overflow-y-auto h-screen w-[260px] items-center justify-between border-r md:w-[200px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       >
@@ -122,35 +129,8 @@ export default function Sidebar() {
             </button>
           </header>
 
-          <section className="flex flex-col gap-4">
+          <section className="flex flex-col gap-4  ">
             {sideItemsTop.map((item, index) => (
-              <Link
-                key={index}
-                href={item.link}
-                role="sidebar-link"
-                onClick={() => handleItemClick(item.id)}
-                className={`${
-                  currentPath === item.id
-                    ? "text-primary font-medium hover:text-primary"
-                    : "text-gray-600 hover:text-primary"
-                } mb-2 flex font-normal transition ease-in-out duration-150 gap-2 text-lg`}
-              >
-                <span
-                  className={`flex items-center transition-colors duration-200 ${
-                    activeItem === item.id ? "text-primary" : "text-gray-600"
-                  }`}
-                >
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
-            ))}
-          </section>
-        </div>
-
-        <div className="flex flex-col w-full my-4">
-          <section className="flex flex-col gap-4">
-            {sideItemsBottom.map((item, index) => (
               <Link
                 key={index}
                 href={item.link}

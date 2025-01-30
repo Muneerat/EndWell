@@ -1,23 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Card from "../components/card";
-import ButtonUpload from "../components/button";
 import { DataTable } from "../components/table";
 import BoardFilter from "../components/board";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Upload2 } from "@/assets/icon";
-import { UploadColumns, UploadData } from "@/app/data/UploadData";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setLedgers } from "@/Store/features/ledgerSlice";
 import Spinner from "@/app/components/Spinner";
-import { getAllLedger } from "@/Services/ledgerService";
 import { memberRequestsColumns } from "@/app/data/memberRequest";
 
 export default function MemberRequest() {
@@ -25,18 +12,20 @@ export default function MemberRequest() {
   const [errors, setErrors] = useState({});
   const [uploadData, setUploadData] = useState([]);
   const dispatch = useDispatch();
-//   const { ledgers, totalLedgers, loading, error } = useSelector(
-//     (state) => state.ledger
-//   );
+  //   const { ledgers, totalLedgers, loading, error } = useSelector(
+  //     (state) => state.ledger
+  //   );
 
   //fetch all ledger files
   useEffect(() => {
     const fetchTransactionRequest = async () => {
-      setProcessing(true)
-      try{
-        const response = await axios.get("/transaction-request",{ headers: {Role: 'admin'},});
+      setProcessing(true);
+      try {
+        const response = await axios.get("/transaction-request", {
+          headers: { Role: "admin" },
+        });
         const data = await response.data.member_requests;
-        const memberRequests = data.map((memberRequest,index) => ({
+        const memberRequests = data.map((memberRequest, index) => ({
           ID: index + 1,
           id: memberRequest.id,
           member_name: memberRequest.member_name,
@@ -44,30 +33,26 @@ export default function MemberRequest() {
           phone: memberRequest.phone,
           request_date: memberRequest.request_date,
           request_type: memberRequest.request_type,
-           status: memberRequest.status,
+          status: memberRequest.status,
           year: memberRequest.year,
-        }))
+        }));
         setUploadData(memberRequests);
 
-       
-        return response.data.member_requests
-      }catch(error){
+        return response.data.member_requests;
+      } catch (error) {
         setErrors("Failed to fetch member requests files", error.message);
-      }finally{
-        setProcessing(false)
+      } finally {
+        setProcessing(false);
       }
-    }
+    };
     fetchTransactionRequest();
   }, []);
 
   return (
     <div className="">
-      <div className="flex justify-end w-full px-6 py-5 ">
-      </div>
+      <div className="flex justify-end w-full px-6 py-5 "></div>
       <BoardFilter text="Member request sms transactions ">
-        <div className="flex gap-6 ">
-          
-        </div>
+        <div className="flex gap-6 "></div>
       </BoardFilter>
       <div>
         {processing ? (

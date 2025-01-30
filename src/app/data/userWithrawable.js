@@ -1,12 +1,21 @@
 import { Excel } from "@/assets/icon";
 import { Button } from "@/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
 
-export const userSmsCountColumns = [
+export const userWithdrawableColumns = [
   {
     accessorKey: "ID",
     header: "S/N",
@@ -33,30 +42,22 @@ export const userSmsCountColumns = [
     ),
   },
   {
-    accessorKey: "month",
-    header: "Month",
-    cell: ({ row }) => (
-      <div className="capitalize flex gap-2">{row.getValue("month")}</div>
-    ),
-  },
-
-  {
     accessorKey: "year",
     header: "Year",
     cell: ({ row }) => <div className="capitalize">{row.getValue("year")}</div>,
   },
   {
-    accessorKey: "no_of_message",
-    header: "No of message ",
+    accessorKey: "status",
+    header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("no_of_message")}</div>
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
   {
-    accessorKey: "total_amount",
-    header: "Total Amount",
+    accessorKey: "created_at",
+    header: "created_at",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("total_amount")}</div>
+      <div className="capitalize">{row.getValue("created_at")}</div>
     ),
   },
 ];

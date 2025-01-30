@@ -14,26 +14,20 @@ export default function ViewStaff() {
   const searchParams = useSearchParams();
   const user_id = searchParams.get("user_id"); // Fetch the user_id from query parameters
   const [staff, setStaff] = useState(null);
-  const { profile,errors } = useSelector((state) => state.staffProfiles);
+  const { profile, errors } = useSelector((state) => state.staffProfiles);
   const dispatch = useDispatch();
   const [permissions, setPermissions] = useState([]);
   const [selectedPermissions, setSelectedPermissions] = useState([]);
 
-  // useEffect(() => {
-  //   if (user_id) {
-  //     dispatch(staffProfile({ user_id }));
-  //   }
-  // }, [dispatch, user_id]);
-  // console.log(profile,user_id,errors, 'staff');
   useEffect(() => {
     if (user_id) {
       const fetchStaff = async () => {
         try {
           const response = await axios.get(`admin/user/profile`, {
-            headers: {Role: 'admin'},
+            headers: { Role: "admin" },
             params: { user_id },
           });
-          setStaff(response.data.data); 
+          setStaff(response.data.data);
         } catch (error) {
           console.error("Failed to fetch staff:", error);
         }
@@ -41,33 +35,6 @@ export default function ViewStaff() {
       fetchStaff();
     }
   }, [user_id]);
-
-  //Fetch permissions
-  // useEffect(() => {
-  //   const loadPermissions = async () => {
-  //     try{
-  //       const allPermissions = await fetchPermissions();
-  //       // const formatPermissions = Object.entries(allPermissions.permissions).map(
-  //       //   ([key, value]) => ({
-  //       //     key,
-  //       //     value,
-  //       //   })
-  //       // )
-  //       setPermissions(allPermissions.data);
-  //     }catch(error){
-  //       console.log("Failed to fetch permissions:", error);
-  //     }
-  //   }
-  //   loadPermissions();
-  // })
-
-  // const handleCheckboxChange = (permissionId) => {
-  //   setSelectedPermissions((prev) =>
-  //     prev.includes(permissionId)
-  //       ? prev.filter((id) => id !== permissionId) // Remove if already selected
-  //       : [...prev, permissionId] // Add if not selected
-  //   );
-  // };
 
   if (!staff)
     return (
@@ -82,71 +49,70 @@ export default function ViewStaff() {
 
   return (
     <div>
-    <div className="p-5 md:w-2/6 m-10 rounded-md flex flex-col bg-white">
-      {/* Header */}
-      <div className="border font-bold p-3 w-fit rounded-md">Staff</div>
-      <div className="flex justify-between py-4 items-center">
-        <h1 className="font-bold text-2xl">Profile</h1>
-        <Button
-          onClick={() =>
-            router.push(`/dashboard/editStaff?user_id=${staff.id}`)
-          }
-        >
-          Edit
-        </Button>
-      </div>
+      <div className="p-5 md:w-2/6 m-10 rounded-md flex flex-col bg-white">
+        {/* Header */}
+        <div className="border font-bold p-3 w-fit rounded-md">Staff</div>
+        <div className="flex justify-between py-4 items-center">
+          <h1 className="font-bold text-2xl">Profile</h1>
+          <Button
+            onClick={() =>
+              router.push(`/dashboard/editStaff?user_id=${staff.id}`)
+            }
+          >
+            Edit
+          </Button>
+        </div>
 
-      {/* Profile Picture and Email */}
-      <div>
-        <div className="rounded-full h-12 w-12 bg-[#141E2F] text-white flex justify-center mx-auto items-center">
-          {staff.first_name?.[0]?.toUpperCase()}
-          {staff.last_name?.[0]?.toUpperCase()}
+        {/* Profile Picture and Email */}
+        <div>
+          <div className="rounded-full h-12 w-12 bg-[#141E2F] text-white flex justify-center mx-auto items-center">
+            {staff.first_name?.[0]?.toUpperCase()}
+            {staff.last_name?.[0]?.toUpperCase()}
+          </div>
+          <div className="text-[#A3A3A3] items-center text-center mt-2">
+            {staff.email}
+          </div>
         </div>
-        <div className="text-[#A3A3A3] items-center text-center mt-2">
-          {staff.email}
+
+        {/* Personal Information */}
+        <div className="grid grid-cols-1  gap-8 my-6">
+          <div className="flex items-center gap-x-6">
+            <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
+              First Name:
+            </span>
+            <span className="capitalize text-sm">
+              {staff.first_name || "-"}
+            </span>
+          </div>
+          <div className="flex items-center gap-x-6">
+            <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
+              Last Name:
+            </span>
+            <span className="capitalize text-sm">{staff.last_name || "-"}</span>
+          </div>
+          <div className="flex items-center gap-x-6">
+            <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
+              Phone No:
+            </span>
+            <span className="capitalize text-sm">{staff.phone || "N/A"}</span>
+          </div>
+          <div className="flex items-center gap-x-6">
+            <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
+              Role:
+            </span>
+            <span className="capitalize text-sm">{staff.role || "N/A"}</span>
+          </div>
+          <div className="flex items-center gap-x-6">
+            <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
+              Department:
+            </span>
+            <span className="capitalize text-sm">
+              {staff.department || "N/A"}
+            </span>
+          </div>
         </div>
       </div>
-
-      {/* Personal Information */}
-      <div className="grid grid-cols-1  gap-8 my-6">
-        <div className="flex items-center gap-x-6">
-          <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-            First Name:
-          </span>
-          <span className="capitalize text-sm">{staff.first_name || "-"}</span>
-        </div>
-        <div className="flex items-center gap-x-6">
-          <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-            Last Name:
-          </span>
-          <span className="capitalize text-sm">{staff.last_name || "-"}</span>
-        </div>
-        <div className="flex items-center gap-x-6">
-          <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-            Phone No:
-          </span>
-          <span className="capitalize text-sm">{staff.phone || "N/A"}</span>
-        </div>
-        <div className="flex items-center gap-x-6">
-          <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-            Role:
-          </span>
-          <span className="capitalize text-sm">{staff.role || "N/A"}</span>
-        </div>
-        <div className="flex items-center gap-x-6">
-          <span className="sm:w-40 flex-shrink-0 text-sm font-medium">
-            Department:
-          </span>
-          <span className="capitalize text-sm">
-            {staff.department || "N/A"}
-          </span>
-        </div>
-      </div>
-
-      {/* Back Button */}
-      {/* <Button className='w-52 my-10' onClick={() => router.push("/staff")}>Update password</Button> */}
-    </div>
-     {/* <div>
+      {/* <div>
       <h1>Permissions</h1>
       <div className="grid grid-cols-1 gap-3">
         {permissions.map((permission) => (
