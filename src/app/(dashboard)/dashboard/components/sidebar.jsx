@@ -115,7 +115,7 @@ export default function Sidebar() {
         </div>
       </button>
       <div
-        className={`md:flex flex-col scroll-smooth w-[260px] items-center justify-between border-r md:w-[200px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
+        className={`md:flex flex-col scroll-smooth scrollable-container  overflow-y-auto h-screen w-[260px] items-center justify-between border-r md:w-[200px] md:px-6 lg:w-[280px] p-6 z-50 bg-white fixed top-0 left-0 transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       >
@@ -129,7 +129,7 @@ export default function Sidebar() {
             </button>
           </header>
 
-          <section className="flex flex-col gap-4 scroll-smooth scrollable-container  overflow-y-auto h-screen ">
+          <section className="flex flex-col gap-4  ">
             {sideItemsTop.map((item, index) => (
               <Link
                 key={index}
