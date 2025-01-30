@@ -144,19 +144,23 @@ export default function AdminLayout({ children }) {
       localStorage.removeItem("_APP_ADMIN_REFRESH_TOKEN_KEY_");
       localStorage.removeItem("_APP_ADMIN_EXPIRATION_TIME_KEY_");
     };
-  
+
     const validateToken = async () => {
       const token = localStorage.getItem("_APP_ADMIN_TOKEN_KEY_");
-      const refreshToken = localStorage.getItem("_APP_ADMIN_REFRESH_TOKEN_KEY_");
-      const expirationTime = localStorage.getItem("_APP_ADMIN_EXPIRATION_TIME_KEY_");
-  
+      const refreshToken = localStorage.getItem(
+        "_APP_ADMIN_REFRESH_TOKEN_KEY_"
+      );
+      const expirationTime = localStorage.getItem(
+        "_APP_ADMIN_EXPIRATION_TIME_KEY_"
+      );
+
       try {
         if (!token) {
           clearAuthData();
           router.push("/admin/SignIn");
           return;
         }
-  
+
         if (new Date(expirationTime) < new Date()) {
           // Refresh token logic
           const refreshResponse = await axios.post(
@@ -164,9 +168,12 @@ export default function AdminLayout({ children }) {
             { refresh_token: refreshToken },
             { headers: { Authorization: `Bearer ${token}` } }
           );
-  
+
           if (refreshResponse.status === 200) {
-            localStorage.setItem("_APP_ADMIN_TOKEN_KEY_", refreshResponse.data.access_token);
+            localStorage.setItem(
+              "_APP_ADMIN_TOKEN_KEY_",
+              refreshResponse.data.access_token
+            );
             localStorage.setItem(
               "_APP_ADMIN_EXPIRATION_TIME_KEY_",
               new Date().getTime() + 1 * 60 * 60 * 1000 + 45 * 60 * 1000
@@ -181,25 +188,23 @@ export default function AdminLayout({ children }) {
           const response = await axios.get("/check_token", {
             headers: { Authorization: `Bearer ${token}` },
           });
-  
+
           if (response.status === 401) {
             clearAuthData();
             router.push("/admin/SignIn");
           }
         }
       } catch (error) {
-      
         clearAuthData();
         router.push("/admin/SignIn");
       }
     };
-  
+
     validateToken();
     const interval = setInterval(validateToken, 20 * 60 * 1000);
-  
+
     return () => clearInterval(interval);
   }, []);
-  
 
   if (isLoading) {
     return (
@@ -220,7 +225,7 @@ export default function AdminLayout({ children }) {
         <Toaster />
         <Sidebar />
         <MainMenu />
-        <main className="pt-20 bg-[#FAFAFB] w-full md:pl-[290px] sm:pl-[210px] min-h-screen">
+        <main className="pt-20 bg-[#FAFAFB] w-full md:pl-[290px] sm:pl-[210px] h-screen scroll-smooth scrollable-container  overflow-y-auto">
           {children}
         </main>
       </div>
